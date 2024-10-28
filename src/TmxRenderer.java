@@ -3,12 +3,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class TmxRenderer {
     private TmxMapModel mapModel;
-    private HashMap<Integer, BufferedImage> tileImages;  // Mapping from tile ID to image
+    private HashMap<Integer, BufferedImage> tileImages;
     private List<LayerModel> layers;
     private List<ObjectModel> objects;
     private List<AnimationModel> animations;
@@ -19,16 +20,16 @@ public class TmxRenderer {
         this.mapModel = mapModel;
         this.layers = layers;
         this.objects = objects;
-        this.animations = animations;
+        this.animations = new ArrayList<>();  // Ensure animations list is initialized
         this.tilesets = tilesets;
         this.tileImages = new HashMap<>();
         loadTilesetImages();
+        initializeAnimations(); // Initialize animations if not already populated
     }
 
     private void loadTilesetImages() {
         for (TilesetModel tileset : tilesets) {
             try {
-                // Load tileset image file and verify existence
                 File tilesetFile = new File("resources/" + tileset.getImageSource());
                 if (!tilesetFile.exists()) {
                     System.err.println("Tileset image file not found: " + tileset.getImageSource());
@@ -38,99 +39,104 @@ public class TmxRenderer {
                 BufferedImage tilesetImage = ImageIO.read(tilesetFile);
                 int tileWidth = (int) tileset.getWidth();
                 int tileHeight = (int) tileset.getHeight();
-                int firstGid = tileset.getFirstGid();
-                int tileCount = tileset.getTileCount();
+                int columns = tileset.getColumns();
 
-                System.out.println("Loading tileset: " + tileset.getImageSource() +
-                        " with First GID: " + firstGid + ", Tile Count: " + tileCount);
-
-                int tileId = firstGid;
-                for (int y = 0; y < tileset.getImageHeight(); y += tileHeight) {
-                    for (int x = 0; x < tileset.getImageWidth(); x += tileWidth) {
-                        if (tileId <= firstGid + tileCount) {
-                            BufferedImage tileImage = tilesetImage.getSubimage(x, y, tileWidth, tileHeight);
-                            tileImages.put(tileId, tileImage);
-                            System.out.println("Loaded tile for tile ID: " + tileId);  // Debugging output
-                            tileId++;
-                        }
-                    }
+                for (int i = 0; i < tileset.getTileCount(); i++) {
+                    int x = (i % columns) * tileWidth;
+                    int y = (i / columns) * tileHeight;
+                    tileImages.put(tileset.getFirstGid() + i, tilesetImage.getSubimage(x, y, tileWidth, tileHeight));
                 }
-
             } catch (IOException e) {
-                System.err.println("Failed to load tileset image: " + tileset.getImageSource());
+                System.err.println("Error loading tileset image: " + e.getMessage());
             }
         }
+    }
 
-        System.out.println("Summary of loaded tile IDs:");
-        tileImages.keySet().forEach(id -> System.out.println("Loaded tile ID: " + id));
-        if (!tileImages.containsKey(13)) {
-            System.err.println("Tile ID 13 is missing from tile images after loading.");
-        } else {
-            System.out.println("Tile ID 13 loaded successfully.");
+    // Generalized method to initialize animations for any object with an animation in its tileset
+    private void initializeAnimations() {
+        for (ObjectModel object : objects) {
+            int gid = object.getGid();
+
+            if (tileImages.containsKey(gid)) {  // Check if this object has associated tileset images
+                AnimationModel animation = new AnimationModel(gid);  // Use object's GID as first GID
+                animation.setX(object.getX());
+                animation.setY(object.getY());
+
+                // Assume frames in range from object's first gid (78) up to tile count, loop around if needed
+                TilesetModel tileset = findTilesetForGid(gid);
+                if (tileset != null) {
+                    int tileCount = tileset.getTileCount();
+                    int firstGid = tileset.getFirstGid();
+
+                    // Loop animation frames within the tile count range for the tileset
+                    for (int i = 0; i < Math.min(16, tileCount); i++) {  // Avoid going out of bounds
+                        FrameModel frame = new FrameModel(firstGid + (i % tileCount), 300);
+                        animation.addFrame(frame);
+                    }
+
+                    animations.add(animation);
+                    System.out.println("Initialized animation for GID " + gid + " with frames at position (" +
+                            object.getX() + ", " + object.getY() + ")");
+                }
+            } else {
+                System.out.println("Object with GID " + gid + " does not have an animated tileset; skipping animation setup.");
+            }
         }
     }
 
-
-
-    public void renderMap(Graphics g) {
-        renderLayers(g);
-        renderObjects(g);
-        renderAnimations(g);
+    private TilesetModel findTilesetForGid(int gid) {
+        for (TilesetModel tileset : tilesets) {
+            if (gid >= tileset.getFirstGid() && gid < tileset.getFirstGid() + tileset.getTileCount()) {
+                return tileset;
+            }
+        }
+        return null;
     }
 
-    private void renderLayers(Graphics g) {
+    public void render(Graphics g) {
+        // Render static tiles for each layer
         for (LayerModel layer : layers) {
-            System.out.println("Rendering layer: " + layer.getLayerName());
-            int layerWidth = layer.getLayerWidth();
-            int layerHeight = layer.getLayerHeight();
-
-            for (int y = 0; y < layerHeight; y++) {
-                for (int x = 0; x < layerWidth; x++) {
-                    int tileId = getTileIdFromLayer(layer, x, y);
-
-                    if (!tileImages.containsKey(tileId)) {
-                        System.err.println("Missing tile image for tile ID: " + tileId);
-                        continue;
-                    }
-
-                    BufferedImage tileImage = tileImages.get(tileId);
-                    if (tileImage != null) {
-                        g.drawImage(tileImage, x * mapModel.getTileWidth(), y * mapModel.getTileHeight(), null);
+            for (int y = 0; y < layer.getLayerHeight(); y++) {
+                for (int x = 0; x < layer.getLayerWidth(); x++) {
+                    int tileId = layer.getTileIdAt(x, y);
+                    if (tileId > 0 && tileImages.containsKey(tileId)) {
+                        BufferedImage tile = tileImages.get(tileId);
+                        g.drawImage(tile, x * mapModel.getTileWidth(), y * mapModel.getTileHeight(), null);
                     }
                 }
             }
         }
-    }
 
-    private int getTileIdFromLayer(LayerModel layer, int x, int y) {
-        return layer.getTileIdAt(x, y);
-    }
-
-    private void renderObjects(Graphics g) {
+        // Render each object based on its gid and positional coordinates
         for (ObjectModel object : objects) {
-            BufferedImage objectImage = tileImages.get(object.getGid());
-            if (objectImage != null) {
-                g.drawImage(objectImage, (int) object.getX(), (int) object.getY(),
-                        (int) object.getWidth(), (int) object.getHeight(), null);
+            int gid = object.getGid();
+            if (gid > 0 && tileImages.containsKey(gid)) {
+                BufferedImage objectImage = tileImages.get(gid);
+                int xPos = (int) object.getX();
+                int yPos = (int) object.getY();
+                g.drawImage(objectImage, xPos, yPos, (int) object.getWidth(), (int) object.getHeight(), null);
+                System.out.println("Rendering object with GID " + gid + " at (" + xPos + ", " + yPos + ")");
+            } else {
+                System.out.println("Object with GID " + gid + " has no associated image.");
             }
         }
-    }
 
-    private void renderAnimations(Graphics g) {
-        long currentTime = System.currentTimeMillis();
+        // Render animated objects dynamically based on animations list
         for (AnimationModel animation : animations) {
-            animation.update();
-            int localTileId = animation.getCurrentTileId();
-            int globalTileId = localTileId + 78;
-
-            if (!tileImages.containsKey(globalTileId)) {
-                System.err.println("Animation frame missing for tile ID: " + globalTileId);
-                continue;
+            if (animation.getFrames() == null || animation.getFrames().isEmpty()) {
+                System.out.println("Animation with GID " + animation.getFirstGid() + " has no frames loaded.");
+                continue; // Skip if there are no frames to animate
             }
 
-            BufferedImage frameImage = tileImages.get(globalTileId);
-            if (frameImage != null) {
-                g.drawImage(frameImage, 100, 100, null);
+            animation.update();
+            int tileId = animation.getCurrentTileId();
+            if (tileId > 0 && tileImages.containsKey(tileId)) {
+                BufferedImage tile = tileImages.get(tileId);
+                g.drawImage(tile, (int) animation.getX(), (int) animation.getY(), 32, 32, null); // Render 32x32 for animations
+                System.out.println("Animating object with GID: " + animation.getFirstGid() + " using tile ID " + tileId +
+                        " at location (" + animation.getX() + ", " + animation.getY() + ")");
+            } else {
+                System.out.println("Tile ID " + tileId + " for animation with GID " + animation.getFirstGid() + " not found in tileImages.");
             }
         }
     }

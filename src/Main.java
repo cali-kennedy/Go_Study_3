@@ -32,7 +32,7 @@ public class Main extends JPanel {
         super.paintComponent(g);
 
         if (tmxRenderer != null) {
-            tmxRenderer.renderMap(g);
+            tmxRenderer.render(g);
         }
     }
 
