@@ -18,7 +18,7 @@ public class TmxParser {
     private List<ObjectModel> objects = new ArrayList<>();    // Initialize as ArrayList
     private TilesetParser tilesetParser;
     private List<TilesetModel> tilesets = new ArrayList<>(); // Tilesets initialized as ArrayList
-
+    private List<ObjectPropertiesModel> objectPropertiesModels = new ArrayList<>(); // Tilesets initialized as ArrayList
     public TmxParser(String tmxFilePath) throws IOException, ParserConfigurationException, SAXException {
         parseTmxFile(tmxFilePath);
     }
@@ -125,9 +125,13 @@ public class TmxParser {
                     System.out.println("Object Property Name: " + property.getPropertyName());
                     System.out.println("Object Type: " + property.getType());
                     System.out.println("Object Value: " + property.getValue());
+                   // objectPropertiesModels.add(property);
+                    object.addProperty(property);
+                    System.out.println(object.getProperties().toString());
                 }
 
                 objects.add(object); // Add the object to the objects list
+
             }
         }
     }
@@ -156,6 +160,9 @@ public class TmxParser {
     // Sort tilesets by firstGid
     private void sortTilesetsByFirstGid() {
         tilesets.sort(Comparator.comparingInt(TilesetModel::getFirstGid));
+    }
+    public List<ObjectPropertiesModel> getObjectProperties(){
+        return objectPropertiesModels;
     }
 
 }

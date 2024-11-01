@@ -32,7 +32,7 @@ public class AnimationModel {
         if (currentTime - lastFrameTime >= currentFrame.getDuration()) {
             currentFrameIndex = (currentFrameIndex + 1) % frames.size(); // Cycle through frames
             lastFrameTime = currentTime;
-            System.out.println("Updating frame for GID " + firstGid + " to tile ID " + getCurrentTileId());
+          //  System.out.println("Updating frame for GID " + firstGid + " to tile ID " + getCurrentTileId());
         }
     }
 

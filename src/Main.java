@@ -11,7 +11,7 @@ public class Main extends JPanel {
     private Camera camera;
     private Character character;
     private InputHandler inputHandler;
-
+    private CollisionDetector collisionDetector;
     public Main() {
         try {
             // Parse .tmx file and tileset files to populate models
@@ -21,9 +21,12 @@ public class Main extends JPanel {
             List<ObjectModel> objects = tmxParser.getObjects();
             List<AnimationModel> animations = tmxParser.getAnimations();
             List<TilesetModel> tilesets = tmxParser.getTilesets();
+            List<ObjectPropertiesModel> objectProperties = tmxParser.getObjectProperties();
             character = new Character("resources/rabbit.png",10,10,20,20);
+            collisionDetector = new CollisionDetector(character, objects);
             camera = new Camera(400, 400, 2.0f, character);
             inputHandler = new InputHandler(character);
+           // collisionDetector = new CollisionDetector(character, objects);
             setFocusable(true);
             addKeyListener(inputHandler);  // Add the input handler as a key listener
 
@@ -46,7 +49,7 @@ public class Main extends JPanel {
             tmxRenderer.render(g);
          //   character = new Character("resources/rabbit.png",10,10,20,20);
             character.draw(g); // draw the character on the map
-
+            collisionDetector.checkCollisions();
 
         }
 

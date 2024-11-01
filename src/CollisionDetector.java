@@ -2,9 +2,16 @@ import java.awt.Rectangle;
 import java.util.List;
 
 public class CollisionDetector {
+    private Character character;
+    private List<ObjectModel> objects;
+
+    public CollisionDetector(Character character, List<ObjectModel> objects) {
+        this.character = character;
+        this.objects = objects;
+    }
 
     // Detect collision with objects based on type and handle accordingly
-    public static boolean checkCollisions(Character character, List<ObjectModel> objects) {
+    public boolean checkCollisions() {
         boolean collidedWithWall = false;
 
         for (ObjectModel object : objects) {
@@ -12,7 +19,7 @@ public class CollisionDetector {
             if (isColliding(character, object)) {
                 // Get object type from its properties
                 String objectType = getObjectType(object);
-
+                System.out.println("-----" + objectType);
                 switch (objectType) {
                     case "wall" -> {
                         collidedWithWall = true;
@@ -35,24 +42,32 @@ public class CollisionDetector {
     }
 
     // Helper to determine if the character's bounds intersect an object's bounds
-    private static boolean isColliding(Character character, ObjectModel object) {
+    private boolean isColliding(Character character, ObjectModel object) {
         Rectangle charBounds = new Rectangle(character.getX(), character.getY(), character.getWidth(), character.getHeight());
         Rectangle objectBounds = new Rectangle((int) object.getX(), (int) object.getY(), (int) object.getWidth(), (int) object.getHeight());
         return charBounds.intersects(objectBounds);
     }
 
     // Retrieve the type of the object based on its properties
-    private static String getObjectType(ObjectModel object) {
-        for (String property : object.getProperties()) {
-            if (property.equalsIgnoreCase("type")) {
-                return property;  // Extract the 'type' property (e.g., "wall", "apple", "enemy")
+    private String getObjectType(ObjectModel object) {
+        System.out.println(object.getName());
+        for (ObjectPropertiesModel property : object.getProperties()) {
+            if (property.getPropertyName().equalsIgnoreCase("is_enemy") &&
+                    property.getValue().equalsIgnoreCase("true")) {
+                return "enemy"; // Treat as enemy if is_enemy is true
+            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
+                return property.getValue(); // Return the value of 'type' if present
             }
         }
-        return "unknown";  // Default if no type is found
+        if(object.getName().equalsIgnoreCase("wall")){
+            return "wall";
+        }
+        return "unknown"; // Default if no relevant type is found
     }
 
+
     // Initiates combat or interaction when encountering an enemy
-    private static void initiateCombat(Character character, ObjectModel enemy) {
+    private void initiateCombat(Character character, ObjectModel enemy) {
         // Placeholder for combat logic or opening a combat screen
         System.out.println("Initiating combat with enemy at (" + enemy.getX() + ", " + enemy.getY() + ")");
         // Actual combat system or interaction logic would go here

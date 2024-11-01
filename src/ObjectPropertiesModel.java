@@ -3,6 +3,7 @@ public class ObjectPropertiesModel {
     private String type;
     private String value;
     private String objectName;
+    private Object Object;
 
     public ObjectPropertiesModel(){
         this.propertyName = "";
@@ -40,5 +41,15 @@ public class ObjectPropertiesModel {
 
     public void setObjectName(String objectName) {
         this.objectName = objectName;
+    }
+
+    @Override
+    public String toString() {
+        return "ObjectPropertiesModel{" +
+                "propertyName='" + propertyName + '\'' +
+                ", type='" + type + '\'' +
+                ", value='" + value + '\'' +
+                ", objectName='" + objectName + '\'' +
+                '}';
     }
 }

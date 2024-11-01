@@ -18,6 +18,7 @@ public class Character {
     private int levelProgression;
     private int levelCap;
     private int health;
+    private List<ObjectModel> objects;
 
     // Constructor
     public Character(String spritePath, int startX, int startY, int width, int height) {
@@ -30,6 +31,7 @@ public class Character {
         this.levelProgression = 0; // Starting level progression
         this.levelCap = 100; // XP needed for the first level up
         this.health = MAX_HEALTH; // Start with full health
+
 
         try {
             this.sprite = ImageIO.read(new File("resources/rabbit.png"));
@@ -46,6 +48,7 @@ public class Character {
         // Update position based on movement delta
         this.x += dx;
         this.y += dy;
+        CollisionDetector collisionDetector = new CollisionDetector(this,objects);
 
         // input collision detection here
     }

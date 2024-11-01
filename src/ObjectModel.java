@@ -1,4 +1,3 @@
-import javax.lang.model.element.Element;
 import java.util.ArrayList;
 
 public class ObjectModel {
@@ -9,7 +8,7 @@ public class ObjectModel {
     private double y;
     private double width;
     private double height;
-    private ArrayList<String> properties;
+    private ArrayList<ObjectPropertiesModel> properties;
     private String layerName;
     public ObjectModel(){
         this.id =0;
@@ -19,15 +18,16 @@ public class ObjectModel {
         this.y = 0;
         this.width = 0;
         this.height = 0;
-        this.properties = null;
+     //   this.properties = null;
+        this.properties = new ArrayList<ObjectPropertiesModel>(); // Initialize as an empty list to avoid NullPointerException
     }
 
-    public ArrayList<String> getProperties() {
+    public ArrayList<ObjectPropertiesModel> getProperties() {
         return properties;
     }
 
-    public void setProperties(ArrayList<String> properties) {
-        this.properties = properties;
+    public void addProperty(ObjectPropertiesModel property) {
+        this.properties.add(property); // Add individual property
     }
 
     public int getId() {
