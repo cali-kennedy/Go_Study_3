@@ -4,19 +4,21 @@ public class Camera {
     private int x, y;  // Camera position
     private int width, height;  // Viewport size (screen dimensions)
     private float zoomLevel;  // Zoom level (default = 1.0f)
+    private Character character;
 
-    public Camera(int width, int height, float zoomLevel) {
+    public Camera(int width, int height, float zoomLevel, Character character) {
         this.width = width;
         this.height = height;
         this.zoomLevel = zoomLevel;
+        this.character = character;
     }
 
     // Update the camera to follow the character
     public void update( int mapWidth, int mapHeight) {
         // Center the camera on the character
         //character.getX, character.getY
-        x = (int) (1 - width / (2 * zoomLevel));
-        y = (int) (1 - height / (2 * zoomLevel));
+        x = (int) (character.getX() - width / (2 * zoomLevel));
+        y = (int) (character.getY() - height / (2 * zoomLevel));
 
         // Clamp the camera within the bounds of the map
         x = Math.max(0, Math.min(x, mapWidth - (int) (width / zoomLevel)));

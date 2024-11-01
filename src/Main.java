@@ -9,6 +9,8 @@ public class Main extends JPanel {
 
     private TmxRenderer tmxRenderer;
     private Camera camera;
+    private Character character;
+
     public Main() {
         try {
             // Parse .tmx file and tileset files to populate models
@@ -18,7 +20,9 @@ public class Main extends JPanel {
             List<ObjectModel> objects = tmxParser.getObjects();
             List<AnimationModel> animations = tmxParser.getAnimations();
             List<TilesetModel> tilesets = tmxParser.getTilesets();
-            camera = new Camera(400, 400, 2.0f);
+            character = new Character("resources/rabbit.png",10,10,20,20);
+            camera = new Camera(400, 400, 2.0f, character);
+
             // Initialize the renderer with parsed map data
             tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera);
 
@@ -36,7 +40,7 @@ public class Main extends JPanel {
             camera.update(20*16,20*16);
             camera.applyTransform(g2d);
             tmxRenderer.render(g);
-            Character character = new Character("resources/rabbit.png",10,10,20,20);
+         //   character = new Character("resources/rabbit.png",10,10,20,20);
             character.draw(g); // draw the character on the map
 
 
