@@ -1,9 +1,10 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JFrame;
 
 public class Character {
     private int x;
@@ -31,10 +32,13 @@ public class Character {
         this.health = MAX_HEALTH; // Start with full health
 
         try {
-            this.sprite = ImageIO.read(new File(spritePath));
+            this.sprite = ImageIO.read(new File("resources/rabbit.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void draw(Graphics g) {
+        g.drawImage(sprite, x, y, width, height, null);
     }
 
     // Movement Method
@@ -43,17 +47,7 @@ public class Character {
         int newX = this.x + dx;
         int newY = this.y + dy;
 
-        // Collision detection and map interactions
-        CollisionDetector detector = new CollisionDetector();
-        if (!detector.checkCollisions(newX, newY, parser, parentFrame, question, questions)) {
-            // If no collision, update position
-            this.x = newX;
-            this.y = newY;
-        } else {
-            // Handle collision, e.g., reset position, interact with environment, etc.
-            // For simplicity, we just print collision message
-            System.out.println("Collision detected. Movement blocked.");
-        }
+        // input collision detection here
     }
 
     // Health Management
@@ -121,9 +115,6 @@ public class Character {
         return this.height;
     }
 
-    // Render method (optional, if you're handling rendering here)
-    public void render(Graphics g) {
-        g.drawImage(this.sprite, this.x, this.y, this.width, this.height, null);
-    }
+
 }
 

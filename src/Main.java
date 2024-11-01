@@ -12,7 +12,7 @@ public class Main extends JPanel {
     public Main() {
         try {
             // Parse .tmx file and tileset files to populate models
-            TmxParser tmxParser = new TmxParser("resources/large_test.tmx");
+            TmxParser tmxParser = new TmxParser("resources/small_test.tmx");
             TmxMapModel mapModel = tmxParser.getMapModel();
             List<LayerModel> layers = tmxParser.getLayers();
             List<ObjectModel> objects = tmxParser.getObjects();
