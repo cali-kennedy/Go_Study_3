@@ -36,8 +36,14 @@ public class Main extends JPanel {
             camera.update(20*16,20*16);
             camera.applyTransform(g2d);
             tmxRenderer.render(g);
+            Character character = new Character("resources/rabbit.png",10,10,20,20);
+            character.draw(g); // draw the character on the map
+
 
         }
+        Character character = new Character("resources/rabbit.png",1,1,1,1);
+        character.draw(g);
+
     }
 
     public static void main(String[] args) {

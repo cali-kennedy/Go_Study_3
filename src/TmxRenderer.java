@@ -94,6 +94,7 @@ public class TmxRenderer {
     }
 
     public void render(Graphics g) {
+
         // Render static tiles for each layer
         for (LayerModel layer : layers) {
             for (int y = 0; y < layer.getLayerHeight(); y++) {
