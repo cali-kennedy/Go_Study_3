@@ -10,6 +10,7 @@ public class Main extends JPanel {
     private TmxRenderer tmxRenderer;
     private Camera camera;
     private Character character;
+    private InputHandler inputHandler;
 
     public Main() {
         try {
@@ -22,6 +23,9 @@ public class Main extends JPanel {
             List<TilesetModel> tilesets = tmxParser.getTilesets();
             character = new Character("resources/rabbit.png",10,10,20,20);
             camera = new Camera(400, 400, 2.0f, character);
+            inputHandler = new InputHandler(character);
+            setFocusable(true);
+            addKeyListener(inputHandler);  // Add the input handler as a key listener
 
             // Initialize the renderer with parsed map data
             tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera);

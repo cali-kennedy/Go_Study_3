@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TmxRenderer {
     private TmxMapModel mapModel;
@@ -15,6 +16,8 @@ public class TmxRenderer {
     private List<AnimationModel> animations;
     private List<TilesetModel> tilesets;
     private Camera camera;
+    private Map<Integer, BufferedImage> animationFrameCache = new HashMap<>();
+
     public TmxRenderer(TmxMapModel mapModel, List<LayerModel> layers, List<ObjectModel> objects,
                        List<AnimationModel> animations, List<TilesetModel> tilesets, Camera camera) {
         this.mapModel = mapModel;
@@ -95,33 +98,44 @@ public class TmxRenderer {
     }
 
     public void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
 
-        // Render static tiles for each layer
+        // First, render all static tiles in one batch
         for (LayerModel layer : layers) {
             for (int y = 0; y < layer.getLayerHeight(); y++) {
                 for (int x = 0; x < layer.getLayerWidth(); x++) {
                     int tileId = layer.getTileIdAt(x, y);
                     if (tileId > 0 && tileImages.containsKey(tileId)) {
                         BufferedImage tile = tileImages.get(tileId);
-                        g.drawImage(tile, x * mapModel.getTileWidth(), y * mapModel.getTileHeight(), null);
+                        g2d.drawImage(tile, x * mapModel.getTileWidth(), y * mapModel.getTileHeight(), null);
                     }
                 }
             }
         }
 
-        // Render each object based on its gid and positional coordinates
-        for (ObjectModel object : objects) {
-            int gid = object.getGid();
-            if (gid > 0 && tileImages.containsKey(gid)) {
-                BufferedImage objectImage = tileImages.get(gid);
-                int xPos = (int) object.getX();
-                int yPos = (int) object.getY();
-                g.drawImage(objectImage, xPos, yPos, (int) object.getWidth(), (int) object.getHeight(), null);
-                System.out.println("Rendering object with GID " + gid + " at (" + xPos + ", " + yPos + ")");
-            } else {
-                System.out.println("Object with GID " + gid + " has no associated image.");
+        // Then, render all animated objects in one batch
+        for (AnimationModel animation : animations) {
+            animation.update();
+            int tileId = animation.getCurrentTileId();
+
+            // Check if the frame is cached
+            BufferedImage frame = animationFrameCache.get(tileId);
+
+            if (frame == null) {
+                // If not cached, retrieve and cache it
+                frame = tileImages.get(tileId);
+                if (frame != null) {
+                    animationFrameCache.put(tileId, frame);
+                }
+            }
+
+            if (frame != null) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY(), 32, 32, null);
             }
         }
+
+
+
 
         // Render animated objects dynamically based on animations list
         Rectangle cameraBounds = new Rectangle((int) camera.getX(), (int) camera.getY(), camera.getWidth(), camera.getHeight());

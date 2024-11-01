@@ -42,10 +42,10 @@ public class Character {
     }
 
     // Movement Method
-    public void move(int dx, int dy, TmxParser parser, JFrame parentFrame, Question question, List<Question> questions) {
+    public void move(int dx, int dy){ // TmxParser parser, JFrame parentFrame, Question question, List<Question> questions) {
         // Update position based on movement delta
-        int newX = this.x + dx;
-        int newY = this.y + dy;
+        this.x += dx;
+        this.y += dy;
 
         // input collision detection here
     }
