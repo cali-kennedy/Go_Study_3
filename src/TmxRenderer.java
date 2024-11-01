@@ -14,15 +14,16 @@ public class TmxRenderer {
     private List<ObjectModel> objects;
     private List<AnimationModel> animations;
     private List<TilesetModel> tilesets;
-
+    private Camera camera;
     public TmxRenderer(TmxMapModel mapModel, List<LayerModel> layers, List<ObjectModel> objects,
-                       List<AnimationModel> animations, List<TilesetModel> tilesets) {
+                       List<AnimationModel> animations, List<TilesetModel> tilesets, Camera camera) {
         this.mapModel = mapModel;
         this.layers = layers;
         this.objects = objects;
         this.animations = new ArrayList<>();  // Ensure animations list is initialized
         this.tilesets = tilesets;
         this.tileImages = new HashMap<>();
+        this.camera = camera;
         loadTilesetImages();
         initializeAnimations(); // Initialize animations if not already populated
     }
@@ -123,22 +124,21 @@ public class TmxRenderer {
         }
 
         // Render animated objects dynamically based on animations list
+        Rectangle cameraBounds = new Rectangle((int) camera.getX(), (int) camera.getY(), camera.getWidth(), camera.getHeight());
+
         for (AnimationModel animation : animations) {
-            if (animation.getFrames() == null || animation.getFrames().isEmpty()) {
-                System.out.println("Animation with GID " + animation.getFirstGid() + " has no frames loaded.");
-                continue; // Skip if there are no frames to animate
+            Rectangle objectBounds = new Rectangle((int) animation.getX(), (int) animation.getY(), 32, 32);
+            if (!cameraBounds.intersects(objectBounds)) {
+                continue;  // Skip objects outside the camera view
             }
 
-            animation.update();
+            animation.update();  // Only update and render if visible
             int tileId = animation.getCurrentTileId();
             if (tileId > 0 && tileImages.containsKey(tileId)) {
                 BufferedImage tile = tileImages.get(tileId);
-                g.drawImage(tile, (int) animation.getX(), (int) animation.getY(), 32, 32, null); // Render 32x32 for animations
-                System.out.println("Animating object with GID: " + animation.getFirstGid() + " using tile ID " + tileId +
-                        " at location (" + animation.getX() + ", " + animation.getY() + ")");
-            } else {
-                System.out.println("Tile ID " + tileId + " for animation with GID " + animation.getFirstGid() + " not found in tileImages.");
+                g.drawImage(tile, (int) animation.getX(), (int) animation.getY(), 32, 32, null);
             }
         }
+
     }
 }

@@ -20,7 +20,7 @@ public class Main extends JPanel {
             List<TilesetModel> tilesets = tmxParser.getTilesets();
             camera = new Camera(400, 400, 2.0f);
             // Initialize the renderer with parsed map data
-            tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets);
+            tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera);
 
         } catch (IOException | ParserConfigurationException | SAXException e) {
             System.err.println("Error initializing TmxRenderer: " + e.getMessage());
@@ -41,8 +41,7 @@ public class Main extends JPanel {
 
 
         }
-        Character character = new Character("resources/rabbit.png",1,1,1,1);
-        character.draw(g);
+
 
     }
 

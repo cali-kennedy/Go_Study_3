@@ -45,4 +45,11 @@ public class Camera {
     public void setZoomLevel(float zoomLevel) {
         this.zoomLevel = zoomLevel;
     }
+
+    public int getHeight() {
+        return height;
+    }
+    public int getWidth(){
+        return width;
+    }
 }
