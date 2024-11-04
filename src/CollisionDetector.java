@@ -4,6 +4,26 @@ import java.util.List;
 public class CollisionDetector {
     private Character character;
     private List<ObjectModel> objects;
+    private boolean isAnsweringQuestion = false;
+    private ObjectModel lastCollidedEnemy = null;
+
+    public static class CollisionResult {
+        private boolean wallCollision;
+        private boolean enemyCollision;
+
+        public CollisionResult(boolean wallCollision, boolean enemyCollision) {
+            this.wallCollision = wallCollision;
+            this.enemyCollision = enemyCollision;
+        }
+
+        public boolean hasWallCollision() {
+            return wallCollision;
+        }
+
+        public boolean hasEnemyCollision() {
+            return enemyCollision;
+        }
+    }
 
     public CollisionDetector(Character character, List<ObjectModel> objects) {
         this.character = character;
@@ -11,46 +31,58 @@ public class CollisionDetector {
     }
 
     // Detect collision with objects based on type and handle accordingly
-    public boolean checkCollisions() {
+    public CollisionResult checkCollisions() {
         boolean collidedWithWall = false;
+        boolean enemyCollision = false;
 
-        for (ObjectModel object : objects) {
-            // Check if the character is colliding with this object
-            if (isColliding(character, object)) {
-                // Get object type from its properties
-                String objectType = getObjectType(object);
-                System.out.println("-----" + objectType);
-                switch (objectType) {
-                    case "wall" -> {
-                        collidedWithWall = true;
-                        System.out.println("Collision with wall at (" + object.getX() + ", " + object.getY() + ")");
+        if (!isAnsweringQuestion) {
+            for (ObjectModel object : objects) {
+                // Check if the character is colliding with this object
+                if (isColliding(character, object)) {
+                    // Get object type from its properties
+                    String objectType = getObjectType(object);
+                    switch (objectType) {
+                        case "wall" -> collidedWithWall = true;
+                        case "enemy" -> {
+                            // Only trigger for a different enemy than the last one
+                            if (lastCollidedEnemy != object) {
+                                enemyCollision = true;
+                                isAnsweringQuestion = true;
+                                lastCollidedEnemy = object;
+                            }
+                        }
+                        case "apple" -> character.addHealth(10);
                     }
-                    case "apple" -> {
-                        character.addHealth(10);
-                        System.out.println("Collected an apple! Health: " + character.getHealth());
-                        // Optionally remove the object from the map if it's a one-time collectible
-                    }
-                    case "enemy" -> {
-                        System.out.println("Encountered an enemy!");
-                        initiateCombat(character, object);
-                    }
-                    default -> System.out.println("Unknown object type encountered.");
                 }
             }
         }
-        return collidedWithWall;  // Return if a wall collision occurred, blocking movement
+
+        return new CollisionResult(collidedWithWall, enemyCollision);
+    }
+
+    public void resetCollisionState() {
+        isAnsweringQuestion = false;
     }
 
     // Helper to determine if the character's bounds intersect an object's bounds
     private boolean isColliding(Character character, ObjectModel object) {
-        Rectangle charBounds = new Rectangle(character.getX(), character.getY(), character.getWidth(), character.getHeight());
-        Rectangle objectBounds = new Rectangle((int) object.getX(), (int) object.getY(), (int) object.getWidth(), (int) object.getHeight());
+        Rectangle charBounds = new Rectangle(
+                character.getX(),
+                character.getY(),
+                character.getWidth(),
+                character.getHeight()
+        );
+        Rectangle objectBounds = new Rectangle(
+                (int)object.getX(),
+                (int)object.getY(),
+                (int)object.getWidth(),
+                (int)object.getHeight()
+        );
         return charBounds.intersects(objectBounds);
     }
 
     // Retrieve the type of the object based on its properties
     private String getObjectType(ObjectModel object) {
-        System.out.println(object.getName());
         for (ObjectPropertiesModel property : object.getProperties()) {
             if (property.getPropertyName().equalsIgnoreCase("is_enemy") &&
                     property.getValue().equalsIgnoreCase("true")) {
@@ -63,13 +95,5 @@ public class CollisionDetector {
             return "wall";
         }
         return "unknown"; // Default if no relevant type is found
-    }
-
-
-    // Initiates combat or interaction when encountering an enemy
-    private void initiateCombat(Character character, ObjectModel enemy) {
-        // Placeholder for combat logic or opening a combat screen
-        System.out.println("Initiating combat with enemy at (" + enemy.getX() + ", " + enemy.getY() + ")");
-        // Actual combat system or interaction logic would go here
     }
 }

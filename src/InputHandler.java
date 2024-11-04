@@ -1,41 +1,60 @@
-import java.awt.event.KeyAdapter;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public class InputHandler extends KeyAdapter {
+public class InputHandler {
     private final int MOVE_DISTANCE = 10;
-    private final int COOLDOWN_PERIOD = 1;
     private Character character;
-    private double lastMoveTime;
+    private JPanel panel;
 
-    public InputHandler(Character character){
+    public InputHandler(Character character, JPanel panel) {
         this.character = character;
-
-        this.lastMoveTime = 0;
+        this.panel = panel;
+        setupKeyBindings();
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastMoveTime >= COOLDOWN_PERIOD) {
-            handleMovement(e.getKeyCode());
-            lastMoveTime = currentTime;
-        }
-    }
+    private void setupKeyBindings() {
+        // Set up the input map and action map for when the panel has focus
+        InputMap im = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = panel.getActionMap();
 
-    private void handleMovement(int keyCode) {
-        switch (keyCode) {
-            case KeyEvent.VK_W:
-                character.move(0, -MOVE_DISTANCE);;
-                break;
-            case KeyEvent.VK_S:
+        // Setup key bindings for WASD
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "move_up");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "move_down");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "move_left");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "move_right");
+
+        // Add actions for each movement
+        am.put("move_up", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                character.move(0, -MOVE_DISTANCE);
+                panel.repaint();
+            }
+        });
+
+        am.put("move_down", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 character.move(0, MOVE_DISTANCE);
-                break;
-            case KeyEvent.VK_A:
+                panel.repaint();
+            }
+        });
+
+        am.put("move_left", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 character.move(-MOVE_DISTANCE, 0);
-                break;
-            case KeyEvent.VK_D:
+                panel.repaint();
+            }
+        });
+
+        am.put("move_right", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 character.move(MOVE_DISTANCE, 0);
-                break;
-        }
+                panel.repaint();
+            }
+        });
     }
 }
