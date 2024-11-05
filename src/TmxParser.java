@@ -164,5 +164,20 @@ public class TmxParser {
     public List<ObjectPropertiesModel> getObjectProperties(){
         return objectPropertiesModels;
     }
+    public TilesetModel findTilesetForGid(int gid) {
+        // Sort tilesets by firstGid if not already sorted
+        sortTilesetsByFirstGid();
+
+        for (TilesetModel tileset : tilesets) {
+            int firstGid = tileset.getFirstGid();
+            int tileCount = tileset.getTileCount();
+
+            // Check if gid falls within the range of this tileset
+            if (gid >= firstGid && gid < firstGid + tileCount) {
+                return tileset;
+            }
+        }
+        return null; // Return null if no matching tileset is found
+    }
 
 }

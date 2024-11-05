@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class TilesetModel {
     private String name;
     private int firstGid;
@@ -9,11 +12,19 @@ public class TilesetModel {
     private String imageSource;
     private int imageWidth;
     private int imageHeight;
-
+    private List<AnimationModel> animations = new ArrayList<>();  // New field for animations
     public TilesetModel(){
         this.name = "";
         this.firstGid = 0;
         this.tilesetSource = "";
+    }
+    // Getter and setter for animations
+    public List<AnimationModel> getAnimations() {
+        return animations;
+    }
+
+    public void addAnimation(AnimationModel animation) {
+        animations.add(animation);
     }
     public String getName() {
         return name;

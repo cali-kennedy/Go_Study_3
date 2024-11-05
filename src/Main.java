@@ -17,6 +17,7 @@ public class Main extends JPanel {
     private boolean isPaused = false;
     private List<Question> questions;
     private static JFrame gameFrame;
+    private TmxParser tmxParser;
 
     public Main() {
         showQuestionInputDialog();
@@ -108,7 +109,7 @@ public class Main extends JPanel {
 
         try {
             // Parse .tmx file and tileset files to populate models
-            TmxParser tmxParser = new TmxParser("resources/small_test.tmx");
+            tmxParser = new TmxParser("resources/large_test.tmx");
             TmxMapModel mapModel = tmxParser.getMapModel();
             List<LayerModel> layers = tmxParser.getLayers();
             List<ObjectModel> objects = tmxParser.getObjects();
@@ -170,8 +171,28 @@ public class Main extends JPanel {
     private void checkCollisions() {
         CollisionDetector.CollisionResult result = collisionDetector.checkCollisions();
         if (result.hasEnemyCollision() && !questionPanel.isQuestionVisible()) {
-            showRandomQuestion();
+           // showRandomQuestion();
+            FightScreen fightScreen = new FightScreen(gameFrame, character); // pass the main frame and character
+            fightScreen.setVisible(true);
         }
+    }
+    private AnimationModel createEnemyAnimation(int gid) {
+        AnimationModel animation = new AnimationModel(gid);
+
+        // Find the corresponding tileset for this gid
+        TilesetModel tileset = tmxParser.findTilesetForGid(gid);
+
+        if (tileset != null) {
+            int tileCount = tileset.getTileCount();
+            int firstGid = tileset.getFirstGid();
+
+            // Create frames for the enemy's animation using tileCount
+            for (int i = 0; i < Math.min(16, tileCount); i++) {
+                int frameTileId = firstGid + (i % tileCount);
+                animation.addFrame(new FrameModel(frameTileId, 300)); // 300 ms per frame
+            }
+        }
+        return animation;
     }
 
     private void showRandomQuestion() {

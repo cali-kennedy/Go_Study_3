@@ -67,4 +67,7 @@ public class AnimationModel {
     public double getY() {
         return y;
     }
+    public void setFirstGid(int gid){
+        this.firstGid = gid;
+    }
 }

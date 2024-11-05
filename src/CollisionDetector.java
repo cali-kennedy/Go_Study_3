@@ -96,4 +96,22 @@ public class CollisionDetector {
         }
         return "unknown"; // Default if no relevant type is found
     }
+
+    public ObjectModel checkEnemyCollision() {
+        if (!isAnsweringQuestion) {
+            for (ObjectModel object : objects) {
+                if (isColliding(character, object)) {
+                    String objectType = getObjectType(object);
+                    if ("enemy".equals(objectType)) {
+                        if (lastCollidedEnemy != object) {
+                            lastCollidedEnemy = object;
+                            isAnsweringQuestion = true;
+                            return object; // Return the specific enemy object
+                        }
+                    }
+                }
+            }
+        }
+        return null; // No collision with enemy
+    }
 }

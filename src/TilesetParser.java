@@ -43,6 +43,8 @@ public class TilesetParser {
         tilesetModel.setImageSource(imageElement.getAttribute("source"));
 
         tilesets.add(tilesetModel);
+
+        // Parse animations and add to tilesetModel
         NodeList animationNode = tilesetRoot.getElementsByTagName("animation");
         for (int j = 0; j < animationNode.getLength(); j++) {
             Element animationElement = (Element) animationNode.item(j);
@@ -51,14 +53,23 @@ public class TilesetParser {
             NodeList frameNodes = animationElement.getElementsByTagName("frame");
             for (int i = 0; i < frameNodes.getLength(); i++) {
                 Element frameElement = (Element) frameNodes.item(i);
-                int id = Integer.parseInt(frameElement.getAttribute("tileid"));
+
+                // Adjust tile ID by adding firstGid to ensure it aligns with the tileset
+                int id = Integer.parseInt(frameElement.getAttribute("tileid")) + tilesetModel.getFirstGid();
                 int duration = Integer.parseInt(frameElement.getAttribute("duration"));
                 FrameModel frameModel = new FrameModel(id, duration);
                 animationModel.addFrame(frameModel);
+
+                // Debugging output
+                System.out.println("Adding frame to animation: tileid=" + id + ", duration=" + duration);
             }
-            animationsList.add(animationModel);
+
+            // Add parsed animation to the tileset
+            tilesetModel.addAnimation(animationModel);
         }
     }
+
+
 
     public List<AnimationModel> getAnimationModel() {
         return animationsList;
