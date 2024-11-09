@@ -1,3 +1,4 @@
+package models;
 
 public class TmxMapModel {
         // Map parameters
@@ -5,7 +6,7 @@ public class TmxMapModel {
         private int mapHeight;
         private int tileWidth;
         private int tileHeight;
-        // LayerModel parameters
+        // models.LayerModel parameters
         private int layerId;
         private int layerWidth;
         private int layerHeight;

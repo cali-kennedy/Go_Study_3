@@ -1,3 +1,5 @@
+package models;
+
 public class objectGroupModel {
     private int id;
     private String name;

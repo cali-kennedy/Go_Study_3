@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
+
+import models.*;
 import org.xml.sax.SAXException;
 
 public class Main extends JPanel {

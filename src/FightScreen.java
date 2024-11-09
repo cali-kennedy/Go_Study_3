@@ -1,19 +1,43 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+/**
+ * FightScreen class represents a dialog where the player engages in a fight.
+ * It displays health indicators for both the player and the enemy,
+ * provides an attack option, and manages the enemy's animation during the fight.
+ */
 public class FightScreen extends JDialog {
-    private Character player;
+
+    // Constants for health and attack values
+    private static final int ENEMY_MAX_HEALTH = 100;
+    private static final int PLAYER_ATTACK_DAMAGE = 20;
+    private static final int ENEMY_ATTACK_DAMAGE = 15;
+    private static final int ANIMATION_REFRESH_RATE_MS = 100;
+
+    // Player and enemy attributes
+    private final Character player;
     private int enemyHealth;
-    private final int ENEMY_MAX_HEALTH = 100;
+
+    // UI components for health display and attack functionality
     private JLabel playerHealthLabel;
     private JLabel enemyHealthLabel;
     private JButton attackButton;
-    private CollisionDetector collisionDetector;
-    private TmxRenderer tmxRenderer;
+
+    // External components for rendering and collision detection
+    private final CollisionDetector collisionDetector;
+    private final TmxRenderer tmxRenderer;
+
+    // Timer for updating enemy animation
     private Timer animationTimer;
 
+    /**
+     * Constructor initializes the FightScreen dialog with specified parameters and starts the animation.
+     *
+     * @param parent            The parent JFrame for this modal dialog.
+     * @param player            The player's Character object with player-specific stats and actions.
+     * @param collisionDetector CollisionDetector instance for managing and retrieving enemy data.
+     * @param tmxRenderer       Renderer instance for displaying the enemy's animation.
+     */
     public FightScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer) {
         super(parent, "Fight Screen", true);
         this.player = player;
@@ -21,105 +45,153 @@ public class FightScreen extends JDialog {
         this.collisionDetector = collisionDetector;
         this.tmxRenderer = tmxRenderer;
 
-        setupUI(parent);
+        setupUI();
         startAnimationTimer();
     }
 
-    // Setup UI components for the fight
-    private void setupUI(JFrame parent) {
+    /**
+     * Sets up the user interface components for health display, attack button, and animation rendering.
+     */
+    private void setupUI() {
         setSize(400, 300);
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(getParent());
         setLayout(new BorderLayout());
 
-        // Panel for health indicators
+        add(createHealthPanel(), BorderLayout.NORTH);
+        add(createAttackButton(), BorderLayout.SOUTH);
+        add(createAnimationPanel(), BorderLayout.CENTER);
+    }
+
+    /**
+     * Creates a JPanel containing labels to display player and enemy health.
+     *
+     * @return JPanel with health labels.
+     */
+    private JPanel createHealthPanel() {
         JPanel healthPanel = new JPanel(new GridLayout(1, 2));
         playerHealthLabel = new JLabel("Player Health: " + player.getHealth());
         enemyHealthLabel = new JLabel("Enemy Health: " + enemyHealth);
         healthPanel.add(playerHealthLabel);
         healthPanel.add(enemyHealthLabel);
+        return healthPanel;
+    }
 
-        // Attack button
+    /**
+     * Creates and configures the attack button with an action listener
+     * that decreases enemy health and checks the fight status.
+     *
+     * @return Configured JButton for attacking.
+     */
+    private JButton createAttackButton() {
         attackButton = new JButton("Attack");
-        attackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                attackEnemy(20); // Arbitrary damage value
-                if (enemyHealth > 0) {
-                    enemyAttack();
-                }
-                checkFightStatus();
-                repaint();  // Refresh the screen to update animations
-            }
-        });
+        attackButton.addActionListener(e -> handleAttackAction());
+        return attackButton;
+    }
 
-        // Custom panel for rendering enemy animation
-        JPanel animationPanel = new JPanel() {
+    /**
+     * Creates a JPanel for rendering the enemy animation.
+     *
+     * @return JPanel for animation display.
+     */
+    private JPanel createAnimationPanel() {
+        return new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                displayEnemyAnimation(g);  // Call custom method to render enemy animation
+                displayEnemyAnimation(g);
             }
         };
-
-        // Add components to the dialog
-        add(healthPanel, BorderLayout.NORTH);
-        add(attackButton, BorderLayout.SOUTH);
-        add(animationPanel, BorderLayout.CENTER);
     }
 
-    // Deduct health points from the enemy when the player attacks
-    public void attackEnemy(int damage) {
+    /**
+     * Executes the player attack action, reducing enemy health and initiating an enemy counterattack.
+     * Refreshes the screen to update health displays and animations.
+     */
+    private void handleAttackAction() {
+        attackEnemy(PLAYER_ATTACK_DAMAGE);
+        if (enemyHealth > 0) {
+            enemyAttack();
+        }
+        checkFightStatus();
+        repaint();  // Refresh the screen to update animations
+    }
+
+    /**
+     * Reduces the enemy's health by a specified damage amount and updates the health label.
+     *
+     * @param damage Amount of damage inflicted on the enemy.
+     */
+    private void attackEnemy(int damage) {
         enemyHealth = Math.max(0, enemyHealth - damage);
         enemyHealthLabel.setText("Enemy Health: " + enemyHealth);
     }
 
-    // Deduct health points from the player when the enemy attacks
-    public void enemyAttack() {
-        int damage = 15; // Arbitrary enemy damage value
-        player.removeHealth(damage);
+    /**
+     * Executes the enemy's attack, reducing the player's health and updating the player's health label.
+     */
+    private void enemyAttack() {
+        player.removeHealth(ENEMY_ATTACK_DAMAGE);
         playerHealthLabel.setText("Player Health: " + player.getHealth());
     }
 
-    // Check if the fight has been won or lost
-    public void checkFightStatus() {
+    /**
+     * Checks if the fight has been won or lost and displays the appropriate result.
+     * Stops the animation timer and closes the dialog if the fight is over.
+     */
+    private void checkFightStatus() {
         if (isFightWon()) {
-            JOptionPane.showMessageDialog(this, "You have won the fight!", "Victory", JOptionPane.INFORMATION_MESSAGE);
-            stopAnimationTimer();
-            dispose();
+            showFightResult("You have won the fight!", "Victory");
         } else if (player.getHealth() <= 0) {
-            JOptionPane.showMessageDialog(this, "You have been defeated!", "Defeat", JOptionPane.INFORMATION_MESSAGE);
-            stopAnimationTimer();
-            dispose();
+            showFightResult("You have been defeated!", "Defeat");
         }
     }
 
-    // Method to display enemy animation in the fight screen
-    public void displayEnemyAnimation(Graphics g) {
+    /**
+     * Displays the fight result in a dialog and stops the animation.
+     *
+     * @param message The result message to display.
+     * @param title   The title of the result dialog.
+     */
+    private void showFightResult(String message, String title) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+        stopAnimationTimer();
+        dispose();
+    }
+
+    /**
+     * Draws the enemy animation on the fight screen, using the enemy's name to identify the correct animation.
+     *
+     * @param g The Graphics context for rendering the animation.
+     */
+    private void displayEnemyAnimation(Graphics g) {
         String enemyName = collisionDetector.getEnemyName();
         if (enemyName != null) {
             tmxRenderer.renderEnemyAnimation(enemyName, 200, 40, g);
         } else {
-            System.out.println("No enemy name found for animation rendering.");
+            System.err.println("No enemy name found for animation rendering.");
         }
     }
 
-    // Returns true if the player has won the fight
-    public boolean isFightWon() {
+    /**
+     * Checks if the player has won the fight by reducing enemy health to zero.
+     *
+     * @return true if the enemy's health is zero or below.
+     */
+    private boolean isFightWon() {
         return enemyHealth <= 0;
     }
 
-    // Start a timer to repeatedly call repaint, refreshing the animation
+    /**
+     * Starts a timer that repeatedly calls repaint to refresh the animation panel at a specified rate.
+     */
     private void startAnimationTimer() {
-        animationTimer = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                repaint();  // Refreshes the FightScreen panel to animate
-            }
-        });
+        animationTimer = new Timer(ANIMATION_REFRESH_RATE_MS, e -> repaint());
         animationTimer.start();
     }
 
-    // Stop the animation timer
+    /**
+     * Stops the animation timer to prevent further updates after the fight ends.
+     */
     private void stopAnimationTimer() {
         if (animationTimer != null) {
             animationTimer.stop();

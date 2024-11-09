@@ -1,3 +1,5 @@
+package models;
+
 public class FrameModel {
     private int tileId;
     private int duration;

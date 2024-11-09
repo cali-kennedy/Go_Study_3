@@ -1,3 +1,5 @@
+package models;
+
 public class ObjectPropertiesModel {
     private String propertyName;
     private String type;
@@ -45,7 +47,7 @@ public class ObjectPropertiesModel {
 
     @Override
     public String toString() {
-        return "ObjectPropertiesModel{" +
+        return "models.ObjectPropertiesModel{" +
                 "propertyName='" + propertyName + '\'' +
                 ", type='" + type + '\'' +
                 ", value='" + value + '\'' +

@@ -1,5 +1,6 @@
+import models.*;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 public class TmxRenderer {
+    private static final int FRAME_DURATION_MS = 300;      // Default duration for animation frames in milliseconds
+    private static final int TILE_RENDER_SIZE = 32;        // Size in pixels for rendering tiles
+    private static final int ENEMY_RENDER_SIZE = 128;      // Size in pixels for rendering enemies
+
     private TmxMapModel mapModel;
     private HashMap<Integer, BufferedImage> tileImages;
     private List<LayerModel> layers;
@@ -19,19 +24,32 @@ public class TmxRenderer {
     private Camera camera;
     private Map<Integer, BufferedImage> animationFrameCache = new HashMap<>();
 
+    /**
+     * Initializes the renderer with the necessary models, layers, and camera view.
+     *
+     * @param mapModel   Map model containing map properties like width, height, tile size.
+     * @param layers     Layers in the map to be rendered.
+     * @param objects    Objects on the map, such as enemies or items.
+     * @param animations Animation definitions for animatable objects.
+     * @param tilesets   Collection of tilesets used by the map.
+     * @param camera     Camera to control which part of the map is visible.
+     */
     public TmxRenderer(TmxMapModel mapModel, List<LayerModel> layers, List<ObjectModel> objects,
                        List<AnimationModel> animations, List<TilesetModel> tilesets, Camera camera) {
         this.mapModel = mapModel;
         this.layers = layers;
         this.objects = objects;
-        this.animations = new ArrayList<>();  // Ensure animations list is initialized
+        this.animations = new ArrayList<>();
         this.tilesets = tilesets;
         this.tileImages = new HashMap<>();
         this.camera = camera;
         loadTilesetImages();
-        initializeAnimations(); // Initialize animations if not already populated
+        initializeAnimations();
     }
 
+    /**
+     * Loads all tileset images, splits them into individual tiles, and caches them for fast access.
+     */
     private void loadTilesetImages() {
         for (TilesetModel tileset : tilesets) {
             try {
@@ -46,9 +64,18 @@ public class TmxRenderer {
                 int tileHeight = (int) tileset.getHeight();
                 int columns = tileset.getColumns();
 
+                // Calculate x and y positions of the tile within the tileset image grid:
                 for (int i = 0; i < tileset.getTileCount(); i++) {
+
+                    // `i % columns` gives the tile’s column position in its row,
+                    // and multiplying by `tileWidth` gives the exact x-coordinate in pixels.
                     int x = (i % columns) * tileWidth;
+
+                    // `i / columns` gives the row number of tile `i`,
+                    // and multiplying by `tileHeight` gives the exact y-coordinate in pixels.
                     int y = (i / columns) * tileHeight;
+
+                    // Extract the tile as a subimage and store it in `tileImages` with its GID key.
                     tileImages.put(tileset.getFirstGid() + i, tilesetImage.getSubimage(x, y, tileWidth, tileHeight));
                 }
             } catch (IOException e) {
@@ -57,57 +84,34 @@ public class TmxRenderer {
         }
     }
 
-    // Generalized method to initialize animations for any object with an animation in its tileset
+    /**
+     * Initializes animations for each animatable object, setting its frames from the appropriate tileset.
+     */
     private void initializeAnimations() {
         for (ObjectModel object : objects) {
             int gid = object.getGid();
 
-            if (tileImages.containsKey(gid)) {  // Check if this object has associated tileset images
-                AnimationModel animation = new AnimationModel(gid);  // Use object's GID as first GID
+            if (tileImages.containsKey(gid)) {
+                AnimationModel animation = new AnimationModel(gid);
                 animation.setX(object.getX());
                 animation.setY(object.getY());
 
-                // Set name from object or default if object has no name
-                animation.setName(object.getName() != null ? object.getName().replace(".tsk","") : "UnnamedEnemy");
+                // Set name or default if object name is not provided
+                animation.setName(object.getName() != null ? object.getName().replace(".tsk", "") : "UnnamedEnemy");
 
-                // Assume frames in range from object's first gid (78) up to tile count, loop around if needed
+                // Set up frames for animations based on tileset properties
                 TilesetModel tileset = findTilesetForGid(gid);
                 if (tileset != null) {
                     int tileCount = tileset.getTileCount();
                     int firstGid = tileset.getFirstGid();
 
-                    // Loop animation frames within the tile count range for the tileset
-                    for (int i = 0; i < Math.min(16, tileCount); i++) {  // Avoid going out of bounds
-                        FrameModel frame = new FrameModel(firstGid + (i % tileCount), 300);
-                        animation.addFrame(frame);
-                    }
+                    // Add frames, cycling through tile IDs to stay within `tileCount` limit.
+                    for (int i = 0; i < Math.min(16, tileCount); i++) {
+                        // `(i % tileCount)` cycles `i` from 0 to tileCount-1, creating a looping effect.
+                        // Adding `firstGid` adjusts each tile ID to be within the tileset's unique ID range.
+                        FrameModel frame = new FrameModel(firstGid + (i % tileCount), FRAME_DURATION_MS);
 
-                    animations.add(animation);
-                    System.out.println("Initialized animation for GID " + gid + " with frames at position (" +
-                            object.getX() + ", " + object.getY() + ")");
-                }
-            } else {
-                System.out.println("Object with GID " + gid + " does not have an animated tileset; skipping animation setup.");
-            }
-        }
-        for (ObjectModel object : objects) {
-            int gid = object.getGid();
-
-            if (tileImages.containsKey(gid)) {  // Check if this object has associated tileset images
-                AnimationModel animation = new AnimationModel(gid);  // Use object's GID as first GID
-                animation.setX(object.getX());
-                animation.setY(object.getY());
-                // Set the animation's name from the object (if the object has a name)
-                animation.setName(object.getName() != null ? object.getName() : "UnknownEnemy");
-                // Assume frames in range from object's first gid (78) up to tile count, loop around if needed
-                TilesetModel tileset = findTilesetForGid(gid);
-                if (tileset != null) {
-                    int tileCount = tileset.getTileCount();
-                    int firstGid = tileset.getFirstGid();
-
-                    // Loop animation frames within the tile count range for the tileset
-                    for (int i = 0; i < Math.min(16, tileCount); i++) {  // Avoid going out of bounds
-                        FrameModel frame = new FrameModel(firstGid + (i % tileCount), 300);
+                        // Add the frame to the animation, maintaining a sequence within tile bounds.
                         animation.addFrame(frame);
                     }
 
@@ -121,6 +125,12 @@ public class TmxRenderer {
         }
     }
 
+    /**
+     * Finds the tileset that corresponds to a given GID (global tile ID).
+     *
+     * @param gid The GID of the tile.
+     * @return The matching models.TilesetModel or null if not found.
+     */
     private TilesetModel findTilesetForGid(int gid) {
         for (TilesetModel tileset : tilesets) {
             if (gid >= tileset.getFirstGid() && gid < tileset.getFirstGid() + tileset.getTileCount()) {
@@ -130,67 +140,73 @@ public class TmxRenderer {
         return null;
     }
 
-            public void render(Graphics g) {
-                Graphics2D g2d = (Graphics2D) g;
+    /**
+     * Renders the map, including static tiles and animations, based on the camera's position.
+     *
+     * @param g The graphics context used for drawing.
+     */
+    public void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
 
-                // First, render all static tiles in one batch
-                for (LayerModel layer : layers) {
-                    for (int y = 0; y < layer.getLayerHeight(); y++) {
-                        for (int x = 0; x < layer.getLayerWidth(); x++) {
-                            int tileId = layer.getTileIdAt(x, y);
-                            if (tileId > 0 && tileImages.containsKey(tileId)) {
-                                BufferedImage tile = tileImages.get(tileId);
-                                g2d.drawImage(tile, x * mapModel.getTileWidth(), y * mapModel.getTileHeight(), null);
-                            }
-                        }
-                    }
-                }
-
-                // Then, render all animated objects in one batch
-                for (AnimationModel animation : animations) {
-                    animation.update();
-                    int tileId = animation.getCurrentTileId();
-
-                    // Check if the frame is cached
-                    BufferedImage frame = animationFrameCache.get(tileId);
-
-                    if (frame == null) {
-                        // If not cached, retrieve and cache it
-                        frame = tileImages.get(tileId);
-                        if (frame != null) {
-                            animationFrameCache.put(tileId, frame);
-                        }
-                    }
-
-                    if (frame != null) {
-                        g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY(), 32, 32, null);
-                    }
-                }
-
-
-
-
-                // Render animated objects dynamically based on animations list
-                Rectangle cameraBounds = new Rectangle((int) camera.getX(), (int) camera.getY(), camera.getWidth(), camera.getHeight());
-
-                for (AnimationModel animation : animations) {
-                    Rectangle objectBounds = new Rectangle((int) animation.getX(), (int) animation.getY(), 32, 32);
-                    if (!cameraBounds.intersects(objectBounds)) {
-                        continue;  // Skip objects outside the camera view
-                    }
-
-                    animation.update();  // Only update and render if visible
-                    int tileId = animation.getCurrentTileId();
+        // Render static tiles layer by layer
+        for (LayerModel layer : layers) {
+            for (int y = 0; y < layer.getLayerHeight(); y++) {
+                for (int x = 0; x < layer.getLayerWidth(); x++) {
+                    int tileId = layer.getTileIdAt(x, y);
                     if (tileId > 0 && tileImages.containsKey(tileId)) {
                         BufferedImage tile = tileImages.get(tileId);
-                        g.drawImage(tile, (int) animation.getX(), (int) animation.getY(), 32, 32, null);
+                        g2d.drawImage(tile, x * mapModel.getTileWidth(), y * mapModel.getTileHeight(), null);
                     }
                 }
+            }
+        }
 
+        // Render animated objects
+        for (AnimationModel animation : animations) {
+            animation.update();  // Update animation to get the current frame
+            int tileId = animation.getCurrentTileId();
+
+            BufferedImage frame = animationFrameCache.get(tileId);
+
+            if (frame == null) {
+                // Cache frame if not already cached
+                frame = tileImages.get(tileId);
+                if (frame != null) {
+                    animationFrameCache.put(tileId, frame);
+                }
+            }
+
+            if (frame != null) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY(), TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
+            }
+        }
+
+        // Render objects visible within the camera bounds
+        Rectangle cameraBounds = new Rectangle((int) camera.getX(), (int) camera.getY(), camera.getWidth(), camera.getHeight());
+        for (AnimationModel animation : animations) {
+            Rectangle objectBounds = new Rectangle((int) animation.getX(), (int) animation.getY(), TILE_RENDER_SIZE, TILE_RENDER_SIZE);
+            if (!cameraBounds.intersects(objectBounds)) {
+                continue;  // Skip objects outside camera view
+            }
+
+            animation.update();  // Update animation only if visible
+            int tileId = animation.getCurrentTileId();
+            if (tileId > 0 && tileImages.containsKey(tileId)) {
+                BufferedImage tile = tileImages.get(tileId);
+                g.drawImage(tile, (int) animation.getX(), (int) animation.getY(), TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
+            }
+        }
     }
 
+    /**
+     * Renders a specific enemy animation at given screen coordinates.
+     *
+     * @param enemyName The name of the enemy animation to render.
+     * @param x         The x-coordinate for rendering.
+     * @param y         The y-coordinate for rendering.
+     * @param g         The graphics context.
+     */
     public void renderEnemyAnimation(String enemyName, int x, int y, Graphics g) {
-        // Find the animation associated with the given enemy name
         AnimationModel enemyAnimation = null;
         for (AnimationModel animation : animations) {
             if (animation.getName().equalsIgnoreCase(enemyName)) {
@@ -204,12 +220,11 @@ public class TmxRenderer {
             return;
         }
 
-        // Update and retrieve the current frame of the animation
+        // Update and get current frame of the enemy animation
         enemyAnimation.update();
         int tileId = enemyAnimation.getCurrentTileId();
         BufferedImage frame = animationFrameCache.get(tileId);
 
-        // If the frame is not cached, retrieve and cache it
         if (frame == null) {
             frame = tileImages.get(tileId);
             if (frame != null) {
@@ -217,11 +232,9 @@ public class TmxRenderer {
             }
         }
 
-        // Render the frame at the specified x and y coordinates if the frame exists
+        // Draw the frame if it exists
         if (frame != null) {
-            g.drawImage(frame, x, y, 128, 128, null); // obtain the graphics context here, or pass it as a parameter;
-
+            g.drawImage(frame, x, y, ENEMY_RENDER_SIZE, ENEMY_RENDER_SIZE, null);
         }
     }
-
 }

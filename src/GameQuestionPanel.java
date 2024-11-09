@@ -32,7 +32,7 @@ public class GameQuestionPanel extends JPanel {
         submitButton = new JButton("Submit");
         submitButton.setPreferredSize(new Dimension(100, 30));
 
-        // Setup the panel layout for centering components
+        // Set up the panel layout for centering components
         centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
