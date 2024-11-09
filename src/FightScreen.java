@@ -12,6 +12,7 @@ public class FightScreen extends JDialog {
     private JButton attackButton;
     private CollisionDetector collisionDetector;
     private TmxRenderer tmxRenderer;
+    private Timer animationTimer;
 
     public FightScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer) {
         super(parent, "Fight Screen", true);
@@ -21,6 +22,7 @@ public class FightScreen extends JDialog {
         this.tmxRenderer = tmxRenderer;
 
         setupUI(parent);
+        startAnimationTimer();
     }
 
     // Setup UI components for the fight
@@ -82,9 +84,11 @@ public class FightScreen extends JDialog {
     public void checkFightStatus() {
         if (isFightWon()) {
             JOptionPane.showMessageDialog(this, "You have won the fight!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+            stopAnimationTimer();
             dispose();
         } else if (player.getHealth() <= 0) {
             JOptionPane.showMessageDialog(this, "You have been defeated!", "Defeat", JOptionPane.INFORMATION_MESSAGE);
+            stopAnimationTimer();
             dispose();
         }
     }
@@ -92,11 +96,33 @@ public class FightScreen extends JDialog {
     // Method to display enemy animation in the fight screen
     public void displayEnemyAnimation(Graphics g) {
         String enemyName = collisionDetector.getEnemyName();
-        tmxRenderer.renderEnemyAnimation(enemyName, 10, 10, g);  // Pass Graphics and coordinates
+        if (enemyName != null) {
+            tmxRenderer.renderEnemyAnimation(enemyName, 200, 40, g);
+        } else {
+            System.out.println("No enemy name found for animation rendering.");
+        }
     }
 
     // Returns true if the player has won the fight
     public boolean isFightWon() {
         return enemyHealth <= 0;
+    }
+
+    // Start a timer to repeatedly call repaint, refreshing the animation
+    private void startAnimationTimer() {
+        animationTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                repaint();  // Refreshes the FightScreen panel to animate
+            }
+        });
+        animationTimer.start();
+    }
+
+    // Stop the animation timer
+    private void stopAnimationTimer() {
+        if (animationTimer != null) {
+            animationTimer.stop();
+        }
     }
 }

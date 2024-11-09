@@ -219,7 +219,7 @@ public class TmxRenderer {
 
         // Render the frame at the specified x and y coordinates if the frame exists
         if (frame != null) {
-            g.drawImage(frame, x, y, 32, 32, null); // obtain the graphics context here, or pass it as a parameter;
+            g.drawImage(frame, x, y, 128, 128, null); // obtain the graphics context here, or pass it as a parameter;
 
         }
     }
