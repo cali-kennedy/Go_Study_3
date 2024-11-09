@@ -8,6 +8,7 @@ public class AnimationModel {
     private int firstGid;
     private double x;
     private double y;
+    private String name;
 
     public AnimationModel(int firstGid) {
         this.frames = new ArrayList<>();
@@ -69,5 +70,13 @@ public class AnimationModel {
     }
     public void setFirstGid(int gid){
         this.firstGid = gid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

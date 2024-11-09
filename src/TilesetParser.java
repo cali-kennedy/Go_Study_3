@@ -49,7 +49,8 @@ public class TilesetParser {
         for (int j = 0; j < animationNode.getLength(); j++) {
             Element animationElement = (Element) animationNode.item(j);
             AnimationModel animationModel = new AnimationModel(tilesetModel.getFirstGid());
-
+            animationModel.setName(tilesetModel.getTilesetSource().replace(".tsx",""));
+            System.out.println("ANIMATION MODEL " + animationModel.getName());
             NodeList frameNodes = animationElement.getElementsByTagName("frame");
             for (int i = 0; i < frameNodes.getLength(); i++) {
                 Element frameElement = (Element) frameNodes.item(i);

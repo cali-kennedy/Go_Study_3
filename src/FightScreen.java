@@ -10,17 +10,21 @@ public class FightScreen extends JDialog {
     private JLabel playerHealthLabel;
     private JLabel enemyHealthLabel;
     private JButton attackButton;
+    private CollisionDetector collisionDetector;
+    private TmxRenderer tmxRenderer;
 
-    public FightScreen(JFrame parent, Character player) {
+    public FightScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer) {
         super(parent, "Fight Screen", true);
         this.player = player;
         this.enemyHealth = ENEMY_MAX_HEALTH;
+        this.collisionDetector = collisionDetector;
+        this.tmxRenderer = tmxRenderer;
 
         setupUI(parent);
     }
 
     // Setup UI components for the fight
-    public void setupUI(JFrame parent) {
+    private void setupUI(JFrame parent) {
         setSize(400, 300);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
@@ -42,12 +46,23 @@ public class FightScreen extends JDialog {
                     enemyAttack();
                 }
                 checkFightStatus();
+                repaint();  // Refresh the screen to update animations
             }
         });
+
+        // Custom panel for rendering enemy animation
+        JPanel animationPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                displayEnemyAnimation(g);  // Call custom method to render enemy animation
+            }
+        };
 
         // Add components to the dialog
         add(healthPanel, BorderLayout.NORTH);
         add(attackButton, BorderLayout.SOUTH);
+        add(animationPanel, BorderLayout.CENTER);
     }
 
     // Deduct health points from the enemy when the player attacks
@@ -72,6 +87,12 @@ public class FightScreen extends JDialog {
             JOptionPane.showMessageDialog(this, "You have been defeated!", "Defeat", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         }
+    }
+
+    // Method to display enemy animation in the fight screen
+    public void displayEnemyAnimation(Graphics g) {
+        String enemyName = collisionDetector.getEnemyName();
+        tmxRenderer.renderEnemyAnimation(enemyName, 10, 10, g);  // Pass Graphics and coordinates
     }
 
     // Returns true if the player has won the fight

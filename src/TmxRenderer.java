@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -66,6 +67,9 @@ public class TmxRenderer {
                 animation.setX(object.getX());
                 animation.setY(object.getY());
 
+                // Set name from object or default if object has no name
+                animation.setName(object.getName() != null ? object.getName().replace(".tsk","") : "UnnamedEnemy");
+
                 // Assume frames in range from object's first gid (78) up to tile count, loop around if needed
                 TilesetModel tileset = findTilesetForGid(gid);
                 if (tileset != null) {
@@ -93,7 +97,8 @@ public class TmxRenderer {
                 AnimationModel animation = new AnimationModel(gid);  // Use object's GID as first GID
                 animation.setX(object.getX());
                 animation.setY(object.getY());
-
+                // Set the animation's name from the object (if the object has a name)
+                animation.setName(object.getName() != null ? object.getName() : "UnknownEnemy");
                 // Assume frames in range from object's first gid (78) up to tile count, loop around if needed
                 TilesetModel tileset = findTilesetForGid(gid);
                 if (tileset != null) {
@@ -183,4 +188,40 @@ public class TmxRenderer {
                 }
 
     }
+
+    public void renderEnemyAnimation(String enemyName, int x, int y, Graphics g) {
+        // Find the animation associated with the given enemy name
+        AnimationModel enemyAnimation = null;
+        for (AnimationModel animation : animations) {
+            if (animation.getName().equalsIgnoreCase(enemyName)) {
+                enemyAnimation = animation;
+                break;
+            }
+        }
+
+        if (enemyAnimation == null) {
+            System.out.println("Enemy animation not found for: " + enemyName);
+            return;
+        }
+
+        // Update and retrieve the current frame of the animation
+        enemyAnimation.update();
+        int tileId = enemyAnimation.getCurrentTileId();
+        BufferedImage frame = animationFrameCache.get(tileId);
+
+        // If the frame is not cached, retrieve and cache it
+        if (frame == null) {
+            frame = tileImages.get(tileId);
+            if (frame != null) {
+                animationFrameCache.put(tileId, frame);
+            }
+        }
+
+        // Render the frame at the specified x and y coordinates if the frame exists
+        if (frame != null) {
+            g.drawImage(frame, x, y, 32, 32, null); // obtain the graphics context here, or pass it as a parameter;
+
+        }
+    }
+
 }

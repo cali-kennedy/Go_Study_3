@@ -19,6 +19,7 @@ public class Main extends JPanel {
     private static JFrame gameFrame;
     private TmxParser tmxParser;
 
+
     public Main() {
         showQuestionInputDialog();
 
@@ -172,7 +173,7 @@ public class Main extends JPanel {
         CollisionDetector.CollisionResult result = collisionDetector.checkCollisions();
         if (result.hasEnemyCollision() && !questionPanel.isQuestionVisible()) {
            // showRandomQuestion();
-            FightScreen fightScreen = new FightScreen(gameFrame, character); // pass the main frame and character
+            FightScreen fightScreen = new FightScreen(gameFrame, character, collisionDetector, tmxRenderer); // pass the main frame and character
             fightScreen.setVisible(true);
         }
     }

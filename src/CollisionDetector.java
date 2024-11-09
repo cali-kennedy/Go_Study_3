@@ -6,6 +6,7 @@ public class CollisionDetector {
     private List<ObjectModel> objects;
     private boolean isAnsweringQuestion = false;
     private ObjectModel lastCollidedEnemy = null;
+    private String enemyName;
 
     public static class CollisionResult {
         private boolean wallCollision;
@@ -86,6 +87,7 @@ public class CollisionDetector {
         for (ObjectPropertiesModel property : object.getProperties()) {
             if (property.getPropertyName().equalsIgnoreCase("is_enemy") &&
                     property.getValue().equalsIgnoreCase("true")) {
+                   setEnemyName(object.getName());
                 return "enemy"; // Treat as enemy if is_enemy is true
             } else if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue(); // Return the value of 'type' if present
@@ -95,6 +97,14 @@ public class CollisionDetector {
             return "wall";
         }
         return "unknown"; // Default if no relevant type is found
+    }
+
+    public void setEnemyName(String enemyName){
+        this.enemyName = enemyName;
+    }
+
+    public String getEnemyName() {
+        return enemyName;
     }
 
     public ObjectModel checkEnemyCollision() {
