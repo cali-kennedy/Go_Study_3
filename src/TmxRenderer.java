@@ -5,16 +5,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class TmxRenderer {
     private static final int FRAME_DURATION_MS = 300;      // Default duration for animation frames in milliseconds
     private static final int TILE_RENDER_SIZE = 32;        // Size in pixels for rendering tiles
     private static final int ENEMY_RENDER_SIZE = 128;      // Size in pixels for rendering enemies
-
+    private Set<String> defeatedEnemies = new HashSet<>();
     private TmxMapModel mapModel;
     private HashMap<Integer, BufferedImage> tileImages;
     private List<LayerModel> layers;
@@ -23,7 +21,8 @@ public class TmxRenderer {
     private List<TilesetModel> tilesets;
     private Camera camera;
     private Map<Integer, BufferedImage> animationFrameCache = new HashMap<>();
-
+    private Component displayComponent;
+    private Graphics2D g2d;
     /**
      * Initializes the renderer with the necessary models, layers, and camera view.
      *
@@ -92,6 +91,7 @@ public class TmxRenderer {
             int gid = object.getGid();
 
             if (tileImages.containsKey(gid)) {
+
                 AnimationModel animation = new AnimationModel(gid);
                 animation.setX(object.getX());
                 animation.setY(object.getY());
@@ -139,14 +139,35 @@ public class TmxRenderer {
         }
         return null;
     }
+    public void markEnemyAsDefeated(String enemyName) {
+        defeatedEnemies.add(enemyName);
+        //objects.removeIf(object -> object.getName().equalsIgnoreCase(enemyName));
+        for (AnimationModel animation : animations) {
+            if (animation.getName().equalsIgnoreCase(enemyName)) {
+                animation.setDefeated(true);
+                break;
+            }
+        }
+        System.out.println("\ntmxrenderer ENEMY NAME : " + enemyName);
+        for (ObjectModel object : objects) {
+            if(object.isDefeated()) {continue;}
+            System.out.println("looping through tmxrenderer OBJECT NAME" + object.getName());
+            if (object.getName().equalsIgnoreCase(enemyName)) {
 
+                System.out.println("tmxrender OBJECT NAME MATCH : " + object.getName());
+                object.setDefeated(true); // Mark the enemy as defeated
+                break;
+            }
+            updateDefeatedEnemies();
+        }
+    }
     /**
      * Renders the map, including static tiles and animations, based on the camera's position.
      *
      * @param g The graphics context used for drawing.
      */
     public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+         g2d = (Graphics2D) g;
 
         // Render static tiles layer by layer
         for (LayerModel layer : layers) {
@@ -161,15 +182,15 @@ public class TmxRenderer {
             }
         }
 
-        // Render animated objects
+        // Render animated objects, skipping defeated ones
         for (AnimationModel animation : animations) {
+            if (animation.isDefeated()){ continue;} // Skip defeated animations
+
             animation.update();  // Update animation to get the current frame
             int tileId = animation.getCurrentTileId();
-
             BufferedImage frame = animationFrameCache.get(tileId);
 
             if (frame == null) {
-                // Cache frame if not already cached
                 frame = tileImages.get(tileId);
                 if (frame != null) {
                     animationFrameCache.put(tileId, frame);
@@ -180,23 +201,8 @@ public class TmxRenderer {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY(), TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
             }
         }
-
-        // Render objects visible within the camera bounds
-        Rectangle cameraBounds = new Rectangle((int) camera.getX(), (int) camera.getY(), camera.getWidth(), camera.getHeight());
-        for (AnimationModel animation : animations) {
-            Rectangle objectBounds = new Rectangle((int) animation.getX(), (int) animation.getY(), TILE_RENDER_SIZE, TILE_RENDER_SIZE);
-            if (!cameraBounds.intersects(objectBounds)) {
-                continue;  // Skip objects outside camera view
-            }
-
-            animation.update();  // Update animation only if visible
-            int tileId = animation.getCurrentTileId();
-            if (tileId > 0 && tileImages.containsKey(tileId)) {
-                BufferedImage tile = tileImages.get(tileId);
-                g.drawImage(tile, (int) animation.getX(), (int) animation.getY(), TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
-            }
-        }
     }
+
 
     /**
      * Renders a specific enemy animation at given screen coordinates.
@@ -207,6 +213,7 @@ public class TmxRenderer {
      * @param g         The graphics context.
      */
     public void renderEnemyAnimation(String enemyName, int x, int y, Graphics g) {
+        updateDefeatedEnemies();
         AnimationModel enemyAnimation = null;
         for (AnimationModel animation : animations) {
             if (animation.getName().equalsIgnoreCase(enemyName)) {
@@ -236,5 +243,19 @@ public class TmxRenderer {
         if (frame != null) {
             g.drawImage(frame, x, y, ENEMY_RENDER_SIZE, ENEMY_RENDER_SIZE, null);
         }
+
     }
-}
+    // Method to trigger repaint
+    public void repaintMap() {
+        if (displayComponent != null) {
+            displayComponent.repaint(); // Forces a full repaint
+        }
+    }
+
+    public void updateDefeatedEnemies() {
+            animations.removeIf(AnimationModel::isDefeated);
+            objects.removeIf(ObjectModel::isDefeated); // Clean up objects as well
+        }
+
+    }
+

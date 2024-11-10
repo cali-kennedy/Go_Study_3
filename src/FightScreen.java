@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * FightScreen class represents a dialog where the player engages in a fight.
@@ -18,6 +22,9 @@ public class FightScreen extends JDialog {
     private final Character player;
     private int enemyHealth;
 
+    // Player character image
+    private BufferedImage playerImage;
+
     // UI components for health display and attack functionality
     private JLabel playerHealthLabel;
     private JLabel enemyHealthLabel;
@@ -26,7 +33,7 @@ public class FightScreen extends JDialog {
     // External components for rendering and collision detection
     private final CollisionDetector collisionDetector;
     private final TmxRenderer tmxRenderer;
-
+    private String enemyName;
     // Timer for updating enemy animation
     private Timer animationTimer;
 
@@ -45,21 +52,40 @@ public class FightScreen extends JDialog {
         this.collisionDetector = collisionDetector;
         this.tmxRenderer = tmxRenderer;
 
+        loadPlayerImage();  // Ensure player image is loaded
         setupUI();
         startAnimationTimer();
+    }
+
+    /**
+     * Loads the player image from the resources folder and checks if loading was successful.
+     */
+    private void loadPlayerImage() {
+        try {
+            playerImage = ImageIO.read(new File("resources/rabbit.png"));  // Ensure path is correct
+            if (playerImage == null) {
+                System.err.println("Player image is null after loading.");
+            }
+        } catch (IOException e) {
+            System.err.println("Player image could not be loaded: " + e.getMessage());
+        }
     }
 
     /**
      * Sets up the user interface components for health display, attack button, and animation rendering.
      */
     private void setupUI() {
-        setSize(400, 300);
+        setSize(500, 300);  // Adjusted width to accommodate player image panel
         setLocationRelativeTo(getParent());
         setLayout(new BorderLayout());
 
         add(createHealthPanel(), BorderLayout.NORTH);
         add(createAttackButton(), BorderLayout.SOUTH);
         add(createAnimationPanel(), BorderLayout.CENTER);
+
+        JPanel playerImagePanel = createPlayerImagePanel();
+        playerImagePanel.setPreferredSize(new Dimension(100, 100)); // Set preferred size for player image panel
+        add(playerImagePanel, BorderLayout.LINE_START); // Add player image panel to the left
     }
 
     /**
@@ -99,8 +125,30 @@ public class FightScreen extends JDialog {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 displayEnemyAnimation(g);
+
             }
         };
+    }
+
+    /**
+     * Creates a JPanel to display the player image on the left side of the fight screen.
+     *
+     * @return JPanel with player image.
+     */
+    private JPanel createPlayerImagePanel() {
+        JPanel imagePanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (playerImage != null) {
+                    g.drawImage(playerImage, 10, 40, 128, 128, null);  // Draw image with padding
+                } else {
+                    System.err.println("Player image is not available for rendering.");
+                }
+            }
+        };
+
+        return imagePanel;
     }
 
     /**
@@ -140,7 +188,10 @@ public class FightScreen extends JDialog {
      */
     private void checkFightStatus() {
         if (isFightWon()) {
-            showFightResult("You have won the fight!", "Victory");
+            //enemyName = collisionDetector.getEnemyName();
+            if (enemyName != null) {
+                // tmxRenderer.markEnemyAsDefeated(enemyName);            }
+            } showFightResult("You have won the fight!", "Victory");
         } else if (player.getHealth() <= 0) {
             showFightResult("You have been defeated!", "Defeat");
         }
@@ -154,6 +205,9 @@ public class FightScreen extends JDialog {
      */
     private void showFightResult(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+        tmxRenderer.markEnemyAsDefeated(enemyName);
+        System.out.println("Enemy name from Fightscreen passed to tmx renderer: " + enemyName);
+        tmxRenderer.repaintMap();
         stopAnimationTimer();
         dispose();
     }
@@ -164,12 +218,14 @@ public class FightScreen extends JDialog {
      * @param g The Graphics context for rendering the animation.
      */
     private void displayEnemyAnimation(Graphics g) {
-        String enemyName = collisionDetector.getEnemyName();
+        enemyName = collisionDetector.getEnemyName();
         if (enemyName != null) {
             tmxRenderer.renderEnemyAnimation(enemyName, 200, 40, g);
         } else {
             System.err.println("No enemy name found for animation rendering.");
+
         }
+
     }
 
     /**
@@ -179,6 +235,7 @@ public class FightScreen extends JDialog {
      */
     private boolean isFightWon() {
         return enemyHealth <= 0;
+
     }
 
     /**

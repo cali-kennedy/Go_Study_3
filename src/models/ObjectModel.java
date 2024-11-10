@@ -12,6 +12,11 @@ public class ObjectModel {
     private double height;
     private ArrayList<ObjectPropertiesModel> properties;
     private String layerName;
+    // Inside ObjectModel class
+    private boolean defeated = false;
+
+
+
     public ObjectModel(){
         this.id =0;
         this.name = "";
@@ -94,5 +99,15 @@ public class ObjectModel {
 
     public void setLayerName(String layerName) {
         this.layerName = layerName;
+    }
+
+    // Method to set the defeated status
+    public void setDefeated(boolean defeated) {
+        this.defeated = defeated;
+    }
+
+    // Method to check if the enemy is defeated
+    public boolean isDefeated() {
+        return defeated;
     }
 }

@@ -1,7 +1,7 @@
 import models.ObjectModel;
 import models.ObjectPropertiesModel;
-
 import java.awt.Rectangle;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -62,21 +62,26 @@ public class CollisionDetector {
         boolean collidedWithWall = false;
         boolean enemyCollision = false;
 
-        if (!isAnsweringQuestion) {
-            for (ObjectModel object : objects) {
-                if (isColliding(character, object)) {
-                    String objectType = getObjectType(object);
-                    switch (objectType) {
-                        case "wall" -> collidedWithWall = true;
-                        case "enemy" -> {
-                            if (isNewEnemyCollision(object)) {
-                                enemyCollision = true;
-                                isAnsweringQuestion = true;
-                                lastCollidedEnemy = object;
-                            }
+        // Iterate through the objects and check for collisions
+        Iterator<ObjectModel> iterator = objects.iterator();
+        while (iterator.hasNext()) {
+            ObjectModel object = iterator.next();
+            if (isColliding(character, object)) {
+                String objectType = getObjectType(object);
+                switch (objectType) {
+                    case "wall" -> collidedWithWall = true;
+                    case "enemy" -> {
+                        // Register collision with a new enemy only if not answering a question
+                        if (!isAnsweringQuestion || !object.equals(lastCollidedEnemy)) {
+                            enemyCollision = true;
+                            isAnsweringQuestion = true;
+                            lastCollidedEnemy = object; // Set the current enemy for fight
+                            setEnemyName(object.getName()); // Update the enemy
+                            System.out.println("Collision Detecor enemy name: " + enemyName);
+                            object.isDefeated();
                         }
-                        case "apple" -> character.addHealth(HEALTH_REWARD);
                     }
+                    case "apple" -> character.addHealth(HEALTH_REWARD);
                 }
             }
         }
@@ -85,9 +90,17 @@ public class CollisionDetector {
 
     /**
      * Resets the collision state to allow further interactions with objects.
+     * Removes the last collided enemy from the map after the fight is over.
      */
     public void resetCollisionState() {
         isAnsweringQuestion = false;
+
+        // Remove lastCollidedEnemy from the objects list if it exists and was an enemy
+        if (lastCollidedEnemy != null && "enemy".equals(getObjectType(lastCollidedEnemy))) {
+            objects.remove(lastCollidedEnemy);
+            lastCollidedEnemy = null; // Reset after removal
+        }
+        enemyName = null; // Clear enemy name to register new collisions
     }
 
     /**
@@ -123,7 +136,6 @@ public class CollisionDetector {
         for (ObjectPropertiesModel property : object.getProperties()) {
             if (property.getPropertyName().equalsIgnoreCase("is_enemy") &&
                     property.getValue().equalsIgnoreCase("true")) {
-                setEnemyName(object.getName());
                 return "enemy";
             } else if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
@@ -159,24 +171,13 @@ public class CollisionDetector {
         if (!isAnsweringQuestion) {
             for (ObjectModel object : objects) {
                 if (isColliding(character, object) && "enemy".equals(getObjectType(object))) {
-                    if (isNewEnemyCollision(object)) {
-                        lastCollidedEnemy = object;
-                        isAnsweringQuestion = true;
-                        return object;
-                    }
+                    lastCollidedEnemy = object;
+                    isAnsweringQuestion = true;
+                    object.isDefeated();
+                    return object;
                 }
             }
         }
         return null;
-    }
-
-    /**
-     * Checks if the current collision is with a new enemy, distinct from the last encountered enemy.
-     *
-     * @param object The object to check against the last collided enemy.
-     * @return true if the object is a new enemy, otherwise false.
-     */
-    private boolean isNewEnemyCollision(ObjectModel object) {
-        return lastCollidedEnemy != object;
     }
 }

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,6 +26,8 @@ public class TmxParser {
     private TilesetParser tilesetParser;
     private List<TilesetModel> tilesets = new ArrayList<>();
     private List<ObjectPropertiesModel> objectPropertiesModels = new ArrayList<>();
+    // Map to track names and ensure unique names for duplicate objects
+    private HashMap<String, Integer> nameCountMap = new HashMap<>();
 
     /**
      * Initializes the parser by loading and parsing the specified .tmx file.
@@ -103,8 +106,14 @@ public class TmxParser {
                 Element objectElement = (Element) objectNodes.item(i);
                 ObjectModel object = new ObjectModel();
 
+                String baseName = objectElement.getAttribute("name");
+                String uniqueName = getUniqueObjectName(baseName);  // Get unique name
+
+                object.setName(uniqueName);  // Assign unique name to the object
+                System.out.println("Object ID: " + objectElement.getAttribute("id") + " - Name: " + uniqueName);
+
+                // Set other attributes as before
                 object.setLayerName(objectGroupElement.getAttribute("name"));
-                object.setName(objectElement.getAttribute("name"));
                 object.setId(Integer.parseInt(objectElement.getAttribute("id")));
 
                 if (!objectElement.getAttribute("gid").isEmpty()) {
@@ -127,7 +136,7 @@ public class TmxParser {
                     ObjectPropertiesModel property = new ObjectPropertiesModel();
 
                     property.setPropertyName(propertyElement.getAttribute("name"));
-                    property.setObjectName(objectElement.getAttribute("name"));
+                    property.setObjectName(uniqueName);  // Set unique name for property association
                     property.setType(propertyElement.getAttribute("type"));
                     property.setValue(propertyElement.getAttribute("value"));
 
@@ -136,6 +145,32 @@ public class TmxParser {
                 objects.add(object);
             }
         }
+    }
+
+    /**
+     * Generates a unique object name by appending a number if the base name already exists.
+     *
+     * @param baseName The base name to make unique.
+     * @return A unique name based on the base name.
+     */
+    private String getUniqueObjectName(String baseName) {
+        if (baseName == null || baseName.isEmpty()) {
+            baseName = "Unnamed_Object";
+        }
+
+        // Check if the name already exists in the map
+        int count = nameCountMap.getOrDefault(baseName, 0);
+        String uniqueName = baseName;
+
+        // If the base name exists, append a count to make it unique
+        if (count > 0) {
+            uniqueName = baseName + "_" + count;
+        }
+
+        // Update the name count in the map
+        nameCountMap.put(baseName, count + 1);
+
+        return uniqueName;
     }
 
     /**

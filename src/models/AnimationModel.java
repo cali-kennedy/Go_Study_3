@@ -11,6 +11,8 @@ public class AnimationModel {
     private double x;
     private double y;
     private String name;
+    // Inside ObjectModel class
+    private boolean defeated = false;
 
     public AnimationModel(int firstGid) {
         this.frames = new ArrayList<>();
@@ -80,5 +82,13 @@ public class AnimationModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+    // Method to set the defeated status
+    public void setDefeated(boolean defeated) {
+        this.defeated = defeated;
+    }
+    // Method to check if the enemy is defeated
+    public boolean isDefeated() {
+        return defeated;
     }
 }
