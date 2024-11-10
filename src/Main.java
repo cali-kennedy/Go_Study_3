@@ -174,8 +174,7 @@ public class Main extends JPanel {
     private void checkCollisions() {
         CollisionDetector.CollisionResult result = collisionDetector.checkCollisions();
         if (result.hasEnemyCollision() && !questionPanel.isQuestionVisible()) {
-           // showRandomQuestion();
-            FightScreen fightScreen = new FightScreen(gameFrame, character, collisionDetector, tmxRenderer); // pass the main frame and character
+            FightScreen fightScreen = new FightScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel); // pass the main frame and character
             fightScreen.setVisible(true);
         }
     }

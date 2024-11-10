@@ -34,9 +34,10 @@ public class FightScreen extends JDialog {
     private final CollisionDetector collisionDetector;
     private final TmxRenderer tmxRenderer;
     private String enemyName;
+    private java.util.List<Question> questions;
     // Timer for updating enemy animation
     private Timer animationTimer;
-
+    private GameQuestionPanel questionPanel;
     /**
      * Constructor initializes the FightScreen dialog with specified parameters and starts the animation.
      *
@@ -45,13 +46,14 @@ public class FightScreen extends JDialog {
      * @param collisionDetector CollisionDetector instance for managing and retrieving enemy data.
      * @param tmxRenderer       Renderer instance for displaying the enemy's animation.
      */
-    public FightScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer) {
+    public FightScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer, java.util.List<Question> questions, GameQuestionPanel questionPanel) {
         super(parent, "Fight Screen", true);
         this.player = player;
         this.enemyHealth = ENEMY_MAX_HEALTH;
         this.collisionDetector = collisionDetector;
         this.tmxRenderer = tmxRenderer;
-
+        this.questions = questions;
+        this.questionPanel = questionPanel;
         loadPlayerImage();  // Ensure player image is loaded
         setupUI();
         startAnimationTimer();
@@ -170,6 +172,7 @@ public class FightScreen extends JDialog {
      * @param damage Amount of damage inflicted on the enemy.
      */
     private void attackEnemy(int damage) {
+        showRandomQuestion();
         enemyHealth = Math.max(0, enemyHealth - damage);
         enemyHealthLabel.setText("Enemy Health: " + enemyHealth);
     }
@@ -252,6 +255,21 @@ public class FightScreen extends JDialog {
     private void stopAnimationTimer() {
         if (animationTimer != null) {
             animationTimer.stop();
+        }
+    }
+    private void showRandomQuestion() {
+        if (!questions.isEmpty()) {
+            int randomIndex = (int)(Math.random() * questions.size());
+            Question randomQuestion = questions.get(randomIndex);
+            int x = (getWidth() - questionPanel.getPreferredSize().width) / 2;
+            int y = (getHeight() - questionPanel.getPreferredSize().height) / 2;
+            questionPanel.setBounds(x, y,
+                    questionPanel.getPreferredSize().width,
+                    questionPanel.getPreferredSize().height);
+
+            questionPanel.showQuestion(randomQuestion);
+            revalidate();
+            repaint();
         }
     }
 }
