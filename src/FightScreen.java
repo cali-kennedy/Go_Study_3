@@ -17,7 +17,8 @@ public class FightScreen extends JDialog {
     private static final int PLAYER_ATTACK_DAMAGE = 20;
     private static final int ENEMY_ATTACK_DAMAGE = 15;
     private static final int ANIMATION_REFRESH_RATE_MS = 100;
-
+    private JLayeredPane layeredPane;
+    private JPanel mainPanel;
     // Player and enemy attributes
     private final Character player;
     private int enemyHealth;
@@ -38,6 +39,7 @@ public class FightScreen extends JDialog {
     // Timer for updating enemy animation
     private Timer animationTimer;
     private GameQuestionPanel questionPanel;
+
     /**
      * Constructor initializes the FightScreen dialog with specified parameters and starts the animation.
      *
@@ -77,17 +79,35 @@ public class FightScreen extends JDialog {
      * Sets up the user interface components for health display, attack button, and animation rendering.
      */
     private void setupUI() {
-        setSize(500, 300);  // Adjusted width to accommodate player image panel
+        setSize(500, 300);
         setLocationRelativeTo(getParent());
-        setLayout(new BorderLayout());
 
-        add(createHealthPanel(), BorderLayout.NORTH);
-        add(createAttackButton(), BorderLayout.SOUTH);
-        add(createAnimationPanel(), BorderLayout.CENTER);
+        // Create a main panel with BorderLayout to retain original layout structure
+        mainPanel = new JPanel(new BorderLayout());
 
+        // Add health panel, attack button, and animation panel to mainPanel
+        mainPanel.add(createHealthPanel(), BorderLayout.NORTH);
+        mainPanel.add(createAttackButton(), BorderLayout.SOUTH);
+        mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
+
+        // Add player image panel on the left side
         JPanel playerImagePanel = createPlayerImagePanel();
-        playerImagePanel.setPreferredSize(new Dimension(100, 100)); // Set preferred size for player image panel
-        add(playerImagePanel, BorderLayout.LINE_START); // Add player image panel to the left
+        playerImagePanel.setPreferredSize(new Dimension(100, 100));
+        mainPanel.add(playerImagePanel, BorderLayout.LINE_START);
+
+        // Initialize the layered pane as content pane
+        layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(500, 300));
+        setContentPane(layeredPane);
+
+        // Add mainPanel to the base layer of layeredPane
+        mainPanel.setBounds(0, 0, 500, 300);
+        layeredPane.add(mainPanel, Integer.valueOf(0));  // Base layer
+
+        // Add GameQuestionPanel on a higher layer for overlay
+        questionPanel.setBounds(100, 75, questionPanel.getPreferredSize().width, questionPanel.getPreferredSize().height);
+        layeredPane.add(questionPanel, Integer.valueOf(1));  // Higher layer
+        questionPanel.setVisible(false);  // Initially hidden
     }
 
     /**
@@ -194,7 +214,8 @@ public class FightScreen extends JDialog {
             //enemyName = collisionDetector.getEnemyName();
             if (enemyName != null) {
                 // tmxRenderer.markEnemyAsDefeated(enemyName);            }
-            } showFightResult("You have won the fight!", "Victory");
+            }
+            showFightResult("You have won the fight!", "Victory");
         } else if (player.getHealth() <= 0) {
             showFightResult("You have been defeated!", "Defeat");
         }
@@ -257,19 +278,20 @@ public class FightScreen extends JDialog {
             animationTimer.stop();
         }
     }
+
+    // Modify showRandomQuestion to display GameQuestionPanel in the layered pane
     private void showRandomQuestion() {
         if (!questions.isEmpty()) {
-            int randomIndex = (int)(Math.random() * questions.size());
+            int randomIndex = (int) (Math.random() * questions.size());
             Question randomQuestion = questions.get(randomIndex);
-            int x = (getWidth() - questionPanel.getPreferredSize().width) / 2;
-            int y = (getHeight() - questionPanel.getPreferredSize().height) / 2;
-            questionPanel.setBounds(x, y,
-                    questionPanel.getPreferredSize().width,
-                    questionPanel.getPreferredSize().height);
-
+            GameQuestionPanel questionPanel1 = new GameQuestionPanel(player, mainPanel);
+            // Set question and display the panel on the top layer
             questionPanel.showQuestion(randomQuestion);
-            revalidate();
-            repaint();
+            questionPanel.setVisible(true);
+
         }
     }
+
+
 }
+

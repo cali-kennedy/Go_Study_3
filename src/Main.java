@@ -217,9 +217,10 @@ public class Main extends JPanel {
     public void togglePause(boolean pause) {
         isPaused = pause;
         if (!pause) {
-            requestFocusInWindow();
+            requestFocusInWindow(); // Regain focus for keyboard events
         }
     }
+
 
     public void resetCollisionState() {
         collisionDetector.resetCollisionState();

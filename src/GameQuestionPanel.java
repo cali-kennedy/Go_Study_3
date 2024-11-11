@@ -8,12 +8,12 @@ public class GameQuestionPanel extends JPanel {
     private Character character;
     private boolean isVisible = false;
     private JLabel questionLabel;
-    private Main mainPanel;
+    private JPanel mainPanel;
     private JPanel centerPanel;
     private JButton submitButton;
 
     // Initialize the question panel with necessary components and styling
-    public GameQuestionPanel(Character character, Main mainPanel) {
+    public GameQuestionPanel(Character character, JPanel mainPanel) {
         this.character = character;
         this.mainPanel = mainPanel;
         setLayout(new BorderLayout());
@@ -75,7 +75,7 @@ public class GameQuestionPanel extends JPanel {
             answerField.setText("");
             isVisible = true;
             setVisible(true);
-            mainPanel.togglePause(true);
+          //  mainPanel.togglePause(true);
             answerField.requestFocus();
         }
     }
@@ -101,14 +101,14 @@ public class GameQuestionPanel extends JPanel {
         }
 
         hidePanel();
-        mainPanel.resetCollisionState();
+    //    mainPanel.resetCollisionState();
     }
 
     // Hide the question panel and resume the game
     private void hidePanel() {
         isVisible = false;
         setVisible(false);
-        mainPanel.togglePause(false);
+     //   mainPanel.togglePause(false);
         SwingUtilities.invokeLater(() -> {
             mainPanel.requestFocusInWindow();
         });
