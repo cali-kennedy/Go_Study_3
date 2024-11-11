@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * FightScreen class represents a dialog where the player engages in a fight.
@@ -23,6 +24,7 @@ public class FightScreen extends JDialog {
     private final Character player;
     private int enemyHealth;
 
+    private boolean questionIsCorrect = false;
     // Player character image
     private BufferedImage playerImage;
 
@@ -79,7 +81,7 @@ public class FightScreen extends JDialog {
      * Sets up the user interface components for health display, attack button, and animation rendering.
      */
     private void setupUI() {
-        setSize(500, 300);
+        setSize(500, 350);
         setLocationRelativeTo(getParent());
 
         // Create a main panel with BorderLayout to retain original layout structure
@@ -178,13 +180,49 @@ public class FightScreen extends JDialog {
      * Refreshes the screen to update health displays and animations.
      */
     private void handleAttackAction() {
-        attackEnemy(PLAYER_ATTACK_DAMAGE);
-        if (enemyHealth > 0) {
-            enemyAttack();
-        }
-        checkFightStatus();
-        repaint();  // Refresh the screen to update animations
+        // Display question and wait for an answer
+        showRandomQuestion();
+
+        // After the question is answered, calculate damage
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                // Wait until the question is answered
+                while (!questionPanel.isAnswered()) {
+                    try {
+                        Thread.sleep(100); // Check every 100ms if the question is answered
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            protected void done() {
+
+                Random random = new Random();
+                int multiplier = random.nextInt(5) + 1; // Generates 1-5
+
+                // Calculate damage based on whether the answer is correct
+                int damage = questionPanel.isCorrect() ? PLAYER_ATTACK_DAMAGE * multiplier : PLAYER_ATTACK_DAMAGE;
+                JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
+
+                // Proceed with the attack on the enemy
+                attackEnemy(damage);
+                if (enemyHealth > 0) {
+                    enemyAttack();
+                }
+
+                checkFightStatus();
+                repaint();  // Refresh the screen to update animations
+            }
+        };
+
+        // Start the worker to wait for the answer and then apply the attack logic
+        worker.execute();
     }
+
 
     /**
      * Reduces the enemy's health by a specified damage amount and updates the health label.
@@ -192,10 +230,10 @@ public class FightScreen extends JDialog {
      * @param damage Amount of damage inflicted on the enemy.
      */
     private void attackEnemy(int damage) {
-        showRandomQuestion();
         enemyHealth = Math.max(0, enemyHealth - damage);
         enemyHealthLabel.setText("Enemy Health: " + enemyHealth);
     }
+
 
     /**
      * Executes the enemy's attack, reducing the player's health and updating the player's health label.
@@ -284,11 +322,11 @@ public class FightScreen extends JDialog {
         if (!questions.isEmpty()) {
             int randomIndex = (int) (Math.random() * questions.size());
             Question randomQuestion = questions.get(randomIndex);
-            GameQuestionPanel questionPanel1 = new GameQuestionPanel(player, mainPanel);
+
             // Set question and display the panel on the top layer
             questionPanel.showQuestion(randomQuestion);
             questionPanel.setVisible(true);
-
+            questionIsCorrect = questionPanel.isCorrect();
         }
     }
 

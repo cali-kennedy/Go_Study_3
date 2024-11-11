@@ -11,7 +11,8 @@ import java.util.List;
 public class CollisionDetector {
 
     private static final int HEALTH_REWARD = 10;
-
+private boolean collidedWithWall;
+private boolean wallFlag;
     // Character and objects for collision detection
     private final Character character;
     private final List<ObjectModel> objects;
@@ -20,6 +21,17 @@ public class CollisionDetector {
     private boolean isAnsweringQuestion = false;
     private ObjectModel lastCollidedEnemy = null;
     private String enemyName;
+
+    private int old_x;
+    private int old_y;
+
+    public boolean isWallFlag() {
+        return wallFlag;
+    }
+
+    public void setWallFlag(boolean wallFlag) {
+        this.wallFlag = wallFlag;
+    }
 
     /**
      * Inner class to store collision results for walls and enemies.
@@ -36,6 +48,7 @@ public class CollisionDetector {
         public boolean hasWallCollision() {
             return wallCollision;
         }
+
 
         public boolean hasEnemyCollision() {
             return enemyCollision;
@@ -59,7 +72,7 @@ public class CollisionDetector {
      * @return CollisionResult indicating if the character has collided with a wall or enemy.
      */
     public CollisionResult checkCollisions() {
-        boolean collidedWithWall = false;
+        collidedWithWall = false;
         boolean enemyCollision = false;
 
         // Iterate through the objects and check for collisions
@@ -69,7 +82,10 @@ public class CollisionDetector {
             if (isColliding(character, object)) {
                 String objectType = getObjectType(object);
                 switch (objectType) {
-                    case "wall" -> collidedWithWall = true;
+                    case "wall" -> {
+                        setWallFlag(true);
+                        collidedWithWall = true;
+                    }
                     case "enemy" -> {
                         // Register collision with a new enemy only if not answering a question
                         if (!isAnsweringQuestion || !object.equals(lastCollidedEnemy)) {
@@ -83,6 +99,7 @@ public class CollisionDetector {
                     }
                     case "apple" -> character.addHealth(HEALTH_REWARD);
                 }
+                System.out.println("Collided w wall: " + collidedWithWall);
             }
         }
         return new CollisionResult(collidedWithWall, enemyCollision);
@@ -126,6 +143,8 @@ public class CollisionDetector {
         return charBounds.intersects(objectBounds);
     }
 
+
+
     /**
      * Retrieves the type of the object by checking its properties.
      *
@@ -142,6 +161,9 @@ public class CollisionDetector {
             }
         }
         return object.getName().equalsIgnoreCase("wall") ? "wall" : "unknown";
+    }
+    public boolean CollidedWithWall(){
+        return this.collidedWithWall;
     }
 
     /**

@@ -46,17 +46,16 @@ public class Character {
 
     // Movement Method
     public void move(int dx, int dy){ // TmxParser parser, JFrame parentFrame, Question question, List<Question> questions) {
-        // Update position based on movement delta
-        this.x += dx;
-        this.y += dy;
-        CollisionDetector collisionDetector = new CollisionDetector(this,objects);
+             this.x += dx;
+             this.y += dy;
+       //  }
 
-        // input collision detection here
     }
 
     // Health Management
     public void addHealth(int healthToAdd) {
         this.health = Math.min(this.health + healthToAdd, MAX_HEALTH); // Ensure health doesn't exceed max
+        System.out.println("You gained " + healthToAdd + " health");
     }
 
     public void removeHealth(int healthToRemove) {

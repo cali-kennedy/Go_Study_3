@@ -20,7 +20,8 @@ public class Main extends JPanel {
     private List<Question> questions;
     private static JFrame gameFrame;
     private TmxParser tmxParser;
-
+    private int old_x;
+    private int old_y;
 
     public Main() {
         showQuestionInputDialog();
@@ -165,66 +166,41 @@ public class Main extends JPanel {
 
             g2d.setTransform(oldTransform);
 
+
             if (!isPaused) {
+
                 checkCollisions();
             }
         }
     }
 
     private void checkCollisions() {
+        // Only update old_x and old_y before movement, not every time checkCollisions is called
+        int previousX = character.getX();
+        int previousY = character.getY();
+
         CollisionDetector.CollisionResult result = collisionDetector.checkCollisions();
+
         if (result.hasEnemyCollision() && !questionPanel.isQuestionVisible()) {
-            FightScreen fightScreen = new FightScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel); // pass the main frame and character
+            FightScreen fightScreen = new FightScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel);
             fightScreen.setVisible(true);
         }
-    }
-    private AnimationModel createEnemyAnimation(int gid) {
-        AnimationModel animation = new AnimationModel(gid);
 
-        // Find the corresponding tileset for this gid
-        TilesetModel tileset = tmxParser.findTilesetForGid(gid);
-
-        if (tileset != null) {
-            int tileCount = tileset.getTileCount();
-            int firstGid = tileset.getFirstGid();
-
-            // Create frames for the enemy's animation using tileCount
-            for (int i = 0; i < Math.min(16, tileCount); i++) {
-                int frameTileId = firstGid + (i % tileCount);
-                animation.addFrame(new FrameModel(frameTileId, 300)); // 300 ms per frame
-            }
+        if (result.hasWallCollision()) {
+            // Revert to last "safe" position if a wall collision is detected
+            character.setX(old_x);
+            character.setY(old_y);
+        } else {
+            // Update old_x and old_y only if there’s no collision
+            old_x = previousX;
+            old_y = previousY;
         }
-        return animation;
-    }
-
-    private void showRandomQuestion() {
-        if (!questions.isEmpty()) {
-            int randomIndex = (int)(Math.random() * questions.size());
-            Question randomQuestion = questions.get(randomIndex);
-
-            int x = (getWidth() - questionPanel.getPreferredSize().width) / 2;
-            int y = (getHeight() - questionPanel.getPreferredSize().height) / 2;
-            questionPanel.setBounds(x, y,
-                    questionPanel.getPreferredSize().width,
-                    questionPanel.getPreferredSize().height);
-
-            questionPanel.showQuestion(randomQuestion);
-            revalidate();
-            repaint();
         }
-    }
-
-    public void togglePause(boolean pause) {
-        isPaused = pause;
-        if (!pause) {
-            requestFocusInWindow(); // Regain focus for keyboard events
-        }
-    }
 
 
-    public void resetCollisionState() {
-        collisionDetector.resetCollisionState();
-    }
+
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             gameFrame = new JFrame("TMX Map Renderer");

@@ -11,6 +11,8 @@ public class GameQuestionPanel extends JPanel {
     private JPanel mainPanel;
     private JPanel centerPanel;
     private JButton submitButton;
+    private boolean isCorrect;
+    private boolean isAnswered;
 
     // Initialize the question panel with necessary components and styling
     public GameQuestionPanel(Character character, JPanel mainPanel) {
@@ -70,6 +72,7 @@ public class GameQuestionPanel extends JPanel {
     // Display a new question and pause the game
     public void showQuestion(Question question) {
         if (!isVisible) {
+            isAnswered = false;
             this.currentQuestion = question;
             questionLabel.setText(question.getQuestion());
             answerField.setText("");
@@ -83,7 +86,8 @@ public class GameQuestionPanel extends JPanel {
     // Verify the user's answer and provide feedback
     private void checkAnswer() {
         String userAnswer = answerField.getText().trim();
-        boolean isCorrect = userAnswer.equalsIgnoreCase(currentQuestion.getAnswer());
+        isCorrect = userAnswer.equalsIgnoreCase(currentQuestion.getAnswer());
+        isAnswered = true; // Set isAnswered to true after submitting an answer
 
         // Award XP for correct answers, deduct health for incorrect ones (deducting not fully implemented yet)
         if (isCorrect) {
@@ -101,7 +105,11 @@ public class GameQuestionPanel extends JPanel {
         }
 
         hidePanel();
-    //    mainPanel.resetCollisionState();
+
+    }
+
+    public boolean isCorrect(){
+        return isCorrect;
     }
 
     // Hide the question panel and resume the game
@@ -133,5 +141,9 @@ public class GameQuestionPanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(300, 150);
+    }
+
+    public boolean isAnswered() {
+        return isAnswered;
     }
 }
