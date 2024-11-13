@@ -180,17 +180,14 @@ public class FightScreen extends JDialog {
      * Refreshes the screen to update health displays and animations.
      */
     private void handleAttackAction() {
-        // Display question and wait for an answer
-        showRandomQuestion();
+        showRandomQuestion(); // Display question and wait for an answer
 
-        // After the question is answered, calculate damage
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                // Wait until the question is answered
                 while (!questionPanel.isAnswered()) {
                     try {
-                        Thread.sleep(100); // Check every 100ms if the question is answered
+                        Thread.sleep(100);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -200,28 +197,31 @@ public class FightScreen extends JDialog {
 
             @Override
             protected void done() {
+                boolean isCorrect = questionPanel.isCorrect();
+                int xpGain = isCorrect ? 100 : 0; // XP for correct answer
+                String answerFeedback = isCorrect ? "Correct! +100 XP" : "Incorrect! The answer was: " + questionPanel.currentQuestion.getAnswer();
 
-                Random random = new Random();
-                int multiplier = random.nextInt(5) + 1; // Generates 1-5
+                // 1. Show feedback on answer correctness
+                JOptionPane.showMessageDialog(FightScreen.this, answerFeedback, "Answer Result", JOptionPane.INFORMATION_MESSAGE);
 
-                // Calculate damage based on whether the answer is correct
-                int damage = questionPanel.isCorrect() ? PLAYER_ATTACK_DAMAGE * multiplier : PLAYER_ATTACK_DAMAGE;
+                // 2. Calculate and show damage dealt
+                int damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(5) + 1) : PLAYER_ATTACK_DAMAGE;
                 JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
 
-                // Proceed with the attack on the enemy
                 attackEnemy(damage);
                 if (enemyHealth > 0) {
                     enemyAttack();
                 }
 
+                // 3. Check and show fight status
                 checkFightStatus();
-                repaint();  // Refresh the screen to update animations
+                repaint();
             }
         };
 
-        // Start the worker to wait for the answer and then apply the attack logic
         worker.execute();
     }
+
 
 
     /**
@@ -332,4 +332,6 @@ public class FightScreen extends JDialog {
 
 
 }
+
+
 

@@ -3,7 +3,7 @@ import java.awt.*;
 
 // Panel that displays and handles the question-answer interaction when colliding with enemies
 public class GameQuestionPanel extends JPanel {
-    private Question currentQuestion;
+    Question currentQuestion;
     private JTextField answerField;
     private Character character;
     private boolean isVisible = false;
@@ -92,16 +92,10 @@ public class GameQuestionPanel extends JPanel {
         // Award XP for correct answers, deduct health for incorrect ones (deducting not fully implemented yet)
         if (isCorrect) {
             character.addXP(100);
-            JOptionPane.showMessageDialog(mainPanel,
-                    "Correct! +100 XP",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+
         } else {
             character.removeHealth(10);
-            JOptionPane.showMessageDialog(mainPanel,
-                    "Incorrect! The answer was: " + currentQuestion.getAnswer(),
-                    "Wrong Answer",
-                    JOptionPane.ERROR_MESSAGE);
+
         }
 
         hidePanel();
