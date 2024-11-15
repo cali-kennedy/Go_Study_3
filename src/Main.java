@@ -164,6 +164,9 @@ public class Main extends JPanel {
             //   character = new Character("resources/rabbit.png",10,10,20,20);
             character.draw(g); // draw the character on the map
 
+            drawHealth(g);
+            drawXP(g);
+
             g2d.setTransform(oldTransform);
 
 
@@ -198,8 +201,18 @@ public class Main extends JPanel {
         }
 
 
+    private void drawHealth(Graphics g) {
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Health: " + character.getHealth(), 10, 20);
 
+    }
 
+    private void drawXP(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("XP: " + character.getXP(), 10, 40);
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
