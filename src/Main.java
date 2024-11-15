@@ -202,16 +202,68 @@ public class Main extends JPanel {
 
 
     private void drawHealth(Graphics g) {
-        g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Health: " + character.getHealth(), 10, 20);
+        int barWidth = 150;
+        int barHeight = 20;
+        int x = 10;
+        int y = 270 ;
 
+        // Draw health bar background
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y, barWidth, barHeight);
+
+        // Calculate health percentage (max health is 100)
+        float healthPercentage = (float) character.getHealth() / 100;
+        int currentHealthWidth = (int) (barWidth * healthPercentage);
+
+        // Draw current health
+        g.setColor(Color.RED);
+        g.fillRect(x, y, currentHealthWidth, barHeight);
+
+        // Draw border
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y, barWidth, barHeight);
+
+        // Draw health text
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 12));
+        String healthText = character.getHealth() + "/100";
+        FontMetrics fm = g.getFontMetrics();
+        int textX = x + (barWidth - fm.stringWidth(healthText)) / 2;
+        int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
+        g.drawString(healthText, textX, textY);
     }
 
     private void drawXP(Graphics g) {
+        int barWidth = 150;
+        int barHeight = 20;
+        int x = 10;
+        int y = 290;  // Position below health bar
+
+        // Draw XP bar background
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y, barWidth, barHeight);
+
+        // Calculate XP percentage using levelProgression and levelCap
+        float xpPercentage = (float) character.getLevelProgression() / character.getLevelCap();
+        int currentXPWidth = (int) (barWidth * xpPercentage);
+
+        // Draw current XP
         g.setColor(Color.BLUE);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("XP: " + character.getXP(), 10, 40);
+        g.fillRect(x, y, currentXPWidth, barHeight);
+
+        // Draw border
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y, barWidth, barHeight);
+
+        // Draw XP text
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 12));
+        String xpText = "Level " + character.getLevel() + " (" +
+                character.getLevelProgression() + "/" + character.getLevelCap() + ")";
+        FontMetrics fm = g.getFontMetrics();
+        int textX = x + (barWidth - fm.stringWidth(xpText)) / 2;
+        int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
+        g.drawString(xpText, textX, textY);
     }
 
     public static void main(String[] args) {

@@ -72,15 +72,27 @@ public class Character {
 
     // XP Management
     public void addXP(int XPToAdd) {
+        // Add to both total XP and level progression
         this.XP += XPToAdd;
         this.levelProgression += XPToAdd;
 
         // Check if level up is needed
-        if (this.levelProgression >= this.levelCap) {
+        while (this.levelProgression >= this.levelCap) {
+            // Level up
             this.level++;
-            this.levelProgression = 0; // Reset progression for the new level
-            this.levelCap += 50; // Increase XP cap for next level (could be dynamic)
+
+            // Calculate remaining XP after level up
+            this.levelProgression = this.levelProgression - this.levelCap;
+
+            // Increase XP requirement for next level
+            this.levelCap += 50;
+
+            // Notify of level up
             System.out.println("Level up! Now level: " + this.level);
+            System.out.println("XP needed for next level: " + this.levelCap);
+
+            // Restore full health on level up (optional - remove if you don't want this)
+            this.health = 100;
         }
     }
 
@@ -89,8 +101,20 @@ public class Character {
     }
 
     public int LevelUp(int XPToAdd) {
-        addXP(XPToAdd); // Reuse addXP method
-        return this.levelProgression; // Return progression for display
+        addXP(XPToAdd);
+        return this.levelProgression;
+    }
+
+    public int getLevel() {
+        return this.level;
+    }
+
+    public int getLevelProgression() {
+        return this.levelProgression;
+    }
+
+    public int getLevelCap() {
+        return this.levelCap;
     }
 
     // Position Getters and Setters
