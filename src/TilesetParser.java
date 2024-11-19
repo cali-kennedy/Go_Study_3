@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class TilesetParser {
 
         // Load and parse the XML file
         File file = new File(tilesetPath);
+        System.out.println("------------- tilesetparser invoked -------------  ");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(file);
@@ -75,22 +77,27 @@ public class TilesetParser {
         tilesetModel.setImageWidth(Integer.parseInt(imageElement.getAttribute("width")));
         tilesetModel.setImageHeight(Integer.parseInt(imageElement.getAttribute("height")));
         tilesetModel.setImageSource(imageElement.getAttribute("source"));
+        System.out.println("TILESET SOURCE: "+tilesetModel.getTilesetSource());
+
 
         tilesets.add(tilesetModel);
 
         // Parse and set animations in the tileset
         NodeList animationNodes = tilesetRoot.getElementsByTagName("animation");
         for (int j = 0; j < animationNodes.getLength(); j++) {
+            System.out.println("---PARSING AN ANIMATION---");
             Element animationElement = (Element) animationNodes.item(j);
 
             // Initialize animation with the base tile GID (first global tile ID)
             AnimationModel animationModel = new AnimationModel(tilesetModel.getFirstGid());
             animationModel.setName(tilesetModel.getTilesetSource().replace(FILE_EXTENSION, ""));
-            System.out.println("ANIMATION MODEL " + animationModel.getName()); // Debugging output
+            System.out.println("ANIMATION MODEL: " + animationModel.getName()); // Debugging output
+            System.out.println("ANIMATION GID: " + animationModel.getFirstGid());
 
             // Parse frames for each animation
             NodeList frameNodes = animationElement.getElementsByTagName("frame");
             for (int i = 0; i < frameNodes.getLength(); i++) {
+                System.out.println("--PARSING A FRAME--");
                 Element frameElement = (Element) frameNodes.item(i);
 
                 // Calculate global tile ID by adding base GID to the frame's tile ID
@@ -115,6 +122,16 @@ public class TilesetParser {
      * @return A list of models.AnimationModel instances.
      */
     public List<AnimationModel> getAnimationModel() {
+        System.out.println("----TilesetParser.java : getAnimationModel invoked ----");
+        System.out.println("LIST RETURNED: ");
+        if (animationsList != null && !animationsList.isEmpty()) {
+            System.out.println("Animation Models List:");
+            for (AnimationModel animation : animationsList) {
+                System.out.println(animation); // Ensure AnimationModel has a meaningful toString() method for proper output
+            }
+        } else {
+            System.out.println("Animation Models List is empty or null.");
+        }
         return animationsList;
     }
 
@@ -124,6 +141,16 @@ public class TilesetParser {
      * @return A list of models.TilesetModel instances.
      */
     public List<TilesetModel> getTilesets() {
+        System.out.println("----TilesetParser.java : getTilesets invoked ----");
+        System.out.println("LIST RETURNED: ");
+        if (tilesets != null && !tilesets.isEmpty()) {
+            System.out.println("Tilesets List:");
+            for (TilesetModel tileset : tilesets) {
+                System.out.println(tileset); // Ensure TilesetModel has a meaningful toString() method for proper output
+            }
+        } else {
+            System.out.println("Tilesets List is empty or null.");
+        }
         return tilesets;
     }
 }

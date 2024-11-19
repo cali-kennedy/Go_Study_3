@@ -4,7 +4,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.*;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class TmxRenderer {
      */
     public TmxRenderer(TmxMapModel mapModel, List<LayerModel> layers, List<ObjectModel> objects,
                        List<AnimationModel> animations, List<TilesetModel> tilesets, Camera camera) {
+        System.out.println("---- TMX RENDERER INVOKED ----");
         this.mapModel = mapModel;
         this.layers = layers;
         this.objects = objects;
@@ -42,16 +45,20 @@ public class TmxRenderer {
         this.tilesets = tilesets;
         this.tileImages = new HashMap<>();
         this.camera = camera;
+
         loadTilesetImages();
         initializeAnimations();
+
     }
 
     /**
      * Loads all tileset images, splits them into individual tiles, and caches them for fast access.
      */
     private void loadTilesetImages() {
+        System.out.println("--- TmxRenderer.java : loadTilesetImages invoked ---");
         for (TilesetModel tileset : tilesets) {
             try {
+                System.out.println("\nTmxRenderer.java loading tilesetimage : resources/"+  tileset.getImageSource());
                 File tilesetFile = new File("resources/" + tileset.getImageSource());
                 if (!tilesetFile.exists()) {
                     System.err.println("Tileset image file not found: " + tileset.getImageSource());
@@ -63,6 +70,7 @@ public class TmxRenderer {
                 int tileHeight = (int) tileset.getHeight();
                 int columns = tileset.getColumns();
 
+                System.out.println("TmxRenderer.java - loadTilesetImages:  calculating x and y positions of the tile within the tileset image grid: ");
                 // Calculate x and y positions of the tile within the tileset image grid:
                 for (int i = 0; i < tileset.getTileCount(); i++) {
 
@@ -70,10 +78,22 @@ public class TmxRenderer {
                     // and multiplying by `tileWidth` gives the exact x-coordinate in pixels.
                     int x = (i % columns) * tileWidth;
 
+
                     // `i / columns` gives the row number of tile `i`,
                     // and multiplying by `tileHeight` gives the exact y-coordinate in pixels.
                     int y = (i / columns) * tileHeight;
 
+
+                    // Calculate GID
+                    int gid = tileset.getFirstGid() + i; // Ensure this is consistent
+
+                    System.out.println("TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: " + gid);
+                    System.out.println("x: " + x + ", y: " + y);
+                    if (x + tileWidth > tilesetImage.getWidth() || y + tileHeight > tilesetImage.getHeight()) {
+                        System.err.println("Skipping tile: (" + x + ", " + y + ") is out of bounds for tileset image " + tileset.getImageSource());
+                        continue;
+                    }
+                    // Add to tileImages map
                     // Extract the tile as a subimage and store it in `tileImages` with its GID key.
                     tileImages.put(tileset.getFirstGid() + i, tilesetImage.getSubimage(x, y, tileWidth, tileHeight));
                 }
@@ -87,11 +107,14 @@ public class TmxRenderer {
      * Initializes animations for each animatable object, setting its frames from the appropriate tileset.
      */
     private void initializeAnimations() {
+        System.out.println("\n--- TmxRenderer.java initializeAnimations invoked ---");
+        System.out.println("TmxRenderer.java - initalizeAnimations : looping through objects to initialize animations: ");
         for (ObjectModel object : objects) {
+            System.out.println("\nTmxRenderer.java - initalizeAnimations : Object name: " + object.getName());
             int gid = object.getGid();
 
             if (tileImages.containsKey(gid)) {
-
+                System.out.println("TmxRenderer.java - initalizeAnimations: Making an animation model for object " + object.getName());
                 AnimationModel animation = new AnimationModel(gid);
                 animation.setX(object.getX());
                 animation.setY(object.getY());
@@ -109,14 +132,14 @@ public class TmxRenderer {
                     for (int i = 0; i < Math.min(16, tileCount); i++) {
                         // `(i % tileCount)` cycles `i` from 0 to tileCount-1, creating a looping effect.
                         // Adding `firstGid` adjusts each tile ID to be within the tileset's unique ID range.
-                        FrameModel frame = new FrameModel(firstGid + (i % tileCount), FRAME_DURATION_MS);
-
+                        int tileId = firstGid + (i % tileCount); // Calculate the correct tile ID
+                        FrameModel frame = new FrameModel(tileId, FRAME_DURATION_MS);
                         // Add the frame to the animation, maintaining a sequence within tile bounds.
                         animation.addFrame(frame);
                     }
 
                     animations.add(animation);
-                    System.out.println("Initialized animation for GID " + gid + " with frames at position (" +
+                    System.out.println("TmxRenderer.java - initalizeAnimations: Initialized animation for GID " + gid + " with frames at position (" +
                             object.getX() + ", " + object.getY() + ")");
                 }
             } else {
@@ -133,10 +156,14 @@ public class TmxRenderer {
      */
     private TilesetModel findTilesetForGid(int gid) {
         for (TilesetModel tileset : tilesets) {
-            if (gid >= tileset.getFirstGid() && gid < tileset.getFirstGid() + tileset.getTileCount()) {
+            int firstGid = tileset.getFirstGid();
+            int lastGid = firstGid + tileset.getTileCount() - 1;
+
+            if (gid >= firstGid && gid <= lastGid) {
                 return tileset;
             }
         }
+
         return null;
     }
     public void markEnemyAsDefeated(String enemyName) {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="6">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="9">
  <tileset firstgid="1" source="Grass.tsx"/>
  <tileset firstgid="78" source="new_mroom_idle.tsx"/>
  <tileset firstgid="94" source="Hills.tsx"/>
  <tileset firstgid="171" source="Basic_Grass_Biom_things.tsx"/>
+ <tileset firstgid="216" source="new_apple_attmpt.tsx"/>
  <layer id="1" name="Grass_Layer" width="20" height="20">
   <data encoding="csv">
 1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
@@ -68,7 +69,12 @@
     <property name="is_enemy" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="5" name="apple" gid="191" x="54.3636" y="67.0909" width="16" height="16"/>
+  <object id="8" name="apple" gid="219" x="78.5455" y="48" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="10"/>
+    <property name="is_apple" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="Collision_Layer">
   <object id="4" name="wall" x="33" y="19" width="88" height="12"/>

@@ -67,11 +67,14 @@ public class TmxParser {
         // Parse tilesets
         NodeList tileSetNodes = tmxMap.getElementsByTagName("tileset");
         for (int j = 0; j < tileSetNodes.getLength(); j++) {
+
             Element tilesetElement = (Element) tileSetNodes.item(j);
             TilesetModel tileSetModel = new TilesetModel();
 
             tileSetModel.setFirstGid(Integer.parseInt(tilesetElement.getAttribute("firstgid")));
+            System.out.println("TmxParser.java - parseTmxFile: firstgid: " + tileSetModel.getFirstGid());
             tileSetModel.setTilesetSource(tilesetElement.getAttribute("source"));
+            System.out.println("TmxParser.java - parseTmxFile: parsing tileset " + tileSetModel.getTilesetSource());
 
             // Initialize and parse tileset details using TilesetParser
             this.tilesetParser = new TilesetParser(tileSetModel.getTilesetSource(), tileSetModel);
@@ -80,6 +83,7 @@ public class TmxParser {
 
         // Parse layers
         NodeList layerNodes = tmxMap.getElementsByTagName("layer");
+        //System.out.println("TmxParser.java PARSING LAYERS: ");
         for (int i = 0; i < layerNodes.getLength(); i++) {
             Element layerElement = (Element) layerNodes.item(i);
             LayerModel layer = new LayerModel(

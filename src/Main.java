@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,6 +13,7 @@ import models.*;
 import org.xml.sax.SAXException;
 
 public class Main extends JPanel {
+
     private TmxRenderer tmxRenderer;
     private Camera camera;
     private Character character;
@@ -24,6 +28,20 @@ public class Main extends JPanel {
     private int old_y;
 
     public Main() {
+        try {
+            // Create a file to store the output
+           // File outputFile = new File("output.log");
+           // FileOutputStream fos = new FileOutputStream(outputFile);
+           // PrintStream ps = new PrintStream(fos);
+
+            // Redirect System.out and System.err
+           // System.setOut(ps);
+           // System.setErr(ps);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         showQuestionInputDialog();
 
         if (questions != null && !questions.isEmpty()) {
@@ -177,6 +195,7 @@ public class Main extends JPanel {
         }
     }
 
+    // this check collisions calls the collisiondetectors class check collisions
     private void checkCollisions() {
         // Only update old_x and old_y before movement, not every time checkCollisions is called
         int previousX = character.getX();
@@ -185,6 +204,7 @@ public class Main extends JPanel {
         CollisionDetector.CollisionResult result = collisionDetector.checkCollisions();
 
         if (result.hasEnemyCollision() && !questionPanel.isQuestionVisible()) {
+            System.out.println("---- Main.java CREATING A NEW FIGHT SCREEN ----");
             FightScreen fightScreen = new FightScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel);
             fightScreen.setVisible(true);
         }
@@ -198,7 +218,7 @@ public class Main extends JPanel {
             old_x = previousX;
             old_y = previousY;
         }
-        }
+    }
 
 
     private void drawHealth(Graphics g) {

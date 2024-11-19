@@ -11,8 +11,8 @@ import java.util.List;
 public class CollisionDetector {
 
     private static final int HEALTH_REWARD = 10;
-private boolean collidedWithWall;
-private boolean wallFlag;
+    private boolean collidedWithWall;
+    private boolean wallFlag;
     // Character and objects for collision detection
     private final Character character;
     private final List<ObjectModel> objects;
@@ -41,6 +41,7 @@ private boolean wallFlag;
         private final boolean enemyCollision;
 
         public CollisionResult(boolean wallCollision, boolean enemyCollision) {
+
             this.wallCollision = wallCollision;
             this.enemyCollision = enemyCollision;
         }
@@ -62,6 +63,8 @@ private boolean wallFlag;
      * @param objects   List of objects that the character may collide with.
      */
     public CollisionDetector(Character character, List<ObjectModel> objects) {
+        System.out.println("----COLLISION DETECTOR INVOKED-----");
+        System.out.println("Character: " + character);
         this.character = character;
         this.objects = objects;
     }
@@ -71,7 +74,7 @@ private boolean wallFlag;
      *
      * @return CollisionResult indicating if the character has collided with a wall or enemy.
      */
-    public CollisionResult checkCollisions() {
+    public CollisionResult checkCollisions() { //being checked constantly during runtime
         collidedWithWall = false;
         boolean enemyCollision = false;
 
@@ -93,13 +96,15 @@ private boolean wallFlag;
                             isAnsweringQuestion = true;
                             lastCollidedEnemy = object; // Set the current enemy for fight
                             setEnemyName(object.getName()); // Update the enemy
-                            System.out.println("Collision Detecor enemy name: " + enemyName);
+                            System.out.println("CollisionDetecor.java enemy name: " + enemyName);
                             object.isDefeated();
                         }
                     }
-                    case "apple" -> character.addHealth(HEALTH_REWARD);
+                    case "apple" -> { character.addHealth(HEALTH_REWARD);
+                        System.out.println("COLLIDED WITH AN APPLE"); }
+                  //  object.isDefeated();}
                 }
-                System.out.println("Collided w wall: " + collidedWithWall);
+               // System.out.println("Collided w wall: " + collidedWithWall);
             }
         }
         return new CollisionResult(collidedWithWall, enemyCollision);
@@ -128,6 +133,7 @@ private boolean wallFlag;
      * @return true if there is a collision, otherwise false.
      */
     private boolean isColliding(Character character, ObjectModel object) {
+       // System.out.println("Colliding w: " + object.getName());
         Rectangle charBounds = new Rectangle(
                 character.getX(),
                 character.getY(),
@@ -156,6 +162,12 @@ private boolean wallFlag;
             if (property.getPropertyName().equalsIgnoreCase("is_enemy") &&
                     property.getValue().equalsIgnoreCase("true")) {
                 return "enemy";
+            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
+                return property.getValue();
+            }
+            if (property.getPropertyName().equalsIgnoreCase("is_apple") &&
+                    property.getValue().equalsIgnoreCase("true")) {
+                return "apple";
             } else if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
             }

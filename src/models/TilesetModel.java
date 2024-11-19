@@ -106,4 +106,22 @@ public class TilesetModel {
     public void setImageHeight(int imageHeight) {
         this.imageHeight = imageHeight;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("TilesetModel Details:\n");
+        sb.append("Name: ").append(name).append("\n");
+        sb.append("First GID: ").append(firstGid).append("\n");
+        sb.append("Tileset Source: ").append(tilesetSource).append("\n");
+        sb.append("Width: ").append(width).append("\n");
+        sb.append("Height: ").append(height).append("\n");
+        sb.append("Tile Count: ").append(tileCount).append("\n");
+        sb.append("Columns: ").append(columns).append("\n");
+        sb.append("Image Source: ").append(imageSource).append("\n");
+        sb.append("Image Width: ").append(imageWidth).append("\n");
+        sb.append("Image Height: ").append(imageHeight).append("\n");
+        sb.append("Animations: ").append(animations).append("\n"); // Will call toString on each AnimationModel
+        return sb.toString();
+    }
 }
