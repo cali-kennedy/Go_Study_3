@@ -16,6 +16,7 @@ public class CollisionDetector {
     // Character and objects for collision detection
     private final Character character;
     private final List<ObjectModel> objects;
+    private TmxRenderer tmxRenderer;
 
     // Collision state management
     private boolean isAnsweringQuestion = false;
@@ -62,11 +63,12 @@ public class CollisionDetector {
      * @param character Character involved in the collision detection.
      * @param objects   List of objects that the character may collide with.
      */
-    public CollisionDetector(Character character, List<ObjectModel> objects) {
+    public CollisionDetector(Character character, List<ObjectModel> objects, TmxRenderer tmxRenderer) {
         System.out.println("----COLLISION DETECTOR INVOKED-----");
         System.out.println("Character: " + character);
         this.character = character;
         this.objects = objects;
+        this.tmxRenderer = tmxRenderer;
     }
 
     /**
@@ -101,10 +103,10 @@ public class CollisionDetector {
                         }
                     }
                     case "apple" -> { character.addHealth(HEALTH_REWARD);
-                        System.out.println("COLLIDED WITH AN APPLE"); }
-                  //  object.isDefeated();}
+                        System.out.println("COLLIDED WITH AN APPLE");
+                        tmxRenderer.markEnemyAsDefeated(object.getName()); }
                 }
-               // System.out.println("Collided w wall: " + collidedWithWall);
+               System.out.println("Collided w wall: " + collidedWithWall);
             }
         }
         return new CollisionResult(collidedWithWall, enemyCollision);
@@ -144,7 +146,7 @@ public class CollisionDetector {
                 (int) object.getX(),
                 (int) object.getY(),
                 (int) object.getWidth(),
-                (int) object.getHeight()
+                (int) object.getHeight()-30
         );
         return charBounds.intersects(objectBounds);
     }
@@ -168,6 +170,12 @@ public class CollisionDetector {
             if (property.getPropertyName().equalsIgnoreCase("is_apple") &&
                     property.getValue().equalsIgnoreCase("true")) {
                 return "apple";
+            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
+                return property.getValue();
+            }
+            if (property.getPropertyName().equalsIgnoreCase("is_wall") &&
+                    property.getValue().equalsIgnoreCase("true")) {
+                return "wall";
             } else if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
             }

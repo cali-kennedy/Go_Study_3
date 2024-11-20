@@ -225,7 +225,7 @@ public class TmxRenderer {
             }
 
             if (frame != null) {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY(), TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
             }
         }
     }

@@ -139,7 +139,7 @@ public class Main extends JPanel {
             List<TilesetModel> tilesets = tmxParser.getTilesets();
 
             character = new Character("resources/rabbit.png", 10, 10, 20, 20);
-            camera = new Camera(400, 400, 2.0f, character);
+            camera = new Camera(400, 400,  3.0f, character);
 
             questionPanel = new GameQuestionPanel(character, this);
             questionPanel.setLocation(50, 50);
@@ -156,13 +156,14 @@ public class Main extends JPanel {
             });
 
             inputHandler = new InputHandler(character, this);
-            collisionDetector = new CollisionDetector(character, objects);
+
 
             setFocusable(true);
             requestFocusInWindow();
 
             // Initialize the renderer with parsed map data
             tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera);
+            collisionDetector = new CollisionDetector(character, objects, this.tmxRenderer);
         } catch (IOException | ParserConfigurationException | SAXException e) {
             System.err.println("Error initializing TmxRenderer: " + e.getMessage());
         }

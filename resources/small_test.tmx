@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="9">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="38">
  <tileset firstgid="1" source="Grass.tsx"/>
  <tileset firstgid="78" source="new_mroom_idle.tsx"/>
  <tileset firstgid="94" source="Hills.tsx"/>
  <tileset firstgid="171" source="Basic_Grass_Biom_things.tsx"/>
- <tileset firstgid="216" source="new_apple_attmpt.tsx"/>
+ <tileset firstgid="216" source="Tilled_Dirt.tsx"/>
+ <tileset firstgid="293" source="apple.tsx"/>
+ <tileset firstgid="297" source="pink_apple.tsx"/>
+ <tileset firstgid="301" source="dandelion.tsx"/>
+ <tileset firstgid="307" source="../../Final_Project_Tester/resources/assets/Grass.tsx"/>
+ <tileset firstgid="384" source="Water.tsx"/>
+ <tileset firstgid="388" source="onion.tsx"/>
  <layer id="1" name="Grass_Layer" width="20" height="20">
   <data encoding="csv">
 1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
 12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
 12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
 12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
-12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
-12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
+12,13,13,13,319,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
+12,13,13,319,319,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
 12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
 12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
 12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,
@@ -29,10 +35,18 @@
 23,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,25
 </data>
  </layer>
- <layer id="3" name="Hill_Layer" width="20" height="20">
+ <layer id="9" name="Path_Layer" width="20" height="20">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,116,117,117,117,117,118,0,0,0,0,0,0,0,0,0,0,0,0,
+0,252,0,186,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,219,0,0,186,0,219,0,0,0,0,0,0,0,230,0,0,0,0,0,
+0,230,0,0,0,0,230,0,0,0,0,0,0,0,230,0,0,0,0,0,
+0,230,0,0,0,0,230,0,0,186,186,0,0,0,230,0,0,0,0,0,
+0,253,250,250,250,250,267,0,0,0,0,0,0,0,230,0,0,0,0,0,
+0,0,0,0,0,0,230,0,0,0,0,0,0,0,230,0,0,0,0,0,
+0,0,0,0,0,0,230,0,0,0,0,0,0,0,230,0,0,0,0,0,
+0,0,0,0,0,0,253,250,250,250,250,250,250,250,267,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -40,6 +54,22 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="11" name="Hill_Layer" width="20" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,94,95,95,95,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,105,0,0,106,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,105,0,0,106,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,105,0,0,106,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,105,0,0,106,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,105,0,0,106,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,116,158,159,117,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,169,170,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -53,30 +83,95 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="2" name="Object_Layer">
-  <object id="1" name="mroom" gid="93" x="181.021" y="116.567" width="32" height="32">
+ <layer id="10" name="Biome_Layer" width="20" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,195,172,173,0,0,0,0,0,0,0,0,0,219,0,0,199,172,173,
+185,0,0,181,182,0,0,0,0,193,0,0,0,0,0,0,0,0,181,182,
+0,0,185,0,207,208,0,192,0,172,173,0,0,0,0,0,0,0,0,204,
+0,0,0,0,0,0,0,0,0,181,182,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,195,0,0,0,
+0,0,0,0,0,0,0,0,196,0,0,0,0,186,0,0,0,0,0,196,
+0,384,385,386,0,0,0,0,0,0,0,0,185,199,0,0,0,0,0,0,
+0,0,385,386,386,0,264,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,230,0,0,0,0,0,0,0,0,0,0,0,230,0,
+0,0,0,0,0,0,230,0,0,0,0,0,0,0,264,250,250,250,256,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="4" name="Collision_Layer">
+  <properties>
+   <property name="is_wall" type="bool" value="true"/>
+  </properties>
+  <object id="4" name="wall" x="146.083" y="51.6667" width="26.0833" height="28.25">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="is_wall" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="2" name="mroom" gid="93" x="103.259" y="154.7" width="32" height="32">
+  <object id="27" name="wall" x="65.1667" y="52" width="28.4167" height="12">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="is_wall" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="3" name="mroom" gid="93" x="198.5" y="228" width="32" height="32">
+  <object id="29" name="wall" x="256.25" y="115.333" width="16.75" height="13.8333">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="is_wall" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="8" name="apple" gid="219" x="78.5455" y="48" width="16" height="16">
+  <object id="30" name="wall" x="257.5" y="35.75" width="1.33333" height="76">
    <properties>
-    <property name="health" type="int" value="10"/>
-    <property name="is_apple" type="bool" value="true"/>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="31" name="wall" x="51.8333" y="16" width="22.9167" height="32.25">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="32" name="wall" x="306.083" y="118.167" width="8.91667" height="10.1666">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="4" name="Collision_Layer">
-  <object id="4" name="wall" x="33" y="19" width="88" height="12"/>
+ <objectgroup id="7" name="Object_Layer">
+  <object id="11" name="mroom" gid="93" x="88.75" y="39.5833" width="32" height="32">
+   <properties>
+    <property name="is_enemy" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="14" name="apple" gid="296" x="289.417" y="190.917" width="16" height="16">
+   <properties>
+    <property name="is_apple" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="15" name="apple" gid="300" x="14" y="159.75" width="16" height="16">
+   <properties>
+    <property name="is_apple" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="33" name="onion" gid="391" x="149.5" y="116" width="32" height="32">
+   <properties>
+    <property name="is_enemy" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="35" name="dandy" gid="304" x="274.75" y="88" width="32" height="32">
+   <properties>
+    <property name="is_enemy" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="36" name="dandy" gid="304" x="185.75" y="52.75" width="32" height="32">
+   <properties>
+    <property name="is_enemy" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

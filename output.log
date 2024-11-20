@@ -1,0 +1,539 @@
+TmxParser.java - parseTmxFile: firstgid: 1
+TmxParser.java - parseTmxFile: parsing tileset Grass.tsx
+------------- tilesetparser invoked -------------  
+TILESET SOURCE: Grass.tsx
+TmxParser.java - parseTmxFile: firstgid: 78
+TmxParser.java - parseTmxFile: parsing tileset new_mroom_idle.tsx
+------------- tilesetparser invoked -------------  
+TILESET SOURCE: new_mroom_idle.tsx
+---PARSING AN ANIMATION---
+ANIMATION MODEL: new_mroom_idle
+ANIMATION GID: 78
+--PARSING A FRAME--
+Adding frame to animation: tileId=78, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=79, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=80, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=81, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=82, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=83, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=84, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=85, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=86, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=87, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=88, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=89, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=90, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=91, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=92, duration=300
+--PARSING A FRAME--
+Adding frame to animation: tileId=93, duration=300
+TmxParser.java - parseTmxFile: firstgid: 94
+TmxParser.java - parseTmxFile: parsing tileset Hills.tsx
+------------- tilesetparser invoked -------------  
+TILESET SOURCE: Hills.tsx
+TmxParser.java - parseTmxFile: firstgid: 171
+TmxParser.java - parseTmxFile: parsing tileset Basic_Grass_Biom_things.tsx
+------------- tilesetparser invoked -------------  
+TILESET SOURCE: Basic_Grass_Biom_things.tsx
+TmxParser.java - parseTmxFile: firstgid: 216
+TmxParser.java - parseTmxFile: parsing tileset new_apple_attmpt.tsx
+------------- tilesetparser invoked -------------  
+TILESET SOURCE: new_apple_attmpt.tsx
+Object ID: 1 - Name: mroom
+Object ID: 2 - Name: mroom_1
+Object ID: 3 - Name: mroom_2
+Object ID: 8 - Name: apple
+Object ID: 4 - Name: wall
+----TilesetParser.java : getAnimationModel invoked ----
+LIST RETURNED: 
+Animation Models List is empty or null.
+----COLLISION DETECTOR INVOKED-----
+Character: Character@62446cd9
+---- TMX RENDERER INVOKED ----
+--- TmxRenderer.java : loadTilesetImages invoked ---
+
+TmxRenderer.java loading tilesetimage : resources/Grass.png
+TmxRenderer.java - loadTilesetImages:  calculating x and y positions of the tile within the tileset image grid: 
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 1
+x: 0, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 2
+x: 16, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 3
+x: 32, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 4
+x: 48, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 5
+x: 64, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 6
+x: 80, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 7
+x: 96, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 8
+x: 112, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 9
+x: 128, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 10
+x: 144, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 11
+x: 160, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 12
+x: 0, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 13
+x: 16, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 14
+x: 32, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 15
+x: 48, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 16
+x: 64, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 17
+x: 80, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 18
+x: 96, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 19
+x: 112, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 20
+x: 128, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 21
+x: 144, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 22
+x: 160, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 23
+x: 0, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 24
+x: 16, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 25
+x: 32, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 26
+x: 48, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 27
+x: 64, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 28
+x: 80, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 29
+x: 96, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 30
+x: 112, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 31
+x: 128, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 32
+x: 144, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 33
+x: 160, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 34
+x: 0, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 35
+x: 16, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 36
+x: 32, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 37
+x: 48, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 38
+x: 64, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 39
+x: 80, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 40
+x: 96, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 41
+x: 112, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 42
+x: 128, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 43
+x: 144, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 44
+x: 160, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 45
+x: 0, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 46
+x: 16, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 47
+x: 32, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 48
+x: 48, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 49
+x: 64, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 50
+x: 80, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 51
+x: 96, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 52
+x: 112, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 53
+x: 128, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 54
+x: 144, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 55
+x: 160, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 56
+x: 0, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 57
+x: 16, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 58
+x: 32, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 59
+x: 48, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 60
+x: 64, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 61
+x: 80, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 62
+x: 96, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 63
+x: 112, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 64
+x: 128, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 65
+x: 144, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 66
+x: 160, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 67
+x: 0, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 68
+x: 16, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 69
+x: 32, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 70
+x: 48, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 71
+x: 64, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 72
+x: 80, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 73
+x: 96, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 74
+x: 112, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 75
+x: 128, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 76
+x: 144, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 77
+x: 160, y: 96
+
+TmxRenderer.java loading tilesetimage : resources/new_mroom_idle.png
+TmxRenderer.java - loadTilesetImages:  calculating x and y positions of the tile within the tileset image grid: 
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 78
+x: 0, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 79
+x: 32, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 80
+x: 64, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 81
+x: 96, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 82
+x: 0, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 83
+x: 32, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 84
+x: 64, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 85
+x: 96, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 86
+x: 0, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 87
+x: 32, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 88
+x: 64, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 89
+x: 96, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 90
+x: 0, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 91
+x: 32, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 92
+x: 64, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 93
+x: 96, y: 96
+
+TmxRenderer.java loading tilesetimage : resources/Hills.png
+TmxRenderer.java - loadTilesetImages:  calculating x and y positions of the tile within the tileset image grid: 
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 94
+x: 0, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 95
+x: 16, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 96
+x: 32, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 97
+x: 48, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 98
+x: 64, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 99
+x: 80, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 100
+x: 96, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 101
+x: 112, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 102
+x: 128, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 103
+x: 144, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 104
+x: 160, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 105
+x: 0, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 106
+x: 16, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 107
+x: 32, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 108
+x: 48, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 109
+x: 64, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 110
+x: 80, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 111
+x: 96, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 112
+x: 112, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 113
+x: 128, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 114
+x: 144, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 115
+x: 160, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 116
+x: 0, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 117
+x: 16, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 118
+x: 32, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 119
+x: 48, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 120
+x: 64, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 121
+x: 80, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 122
+x: 96, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 123
+x: 112, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 124
+x: 128, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 125
+x: 144, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 126
+x: 160, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 127
+x: 0, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 128
+x: 16, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 129
+x: 32, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 130
+x: 48, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 131
+x: 64, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 132
+x: 80, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 133
+x: 96, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 134
+x: 112, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 135
+x: 128, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 136
+x: 144, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 137
+x: 160, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 138
+x: 0, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 139
+x: 16, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 140
+x: 32, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 141
+x: 48, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 142
+x: 64, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 143
+x: 80, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 144
+x: 96, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 145
+x: 112, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 146
+x: 128, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 147
+x: 144, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 148
+x: 160, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 149
+x: 0, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 150
+x: 16, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 151
+x: 32, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 152
+x: 48, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 153
+x: 64, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 154
+x: 80, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 155
+x: 96, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 156
+x: 112, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 157
+x: 128, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 158
+x: 144, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 159
+x: 160, y: 80
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 160
+x: 0, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 161
+x: 16, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 162
+x: 32, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 163
+x: 48, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 164
+x: 64, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 165
+x: 80, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 166
+x: 96, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 167
+x: 112, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 168
+x: 128, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 169
+x: 144, y: 96
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 170
+x: 160, y: 96
+
+TmxRenderer.java loading tilesetimage : resources/Basic_Grass_Biom_things.png
+TmxRenderer.java - loadTilesetImages:  calculating x and y positions of the tile within the tileset image grid: 
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 171
+x: 0, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 172
+x: 16, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 173
+x: 32, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 174
+x: 48, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 175
+x: 64, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 176
+x: 80, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 177
+x: 96, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 178
+x: 112, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 179
+x: 128, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 180
+x: 0, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 181
+x: 16, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 182
+x: 32, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 183
+x: 48, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 184
+x: 64, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 185
+x: 80, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 186
+x: 96, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 187
+x: 112, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 188
+x: 128, y: 16
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 189
+x: 0, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 190
+x: 16, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 191
+x: 32, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 192
+x: 48, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 193
+x: 64, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 194
+x: 80, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 195
+x: 96, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 196
+x: 112, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 197
+x: 128, y: 32
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 198
+x: 0, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 199
+x: 16, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 200
+x: 32, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 201
+x: 48, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 202
+x: 64, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 203
+x: 80, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 204
+x: 96, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 205
+x: 112, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 206
+x: 128, y: 48
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 207
+x: 0, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 208
+x: 16, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 209
+x: 32, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 210
+x: 48, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 211
+x: 64, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 212
+x: 80, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 213
+x: 96, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 214
+x: 112, y: 64
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 215
+x: 128, y: 64
+
+TmxRenderer.java loading tilesetimage : resources/new_apple_attmpt.png
+TmxRenderer.java - loadTilesetImages:  calculating x and y positions of the tile within the tileset image grid: 
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 216
+x: 0, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 217
+x: 16, y: 0
+TmxRenderer.java - loadTilesetImages: TileSet firstGid being loaded into tileImages: 218
+x: 32, y: 0
+Exception in thread "AWT-EventQueue-0" java.awt.image.RasterFormatException: (x + width) is outside of Raster
+	at java.desktop/sun.awt.image.ByteInterleavedRaster.createWritableChild(ByteInterleavedRaster.java:1241)
+	at java.desktop/java.awt.image.BufferedImage.getSubimage(BufferedImage.java:1203)
+	at TmxRenderer.loadTilesetImages(TmxRenderer.java:93)
+	at TmxRenderer.<init>(TmxRenderer.java:49)
+	at Main.initializeGame(Main.java:165)
+	at Main.<init>(Main.java:48)
+	at Main.lambda$main$4(Main.java:292)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
