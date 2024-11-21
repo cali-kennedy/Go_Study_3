@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import com.formdev.flatlaf.FlatLightLaf;
 
 // Panel that displays and handles the question-answer interaction when colliding with enemies
 public class GameQuestionPanel extends JPanel {

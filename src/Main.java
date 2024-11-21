@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import models.*;
 import org.xml.sax.SAXException;
+
 
 public class Main extends JPanel {
 
@@ -29,6 +31,9 @@ public class Main extends JPanel {
 
     public Main() {
         try {
+            // import look and feel from faltlaf
+            UIManager.setLookAndFeel(new FlatLightLaf());
+
             // Create a file to store the output
            // File outputFile = new File("output.log");
            // FileOutputStream fos = new FileOutputStream(outputFile);
