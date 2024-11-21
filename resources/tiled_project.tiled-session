@@ -1,0 +1,109 @@
+{
+    "activeFile": "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Basic_Grass_Biom_things.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Grass.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Hills.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilled_Dirt.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "Water.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "apple.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 16
+        },
+        "dandelion.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 16
+        },
+        "large_test.tmx": {
+            "scale": 1.1019999999999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 399.7277676950998,
+                "y": 399.7277676950998
+            }
+        },
+        "new_apple_attmpt.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 8,
+            "scaleInEditor": 23
+        },
+        "new_mroom_idle.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1.5
+        },
+        "onion.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 11
+        },
+        "pink_apple.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 16
+        },
+        "small_test.tmx": {
+            "expandedObjectLayers": [
+                7,
+                4
+            ],
+            "scale": 3,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 148.83333333333331,
+                "y": 128.16666666666669
+            }
+        }
+    },
+    "frame.defaultDuration": 300,
+    "last.imagePath": "C:/Users/calik/IdeaProjects/Go_Study_3/resources",
+    "openFiles": [
+        "Basic_Grass_Biom_things.tsx",
+        "Grass.tsx",
+        "Hills.tsx",
+        "large_test.tmx",
+        "new_mroom_idle.tsx",
+        "small_test.tmx",
+        "Tilled_Dirt.tsx",
+        "apple.tsx",
+        "pink_apple.tsx",
+        "onion.tsx",
+        "dandelion.tsx",
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
+    ],
+    "project": "",
+    "property.type": "bool",
+    "recentFiles": [
+        "Basic_Grass_Biom_things.tsx",
+        "Grass.tsx",
+        "Hills.tsx",
+        "large_test.tmx",
+        "new_mroom_idle.tsx",
+        "small_test.tmx",
+        "Tilled_Dirt.tsx",
+        "apple.tsx",
+        "pink_apple.tsx",
+        "onion.tsx",
+        "dandelion.tsx",
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

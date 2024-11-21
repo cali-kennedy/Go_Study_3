@@ -144,9 +144,9 @@ public class CollisionDetector {
         );
         Rectangle objectBounds = new Rectangle(
                 (int) object.getX(),
-                (int) object.getY(),
+                (int) object.getY()-30,
                 (int) object.getWidth(),
-                (int) object.getHeight()-30
+                (int) object.getHeight()
         );
         return charBounds.intersects(objectBounds);
     }
