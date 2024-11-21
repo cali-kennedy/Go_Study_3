@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * The Camera class manages the viewport for displaying a specific area of the game map
@@ -23,6 +24,7 @@ public class Camera {
         this.height = height;
         this.zoomLevel = zoomLevel;
         this.character = character;
+
     }
 
     /**
@@ -42,6 +44,7 @@ public class Camera {
         x = Math.max(0, Math.min(x, mapWidth - (int) (width / zoomLevel)));
         // Vertical bounds: 0 <= y <= (mapHeight - viewportHeight)
         y = Math.max(0, Math.min(y, mapHeight - (int) (height / zoomLevel)));
+
     }
 
     /**
@@ -54,6 +57,7 @@ public class Camera {
     public void applyTransform(Graphics2D g2d) {
         g2d.scale(zoomLevel, zoomLevel);  // Apply scaling to handle zoom
         g2d.translate(-x, -y);            // Move the viewport to follow the camera
+
     }
 
     // Getters for camera position, dimensions, and zoom level
@@ -111,4 +115,68 @@ public class Camera {
     public int getWidth() {
         return width;
     }
-}
+    public void drawHealth(Graphics g) {
+        int barWidth = 80;
+        int barHeight = 10;
+
+        // Draw health bar background
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y, barWidth, barHeight);
+
+        // Calculate health percentage (max health is 100)
+        float healthPercentage = (float) character.getHealth() / 100;
+        int currentHealthWidth = (int) (barWidth * healthPercentage);
+
+        // Draw current health
+        g.setColor(Color.RED);
+        g.fillRect(x, y, currentHealthWidth, barHeight);
+
+        // Draw border
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y, barWidth, barHeight);
+
+        // Draw health text
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 6));
+        String healthText = character.getHealth() + "/100";
+        FontMetrics fm = g.getFontMetrics();
+        int textX = x + (barWidth - fm.stringWidth(healthText)) / 2;
+        int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
+        g.drawString(healthText, textX, textY);
+    }
+
+    public void drawXP(Graphics g) {
+        int barWidth = 80;
+        int barHeight = 10;
+
+
+        // Draw XP bar background
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y+15, barWidth, barHeight);
+
+        // Calculate XP percentage using levelProgression and levelCap
+        float xpPercentage = (float) character.getLevelProgression() / character.getLevelCap();
+        int currentXPWidth = (int) (barWidth * xpPercentage);
+
+        // Draw current XP
+        g.setColor(Color.BLUE);
+        g.fillRect(x, y+15, currentXPWidth, barHeight);
+
+        // Draw border
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y+15, barWidth, barHeight);
+
+        // Draw XP text
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 6));
+        String xpText = "Level " + character.getLevel() + " (" +
+                character.getLevelProgression() + "/" + character.getLevelCap() + ")";
+        FontMetrics fm = g.getFontMetrics();
+        int textX = x + (barWidth - fm.stringWidth(xpText)) / 2;
+        int textY = y + 15 + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
+        g.drawString(xpText, textX, textY);
+    }
+
+    }
+
+

@@ -39,8 +39,8 @@
             "scale": 1.1019999999999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 399.7277676950998,
-                "y": 399.7277676950998
+                "x": 399.7277676950999,
+                "y": 399.7277676950999
             }
         },
         "new_apple_attmpt.tsx": {
@@ -92,6 +92,7 @@
     "project": "",
     "property.type": "bool",
     "recentFiles": [
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
         "Hills.tsx",
@@ -102,8 +103,11 @@
         "apple.tsx",
         "pink_apple.tsx",
         "onion.tsx",
-        "dandelion.tsx",
-        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
+        "dandelion.tsx"
     ],
-    "tileset.lastUsedFormat": "tsx"
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
 }

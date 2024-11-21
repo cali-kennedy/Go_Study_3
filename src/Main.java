@@ -136,14 +136,14 @@ public class Main extends JPanel {
 
         try {
             // Parse .tmx file and tileset files to populate models
-            tmxParser = new TmxParser("resources/small_test.tmx");
+            tmxParser = new TmxParser("resources/large_test.tmx");
             TmxMapModel mapModel = tmxParser.getMapModel();
             List<LayerModel> layers = tmxParser.getLayers();
             List<ObjectModel> objects = tmxParser.getObjects();
             List<AnimationModel> animations = tmxParser.getAnimations();
             List<TilesetModel> tilesets = tmxParser.getTilesets();
 
-            character = new Character("resources/rabbit.png", 10, 10, 20, 20);
+            character = new Character("resources/rabbit.png", 50, 250, 20, 20);
             camera = new Camera(400, 400,  3.0f, character);
 
             questionPanel = new GameQuestionPanel(character, this);
@@ -182,14 +182,14 @@ public class Main extends JPanel {
 
             AffineTransform oldTransform = g2d.getTransform();
 
-            camera.update(20*16, 20*16);
+            camera.update(50*50, 50*50);
             camera.applyTransform(g2d);
             tmxRenderer.render(g);
+            camera.drawXP(g);
+            camera.drawHealth(g);
             //   character = new Character("resources/rabbit.png",10,10,20,20);
             character.draw(g); // draw the character on the map
 
-            drawHealth(g);
-            drawXP(g);
 
             g2d.setTransform(oldTransform);
 
@@ -227,70 +227,6 @@ public class Main extends JPanel {
     }
 
 
-    private void drawHealth(Graphics g) {
-        int barWidth = 150;
-        int barHeight = 20;
-        int x = 10;
-        int y = 270 ;
-
-        // Draw health bar background
-        g.setColor(Color.GRAY);
-        g.fillRect(x, y, barWidth, barHeight);
-
-        // Calculate health percentage (max health is 100)
-        float healthPercentage = (float) character.getHealth() / 100;
-        int currentHealthWidth = (int) (barWidth * healthPercentage);
-
-        // Draw current health
-        g.setColor(Color.RED);
-        g.fillRect(x, y, currentHealthWidth, barHeight);
-
-        // Draw border
-        g.setColor(Color.BLACK);
-        g.drawRect(x, y, barWidth, barHeight);
-
-        // Draw health text
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 12));
-        String healthText = character.getHealth() + "/100";
-        FontMetrics fm = g.getFontMetrics();
-        int textX = x + (barWidth - fm.stringWidth(healthText)) / 2;
-        int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
-        g.drawString(healthText, textX, textY);
-    }
-
-    private void drawXP(Graphics g) {
-        int barWidth = 150;
-        int barHeight = 20;
-        int x = 10;
-        int y = 290;  // Position below health bar
-
-        // Draw XP bar background
-        g.setColor(Color.GRAY);
-        g.fillRect(x, y, barWidth, barHeight);
-
-        // Calculate XP percentage using levelProgression and levelCap
-        float xpPercentage = (float) character.getLevelProgression() / character.getLevelCap();
-        int currentXPWidth = (int) (barWidth * xpPercentage);
-
-        // Draw current XP
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, currentXPWidth, barHeight);
-
-        // Draw border
-        g.setColor(Color.BLACK);
-        g.drawRect(x, y, barWidth, barHeight);
-
-        // Draw XP text
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 12));
-        String xpText = "Level " + character.getLevel() + " (" +
-                character.getLevelProgression() + "/" + character.getLevelCap() + ")";
-        FontMetrics fm = g.getFontMetrics();
-        int textX = x + (barWidth - fm.stringWidth(xpText)) / 2;
-        int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
-        g.drawString(xpText, textX, textY);
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
