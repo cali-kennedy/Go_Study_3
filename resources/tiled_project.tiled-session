@@ -7,9 +7,18 @@
             "scaleInDock": 4,
             "scaleInEditor": 1
         },
+        "Basic_Plants.tsx": {
+            "scaleInDock": 1
+        },
         "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "Doors.tsx": {
+            "scaleInDock": 1
+        },
+        "Fences.tsx": {
+            "scaleInDock": 1
         },
         "Grass.tsx": {
             "scaleInDock": 1,
@@ -23,9 +32,18 @@
             "scaleInDock": 3,
             "scaleInEditor": 1
         },
+        "Tilled_Dirt_Wide.tsx": {
+            "scaleInDock": 1
+        },
         "Water.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "Wooden_House_Roof_Tilset.tsx": {
+            "scaleInDock": 1
+        },
+        "Wooden_House_Walls_Tilset.tsx": {
+            "scaleInDock": 1
         },
         "apple.tsx": {
             "scaleInDock": 1,
@@ -39,7 +57,7 @@
             "scale": 1.1019999999999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 399.7277676950999,
+                "x": 399.7277676950998,
                 "y": 399.7277676950999
             }
         },
@@ -68,8 +86,8 @@
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 148.83333333333331,
-                "y": 128.16666666666669
+                "x": 160.16666666666666,
+                "y": 160.16666666666669
             }
         }
     },
@@ -92,7 +110,6 @@
     "project": "",
     "property.type": "bool",
     "recentFiles": [
-        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
         "Hills.tsx",
@@ -103,7 +120,8 @@
         "apple.tsx",
         "pink_apple.tsx",
         "onion.tsx",
-        "dandelion.tsx"
+        "dandelion.tsx",
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
