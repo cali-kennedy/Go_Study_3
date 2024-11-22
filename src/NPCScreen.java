@@ -48,39 +48,21 @@ public class NPCScreen extends JDialog {
      *
      * @param parent            The parent JFrame for this modal dialog.
      * @param player            The player's Character object with player-specific stats and actions.
-     * @param collisionDetector CollisionDetector instance for managing and retrieving enemy data.
-     * @param tmxRenderer       Renderer instance for displaying the enemy's animation.
+     * @param collisionDetector CollisionDetector instance for managing and retrieving npc data.
+     * @param tmxRenderer       Renderer instance for displaying the npc's animation.
      */
     public NPCScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer, java.util.List<Question> questions, GameQuestionPanel questionPanel) {
-        super(parent, "Fight Screen", true);
+        super(parent, "NPC Screen", true);
         this.player = player;
-        this.enemyHealth = ENEMY_MAX_HEALTH;
         this.collisionDetector = collisionDetector;
         this.tmxRenderer = tmxRenderer;
         this.questions = questions;
         this.questionPanel = questionPanel;
-        loadPlayerImage();  // Ensure player image is loaded
         setupUI();
         startAnimationTimer();
     }
 
-    /**
-     * Loads the player image from the resources folder and checks if loading was successful.
-     */
-    private void loadPlayerImage() {
-        try {
-            playerImage = ImageIO.read(new File("resources/rabbit.png"));  // Ensure path is correct
-            if (playerImage == null) {
-                System.err.println("Player image is null after loading.");
-            }
-        } catch (IOException e) {
-            System.err.println("Player image could not be loaded: " + e.getMessage());
-        }
-    }
 
-    /**
-     * Sets up the user interface components for health display, attack button, and animation rendering.
-     */
     private void setupUI() {
         setSize(500, 350);
         setLocationRelativeTo(getParent());
@@ -88,12 +70,29 @@ public class NPCScreen extends JDialog {
         // Create a main panel with BorderLayout to retain original layout structure
         mainPanel = new JPanel(new BorderLayout());
 
-        // Add the JLabel for messages
-        messageLabel = new JLabel("Hello! I'm friendly :) Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
-        messageLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        messageLabel.setForeground(Color.BLUE);
-        messageLabel.setVisible(true); // Initially visible
-        mainPanel.add(messageLabel, BorderLayout.NORTH);
+        if (collisionDetector.getNPCName().equalsIgnoreCase("frog_2")) { // Change message depending on NPC shown
+            // Create a container panel for stacked messages
+            JPanel messagePanel = new JPanel();
+            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+            messagePanel.setOpaque(false); // Make it transparent if desired
+
+            // Add the first message
+            JLabel primaryMessage = new JLabel("Hello! I'm friendly :) Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
+            primaryMessage.setFont(new Font("Arial", Font.BOLD, 12));
+            primaryMessage.setForeground(Color.BLUE);
+
+            // Add the second message
+            JLabel secondaryMessage = new JLabel("Be careful. Not all like me are this nice.", SwingConstants.CENTER);
+            secondaryMessage.setFont(new Font("Arial", Font.ITALIC, 10));
+            secondaryMessage.setForeground(Color.RED);
+
+            // Add both labels to the message panel
+            messagePanel.add(primaryMessage);
+            messagePanel.add(secondaryMessage);
+
+            // Add the message panel to the top of the main panel
+            mainPanel.add(messagePanel, BorderLayout.NORTH);
+        }
 
         // Add interact button and animation panel
         mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
@@ -121,8 +120,9 @@ public class NPCScreen extends JDialog {
         questionPanel.setVisible(false); // Initially hidden
     }
 
+
     /**
-     * Creates a JPanel for rendering the enemy animation.
+     * Creates a JPanel for rendering the npc animation.
      *
      * @return JPanel for animation display.
      */
@@ -137,26 +137,7 @@ public class NPCScreen extends JDialog {
         };
     }
 
-    /**
-     * Creates a JPanel to display the player image on the left side of the fight screen.
-     *
-     * @return JPanel with player image.
-     */
-    private JPanel createPlayerImagePanel() {
-        JPanel imagePanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (playerImage != null) {
-                    g.drawImage(playerImage, 10, 40, 128, 128, null);  // Draw image with padding
-                } else {
-                    System.err.println("Player image is not available for rendering.");
-                }
-            }
-        };
 
-        return imagePanel;
-    }
     private JButton createInteractButton() {
         attackButton = new JButton("Interact");
         attackButton.addActionListener(e -> handleInteractAction());
@@ -167,10 +148,7 @@ public class NPCScreen extends JDialog {
         attackButton.addActionListener(e -> handleDontInteractAction());
         return attackButton;
     }
-    /**
-     * Executes the player attack action, reducing enemy health and initiating an enemy counterattack.
-     * Refreshes the screen to update health displays and animations.
-     */
+
     private void handleInteractAction() {
 
         showRandomQuestion(); // Display question and wait for an answer
@@ -205,38 +183,13 @@ public class NPCScreen extends JDialog {
 
         worker.execute();
     }
+
+
     private void handleDontInteractAction(){
         CloseScreen("Goodbye!", "Nice to meet you!");
     }
 
 
-    /**
-     * Reduces the enemy's health by a specified damage amount and updates the health label.
-     *
-     * @param damage Amount of damage inflicted on the enemy.
-     */
-    private void attackEnemy(int damage) {
-        enemyHealth = Math.max(0, enemyHealth - damage);
-        enemyHealthLabel.setText("Enemy Health: " + enemyHealth);
-    }
-
-
-    /**
-     * Executes the enemy's attack, reducing the player's health and updating the player's health label.
-     */
-    private void enemyAttack() {
-        player.removeHealth(ENEMY_ATTACK_DAMAGE);
-        playerHealthLabel.setText("Player Health: " + player.getHealth());
-    }
-
-
-
-    /**
-     * Displays the fight result in a dialog and stops the animation.
-     *
-     * @param message The result message to display.
-     * @param title   The title of the result dialog.
-     */
     private void CloseScreen(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
         tmxRenderer.repaintMap();
@@ -244,11 +197,7 @@ public class NPCScreen extends JDialog {
         dispose();
     }
 
-    /**
-     * Draws the enemy animation on the fight screen, using the enemy's name to identify the correct animation.
-     *
-     * @param g The Graphics context for rendering the animation.
-     */
+
     private void displayNPCAnimation(Graphics g) {
         npcName = collisionDetector.getNPCName();
         if (npcName != null) {
@@ -271,7 +220,7 @@ public class NPCScreen extends JDialog {
     }
 
     /**
-     * Stops the animation timer to prevent further updates after the fight ends.
+     * Stops the animation timer to prevent further updates after the interaction ends.
      */
     private void stopAnimationTimer() {
         if (animationTimer != null) {
