@@ -25,6 +25,7 @@ public class CollisionDetector {
 
     private int old_x;
     private int old_y;
+    private String npcName;
 
     public boolean isWallFlag() {
         return wallFlag;
@@ -40,9 +41,10 @@ public class CollisionDetector {
     public static class CollisionResult {
         private final boolean wallCollision;
         private final boolean enemyCollision;
+        private boolean npcCollision;
 
-        public CollisionResult(boolean wallCollision, boolean enemyCollision) {
-
+        public CollisionResult(boolean wallCollision, boolean enemyCollision, boolean npcCollision) {
+            this.npcCollision = npcCollision;
             this.wallCollision = wallCollision;
             this.enemyCollision = enemyCollision;
         }
@@ -54,6 +56,9 @@ public class CollisionDetector {
 
         public boolean hasEnemyCollision() {
             return enemyCollision;
+        }
+        public boolean hasNPCCollision() {
+            return npcCollision;
         }
     }
 
@@ -79,6 +84,7 @@ public class CollisionDetector {
     public CollisionResult checkCollisions() { //being checked constantly during runtime
         collidedWithWall = false;
         boolean enemyCollision = false;
+        boolean npcCollision = false;
 
         // Iterate through the objects and check for collisions
         Iterator<ObjectModel> iterator = objects.iterator();
@@ -102,14 +108,20 @@ public class CollisionDetector {
                             object.isDefeated();
                         }
                     }
-                    case "apple" -> { character.addHealth(HEALTH_REWARD);
+                    case "apple" -> {
+                        character.addHealth(HEALTH_REWARD);
                         System.out.println("COLLIDED WITH AN APPLE");
-                        tmxRenderer.markEnemyAsDefeated(object.getName()); }
-                }
-               System.out.println("Collided w wall: " + collidedWithWall);
+                        tmxRenderer.markEnemyAsDefeated(object.getName());
+                    }
+                    case "npc" -> {
+                        setNPCName(object.getName());
+                        npcCollision = true;
+                    }
+
+                }System.out.println("Collided w wall: " + collidedWithWall);
             }
         }
-        return new CollisionResult(collidedWithWall, enemyCollision);
+        return new CollisionResult(collidedWithWall, enemyCollision, npcCollision);
     }
 
     /**
@@ -173,6 +185,12 @@ public class CollisionDetector {
             } else if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
             }
+            if (property.getPropertyName().equalsIgnoreCase("is_npc") &&
+                    property.getValue().equalsIgnoreCase("true")) {
+                return "npc";
+            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
+                return property.getValue();
+            }
             if (property.getPropertyName().equalsIgnoreCase("is_wall") &&
                     property.getValue().equalsIgnoreCase("true")) {
                 return "wall";
@@ -202,6 +220,14 @@ public class CollisionDetector {
      */
     public String getEnemyName() {
         return enemyName;
+    }
+
+    public void setNPCName(String npcName){
+        this.npcName = npcName;
+    }
+
+    public String getNPCName(){
+        return npcName;
     }
 
     /**

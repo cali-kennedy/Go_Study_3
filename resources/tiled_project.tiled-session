@@ -20,6 +20,9 @@
         "Fences.tsx": {
             "scaleInDock": 1
         },
+        "GiantCrab.tsx": {
+            "scaleInDock": 1
+        },
         "Grass.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -52,6 +55,12 @@
         "dandelion.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 16
+        },
+        "dandelion2.tsx": {
+            "scaleInDock": 1
+        },
+        "frog.tsx": {
+            "scaleInDock": 1
         },
         "large_test.tmx": {
             "scale": 1.1019999999999999,
@@ -125,7 +134,7 @@
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 32,
+        "width": 32
     }
 }

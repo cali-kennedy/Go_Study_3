@@ -28,7 +28,9 @@ public class Main extends JPanel {
     private TmxParser tmxParser;
     private int old_x;
     private int old_y;
-
+    private boolean isNpcDialogOpen = false;
+    private long lastNpcCollisionTime = 0;   // Tracks the last time an NPC collision occurred
+    private static final int COOLDOWN_TIME_MS = 90000; // Cooldown period in milliseconds
     public Main() {
         try {
             // import look and feel from faltlaf
@@ -215,17 +217,20 @@ public class Main extends JPanel {
             fightScreen.setVisible(true);
         }
 
-        if (result.hasWallCollision()) {
-            // Revert to last "safe" position if a wall collision is detected
-            character.setX(old_x);
-            character.setY(old_y);
-        } else {
-            // Update old_x and old_y only if there’s no collision
-            old_x = previousX;
-            old_y = previousY;
+        if (result.hasNPCCollision() && !isNpcDialogOpen) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastNpcCollisionTime > COOLDOWN_TIME_MS) {
+                isNpcDialogOpen = true;
+                lastNpcCollisionTime = currentTime; // Update the last collision time
+
+                NPCScreen npcScreen = new NPCScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel);
+                npcScreen.setVisible(true);
+
+                isNpcDialogOpen = false; // Reset flag after NPCScreen is closed
+                System.out.println("----------------------HAD NPC COLL ----------------------------------------s");
+            }
         }
     }
-
 
 
     public static void main(String[] args) {

@@ -11,7 +11,7 @@ import java.util.Random;
  * It displays health indicators for both the player and the enemy,
  * provides an attack option, and manages the enemy's animation during the fight.
  */
-public class FightScreen extends JDialog {
+public class NPCScreen extends JDialog {
 
     // Constants for health and attack values
     private static final int ENEMY_MAX_HEALTH = 100;
@@ -19,6 +19,7 @@ public class FightScreen extends JDialog {
     private static final int ENEMY_ATTACK_DAMAGE = 15;
     private static final int ANIMATION_REFRESH_RATE_MS = 100;
     private JLayeredPane layeredPane;
+    private JLabel messageLabel;
     private JPanel mainPanel;
     // Player and enemy attributes
     private final Character player;
@@ -36,7 +37,7 @@ public class FightScreen extends JDialog {
     // External components for rendering and collision detection
     private final CollisionDetector collisionDetector;
     private final TmxRenderer tmxRenderer;
-    private String enemyName;
+   private String npcName;
     private java.util.List<Question> questions;
     // Timer for updating enemy animation
     private Timer animationTimer;
@@ -50,7 +51,7 @@ public class FightScreen extends JDialog {
      * @param collisionDetector CollisionDetector instance for managing and retrieving enemy data.
      * @param tmxRenderer       Renderer instance for displaying the enemy's animation.
      */
-    public FightScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer, java.util.List<Question> questions, GameQuestionPanel questionPanel) {
+    public NPCScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer, java.util.List<Question> questions, GameQuestionPanel questionPanel) {
         super(parent, "Fight Screen", true);
         this.player = player;
         this.enemyHealth = ENEMY_MAX_HEALTH;
@@ -87,15 +88,23 @@ public class FightScreen extends JDialog {
         // Create a main panel with BorderLayout to retain original layout structure
         mainPanel = new JPanel(new BorderLayout());
 
-        // Add health panel, attack button, and animation panel to mainPanel
-        mainPanel.add(createHealthPanel(), BorderLayout.NORTH);
-        mainPanel.add(createAttackButton(), BorderLayout.SOUTH);
+        // Add the JLabel for messages
+        messageLabel = new JLabel("Hello! I'm friendly :) Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
+        messageLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        messageLabel.setForeground(Color.BLUE);
+        messageLabel.setVisible(true); // Initially visible
+        mainPanel.add(messageLabel, BorderLayout.NORTH);
+
+        // Add interact button and animation panel
         mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
 
-        // Add player image panel on the left side
-        JPanel playerImagePanel = createPlayerImagePanel();
-        playerImagePanel.setPreferredSize(new Dimension(100, 100));
-        mainPanel.add(playerImagePanel, BorderLayout.LINE_START);
+        // Create a button panel to hold both buttons side by side
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
+        buttonPanel.add(createInteractButton());
+        buttonPanel.add(createDontInteractButton());
+
+        // Add the button panel to the bottom of the main panel
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         // Initialize the layered pane as content pane
         layeredPane = new JLayeredPane();
@@ -104,38 +113,12 @@ public class FightScreen extends JDialog {
 
         // Add mainPanel to the base layer of layeredPane
         mainPanel.setBounds(0, 0, 500, 300);
-        layeredPane.add(mainPanel, Integer.valueOf(0));  // Base layer
+        layeredPane.add(mainPanel, Integer.valueOf(0)); // Base layer
 
         // Add GameQuestionPanel on a higher layer for overlay
         questionPanel.setBounds(100, 75, questionPanel.getPreferredSize().width, questionPanel.getPreferredSize().height);
-        layeredPane.add(questionPanel, Integer.valueOf(1));  // Higher layer
-        questionPanel.setVisible(false);  // Initially hidden
-    }
-
-    /**
-     * Creates a JPanel containing labels to display player and enemy health.
-     *
-     * @return JPanel with health labels.
-     */
-    private JPanel createHealthPanel() {
-        JPanel healthPanel = new JPanel(new GridLayout(1, 2));
-        playerHealthLabel = new JLabel("Player Health: " + player.getHealth());
-        enemyHealthLabel = new JLabel("Enemy Health: " + enemyHealth);
-        healthPanel.add(playerHealthLabel);
-        healthPanel.add(enemyHealthLabel);
-        return healthPanel;
-    }
-
-    /**
-     * Creates and configures the attack button with an action listener
-     * that decreases enemy health and checks the fight status.
-     *
-     * @return Configured JButton for attacking.
-     */
-    private JButton createAttackButton() {
-        attackButton = new JButton("Attack");
-        attackButton.addActionListener(e -> handleAttackAction());
-        return attackButton;
+        layeredPane.add(questionPanel, Integer.valueOf(1)); // Higher layer
+        questionPanel.setVisible(false); // Initially hidden
     }
 
     /**
@@ -148,7 +131,7 @@ public class FightScreen extends JDialog {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                displayEnemyAnimation(g);
+                displayNPCAnimation(g);
 
             }
         };
@@ -174,12 +157,22 @@ public class FightScreen extends JDialog {
 
         return imagePanel;
     }
-
+    private JButton createInteractButton() {
+        attackButton = new JButton("Interact");
+        attackButton.addActionListener(e -> handleInteractAction());
+        return attackButton;
+    }
+    private JButton createDontInteractButton() {
+        attackButton = new JButton("Don't Interact");
+        attackButton.addActionListener(e -> handleDontInteractAction());
+        return attackButton;
+    }
     /**
      * Executes the player attack action, reducing enemy health and initiating an enemy counterattack.
      * Refreshes the screen to update health displays and animations.
      */
-    private void handleAttackAction() {
+    private void handleInteractAction() {
+
         showRandomQuestion(); // Display question and wait for an answer
 
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
@@ -202,28 +195,19 @@ public class FightScreen extends JDialog {
                 String answerFeedback = isCorrect ? "Correct! +100 XP" : "Incorrect! The answer was: " + questionPanel.currentQuestion.getAnswer();
 
                 // 1. Show feedback on answer correctness
-                JOptionPane.showMessageDialog(FightScreen.this, answerFeedback, "Answer Result", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(NPCScreen.this, answerFeedback, "Answer Result", JOptionPane.INFORMATION_MESSAGE);
 
-                // 2. Calculate and show damage dealt
-                int damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(5) + 1) : PLAYER_ATTACK_DAMAGE;
-                JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
 
-                attackEnemy(damage);
-                if (enemyHealth > 0) {
-                    enemyAttack();
-
-                    JOptionPane.showMessageDialog(FightScreen.this, "The enemy dealt " + damage + " damage!", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
-                }
-
-                // 3. Check and show fight status
-                checkFightStatus();
+                CloseScreen("Goodbye!", "Nice to meet you!");
                 repaint();
             }
         };
 
         worker.execute();
     }
-
+    private void handleDontInteractAction(){
+        CloseScreen("Goodbye!", "Nice to meet you!");
+    }
 
 
     /**
@@ -245,21 +229,7 @@ public class FightScreen extends JDialog {
         playerHealthLabel.setText("Player Health: " + player.getHealth());
     }
 
-    /**
-     * Checks if the fight has been won or lost and displays the appropriate result.
-     * Stops the animation timer and closes the dialog if the fight is over.
-     */
-    private void checkFightStatus() {
-        if (isFightWon()) {
-            //enemyName = collisionDetector.getEnemyName();
-            if (enemyName != null) {
-                // tmxRenderer.markEnemyAsDefeated(enemyName);            }
-            }
-            showFightResult("You have won the fight!", "Victory");
-        } else if (player.getHealth() <= 0) {
-            showFightResult("You have been defeated!", "Defeat");
-        }
-    }
+
 
     /**
      * Displays the fight result in a dialog and stops the animation.
@@ -267,10 +237,8 @@ public class FightScreen extends JDialog {
      * @param message The result message to display.
      * @param title   The title of the result dialog.
      */
-    private void showFightResult(String message, String title) {
+    private void CloseScreen(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
-        tmxRenderer.markEnemyAsDefeated(enemyName);
-        System.out.println("Enemy name from Fightscreen passed to tmx renderer: " + enemyName);
         tmxRenderer.repaintMap();
         stopAnimationTimer();
         dispose();
@@ -281,10 +249,10 @@ public class FightScreen extends JDialog {
      *
      * @param g The Graphics context for rendering the animation.
      */
-    private void displayEnemyAnimation(Graphics g) {
-        enemyName = collisionDetector.getEnemyName();
-        if (enemyName != null) {
-            tmxRenderer.renderEnemyAnimation(enemyName, 200, 40, g);
+    private void displayNPCAnimation(Graphics g) {
+        npcName = collisionDetector.getNPCName();
+        if (npcName != null) {
+            tmxRenderer.renderEnemyAnimation(npcName, 200, 40, g);
         } else {
             System.err.println("No enemy name found for animation rendering.");
 
@@ -293,15 +261,6 @@ public class FightScreen extends JDialog {
 
     }
 
-    /**
-     * Checks if the player has won the fight by reducing enemy health to zero.
-     *
-     * @return true if the enemy's health is zero or below.
-     */
-    private boolean isFightWon() {
-        return enemyHealth <= 0;
-
-    }
 
     /**
      * Starts a timer that repeatedly calls repaint to refresh the animation panel at a specified rate.
