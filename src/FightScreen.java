@@ -68,7 +68,7 @@ public class FightScreen extends JDialog {
      */
     private void loadPlayerImage() {
         try {
-            playerImage = ImageIO.read(new File("resources/rabbit.png"));  // Ensure path is correct
+            playerImage = ImageIO.read(new File("resources/rabbit2.png"));  // Ensure path is correct
             if (playerImage == null) {
                 System.err.println("Player image is null after loading.");
             }
@@ -96,9 +96,11 @@ public class FightScreen extends JDialog {
         JPanel playerImagePanel = createPlayerImagePanel();
         playerImagePanel.setPreferredSize(new Dimension(100, 100));
         mainPanel.add(playerImagePanel, BorderLayout.LINE_START);
-
+        Color customColor = new Color(255, 169, 178);
+        mainPanel.setBackground(customColor);
         // Initialize the layered pane as content pane
         layeredPane = new JLayeredPane();
+        layeredPane.setBackground(customColor);
         layeredPane.setPreferredSize(new Dimension(500, 300));
         setContentPane(layeredPane);
 
@@ -120,7 +122,15 @@ public class FightScreen extends JDialog {
     private JPanel createHealthPanel() {
         JPanel healthPanel = new JPanel(new GridLayout(1, 2));
         playerHealthLabel = new JLabel("Player Health: " + player.getHealth());
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+        playerHealthLabel.setFont(customFont);
+
+        Color customColor = new Color(7, 69, 8);
+
+        playerHealthLabel.setForeground(customColor);
         enemyHealthLabel = new JLabel("Enemy Health: " + enemyHealth);
+        enemyHealthLabel.setFont(customFont);
+        enemyHealthLabel.setForeground(Color.red);
         healthPanel.add(playerHealthLabel);
         healthPanel.add(enemyHealthLabel);
         return healthPanel;
@@ -134,6 +144,10 @@ public class FightScreen extends JDialog {
      */
     private JButton createAttackButton() {
         attackButton = new JButton("Attack");
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+        attackButton.setFont(customFont);
+        attackButton.setForeground(Color.RED);
+        attackButton.setBackground(Color.pink);
         attackButton.addActionListener(e -> handleAttackAction());
         return attackButton;
     }

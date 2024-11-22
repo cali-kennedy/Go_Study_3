@@ -36,14 +36,6 @@ public class Main extends JPanel {
             // import look and feel from faltlaf
             UIManager.setLookAndFeel(new FlatLightLaf());
 
-            // Create a file to store the output
-           // File outputFile = new File("output.log");
-           // FileOutputStream fos = new FileOutputStream(outputFile);
-           // PrintStream ps = new PrintStream(fos);
-
-            // Redirect System.out and System.err
-           // System.setOut(ps);
-           // System.setErr(ps);
 
 
         } catch (Exception e) {
@@ -73,24 +65,41 @@ public class Main extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 5, 5, 5);
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+        Color customgreenColor = new Color(145, 175, 156);
+        Color customLightgreenColor = new Color(195, 213, 200);
+        Color customRedColor = new Color(174, 141, 137);
 
         JTextField questionField = new JTextField(20);
+        questionField.setFont(customFont);
         JTextField answerField = new JTextField(20);
+        answerField.setFont(customFont);
         JButton addButton = new JButton("Add Question");
+        addButton.setFont(customFont);
+        addButton.setBackground(customLightgreenColor);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         JList<String> questionList = new JList<>(listModel);
+        questionList.setFont(customFont);
         JScrollPane scrollPane = new JScrollPane(questionList);
 
-        inputPanel.add(new JLabel("Question:"), gbc);
+        JLabel inputquestionLabel = new JLabel("Question: ");
+        inputquestionLabel.setFont(customFont);
+        inputPanel.add(inputquestionLabel, gbc);
         inputPanel.add(questionField, gbc);
-        inputPanel.add(new JLabel("Answer:"), gbc);
+        JLabel inputAnswerLabel = new JLabel("Question: ");
+        inputAnswerLabel.setFont(customFont);
+        inputPanel.add(inputAnswerLabel, gbc);
         inputPanel.add(answerField, gbc);
         inputPanel.add(addButton, gbc);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton startButton = new JButton("Start Game");
+        startButton.setFont(customFont);
+        startButton.setBackground(customgreenColor);
         JButton removeButton = new JButton("Remove Selected");
+        removeButton.setFont(customFont);
+        removeButton.setBackground(customRedColor);
         buttonPanel.add(removeButton);
         buttonPanel.add(startButton);
 
@@ -145,8 +154,8 @@ public class Main extends JPanel {
             List<AnimationModel> animations = tmxParser.getAnimations();
             List<TilesetModel> tilesets = tmxParser.getTilesets();
 
-            character = new Character("resources/rabbit.png", 50, 250, 20, 20);
-            camera = new Camera(400, 400,  3.0f, character);
+            character = new Character("resources/rabbit2.png", 50, 250, 32, 32);
+            camera = new Camera(700, 700,  3.0f, character);
 
             questionPanel = new GameQuestionPanel(character, this);
             questionPanel.setLocation(50, 50);
@@ -239,7 +248,7 @@ public class Main extends JPanel {
             Main mainPanel = new Main();
 
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            gameFrame.setSize(400, 400); // Adjust based on map size
+            gameFrame.setSize(700, 700); // Adjust based on map size
             gameFrame.add(mainPanel);
             gameFrame.setVisible(true);
             mainPanel.requestFocusInWindow();

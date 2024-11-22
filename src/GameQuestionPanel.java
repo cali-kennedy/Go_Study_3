@@ -28,11 +28,17 @@ public class GameQuestionPanel extends JPanel {
         // Create and style the question text label
         questionLabel = new JLabel();
         questionLabel.setHorizontalAlignment(JLabel.CENTER);
-        questionLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
 
         // Create input field and submit button
         answerField = new JTextField(20);
         submitButton = new JButton("Submit");
+        Font customFont = FontUtils.loadFont("/fonts/RubikMonoOne-Regular.ttf", 15);
+        submitButton.setFont(customFont);
+        Color customColor = new Color(200, 255, 223);
+        submitButton.setBackground(customColor);
+        questionLabel.setFont(customFont);
+        answerField.setFont(customFont);
         submitButton.setPreferredSize(new Dimension(100, 30));
 
         // Set up the panel layout for centering components

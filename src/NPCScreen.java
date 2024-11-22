@@ -67,17 +67,22 @@ public class NPCScreen extends JDialog {
             // Add the first message with custom styling
             JLabel primaryMessage = new JLabel("Hello! I'm friendly :) ", SwingConstants.CENTER);
             primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
-            primaryMessage.setForeground(Color.BLUE);
+            Color customColor = new Color(21, 97, 50);
+
+            primaryMessage.setForeground(customColor);
 
             // Add the first message with custom styling
             JLabel secondaryMessage = new JLabel("Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
             secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
-            secondaryMessage.setForeground(Color.BLUE);
+            customColor = new Color(21, 97, 83);
+            secondaryMessage.setForeground(customColor);
+
+            customColor = new Color(202, 121, 121);
 
             // Add the second message with custom styling
             JLabel thirdMessage = new JLabel("Be careful... Not all like me are this nice.", SwingConstants.CENTER);
-            thirdMessage.setFont(customFont != null ? customFont.deriveFont(14f) : new Font("Arial", Font.ITALIC, 10));
-            thirdMessage.setForeground(Color.RED);
+            thirdMessage.setFont(customFont != null ? customFont.deriveFont(17f) : new Font("Arial", Font.ITALIC, 10));
+            thirdMessage.setForeground(customColor);
 
             // Add both labels to the message panel
             messagePanel.add(primaryMessage);
@@ -108,7 +113,6 @@ public class NPCScreen extends JDialog {
         // Add mainPanel to the base layer of layeredPane
         mainPanel.setBounds(0, 0, 560, 300);
         layeredPane.add(mainPanel, Integer.valueOf(0)); // Base layer
-
         // Add GameQuestionPanel on a higher layer for overlay
         questionPanel.setBounds(100, 75, questionPanel.getPreferredSize().width, questionPanel.getPreferredSize().height);
         layeredPane.add(questionPanel, Integer.valueOf(1)); // Higher layer
@@ -135,11 +139,19 @@ public class NPCScreen extends JDialog {
 
     private JButton createInteractButton() {
         interactButton = new JButton("Interact");
+        Color custombgColor = new Color(134, 156, 143);
+        interactButton.setBackground(custombgColor);
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 17);
+        interactButton.setFont(customFont);
         interactButton.addActionListener(e -> handleInteractAction());
         return interactButton;
     }
     private JButton createDontInteractButton() {
         interactButton = new JButton("Don't Interact");
+        Color custombgColor = new Color(207, 156, 156);
+        interactButton.setBackground(custombgColor);
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 17);
+        interactButton.setFont(customFont);
         interactButton.addActionListener(e -> handleDontInteractAction());
         return interactButton;
     }

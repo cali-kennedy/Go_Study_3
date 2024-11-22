@@ -30,12 +30,12 @@ public class Character {
         this.XP = 0; // Initial XP
         this.level = 1; // Starting level
         this.levelProgression = 0; // Starting level progression
-        this.levelCap = 100; // XP needed for the first level up
+        this.levelCap = 500; // XP needed for the first level up
         this.health = MAX_HEALTH; // Start with full health
 
 
         try {
-            this.sprite = ImageIO.read(new File("resources/rabbit.png"));
+            this.sprite = ImageIO.read(new File("resources/rabbit2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

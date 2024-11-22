@@ -137,7 +137,9 @@ public class Camera {
 
         // Draw health text
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 6));
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 8);
+
+        g.setFont(customFont);
         String healthText = character.getHealth() + "/100";
         FontMetrics fm = g.getFontMetrics();
         int textX = x + (barWidth - fm.stringWidth(healthText)) / 2;
@@ -168,7 +170,9 @@ public class Camera {
 
         // Draw XP text
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 6));
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 8);
+
+        g.setFont(customFont);
         String xpText = "Level " + character.getLevel() + " (" +
                 character.getLevelProgression() + "/" + character.getLevelCap() + ")";
         FontMetrics fm = g.getFontMetrics();
