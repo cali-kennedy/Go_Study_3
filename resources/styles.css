@@ -1,0 +1,78 @@
+/* styles.css */
+@font-face {
+    font-family: 'VT323';
+    src: url('fonts/VT323-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Bungee';
+    src: url('fonts/Bungee-Regular.ttf');
+}
+
+/* Style for buttons */
+.button {
+    -fx-background-color: #FFA07A;
+    -fx-font-family: 'Monospaced';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.character-button {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-font-family: 'Bungee';
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+/* Style for Input Fields*/
+.input-field {
+    -fx-background-color: rgba(255, 250, 205, 0.7); /* Light yellow with 70% opacity */
+    -fx-font-family: 'Monospaced';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Style for buttons */
+.exit-button {
+    -fx-background-color: #FFA07A;
+    -fx-font-family: 'Monospaced';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+}
+/* Style for labels with the title style */
+.character-label {
+    -fx-font-family: 'Monospaced';
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+/* Style for labels with the title style */
+.title-label {
+    -fx-text-fill: white;
+    -fx-font-family: 'Bungee';
+    -fx-font-size: 30px;
+    -fx-effect: dropshadow(gaussian, black, 2, 0.5, 1, 1);
+    -fx-padding: 10px;
+}
+
+.selectedCharacter-label {
+    -fx-text-fill: black;
+    -fx-font-family: 'Bungee';
+    -fx-font-size: 25px;
+
+}
+
+/* Style for error messages */
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-family: 'Monospaced';
+    -fx-font-weight: bold;
+}
+
+/* Style for success messages */
+.success-label {
+    -fx-text-fill: green;
+    -fx-font-family: 'Monospaced';
+    -fx-font-weight: bold;
+}

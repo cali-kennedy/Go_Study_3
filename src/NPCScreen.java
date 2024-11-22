@@ -1,38 +1,23 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
 
-/**
- * FightScreen class represents a dialog where the player engages in a fight.
- * It displays health indicators for both the player and the enemy,
- * provides an attack option, and manages the enemy's animation during the fight.
- */
+
 public class NPCScreen extends JDialog {
 
-    // Constants for health and attack values
-    private static final int ENEMY_MAX_HEALTH = 100;
-    private static final int PLAYER_ATTACK_DAMAGE = 20;
-    private static final int ENEMY_ATTACK_DAMAGE = 15;
+
     private static final int ANIMATION_REFRESH_RATE_MS = 100;
     private JLayeredPane layeredPane;
-    private JLabel messageLabel;
+
     private JPanel mainPanel;
-    // Player and enemy attributes
+
+
     private final Character player;
-    private int enemyHealth;
+
 
     private boolean questionIsCorrect = false;
-    // Player character image
-    private BufferedImage playerImage;
 
-    // UI components for health display and attack functionality
-    private JLabel playerHealthLabel;
-    private JLabel enemyHealthLabel;
-    private JButton attackButton;
+
+    private JButton interactButton;
 
     // External components for rendering and collision detection
     private final CollisionDetector collisionDetector;
@@ -64,7 +49,7 @@ public class NPCScreen extends JDialog {
 
 
     private void setupUI() {
-        setSize(500, 350);
+        setSize(570, 350);
         setLocationRelativeTo(getParent());
 
         // Create a main panel with BorderLayout to retain original layout structure
@@ -76,19 +61,28 @@ public class NPCScreen extends JDialog {
             messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
             messagePanel.setOpaque(false); // Make it transparent if desired
 
-            // Add the first message
-            JLabel primaryMessage = new JLabel("Hello! I'm friendly :) Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
-            primaryMessage.setFont(new Font("Arial", Font.BOLD, 12));
+            // Load custom fonts using FontUtils
+            Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+
+            // Add the first message with custom styling
+            JLabel primaryMessage = new JLabel("Hello! I'm friendly :) ", SwingConstants.CENTER);
+            primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
             primaryMessage.setForeground(Color.BLUE);
 
-            // Add the second message
-            JLabel secondaryMessage = new JLabel("Be careful. Not all like me are this nice.", SwingConstants.CENTER);
-            secondaryMessage.setFont(new Font("Arial", Font.ITALIC, 10));
-            secondaryMessage.setForeground(Color.RED);
+            // Add the first message with custom styling
+            JLabel secondaryMessage = new JLabel("Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
+            secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+            secondaryMessage.setForeground(Color.BLUE);
+
+            // Add the second message with custom styling
+            JLabel thirdMessage = new JLabel("Be careful... Not all like me are this nice.", SwingConstants.CENTER);
+            thirdMessage.setFont(customFont != null ? customFont.deriveFont(14f) : new Font("Arial", Font.ITALIC, 10));
+            thirdMessage.setForeground(Color.RED);
 
             // Add both labels to the message panel
             messagePanel.add(primaryMessage);
             messagePanel.add(secondaryMessage);
+            messagePanel.add(thirdMessage);
 
             // Add the message panel to the top of the main panel
             mainPanel.add(messagePanel, BorderLayout.NORTH);
@@ -102,6 +96,7 @@ public class NPCScreen extends JDialog {
         buttonPanel.add(createInteractButton());
         buttonPanel.add(createDontInteractButton());
 
+
         // Add the button panel to the bottom of the main panel
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -111,7 +106,7 @@ public class NPCScreen extends JDialog {
         setContentPane(layeredPane);
 
         // Add mainPanel to the base layer of layeredPane
-        mainPanel.setBounds(0, 0, 500, 300);
+        mainPanel.setBounds(0, 0, 560, 300);
         layeredPane.add(mainPanel, Integer.valueOf(0)); // Base layer
 
         // Add GameQuestionPanel on a higher layer for overlay
@@ -139,14 +134,14 @@ public class NPCScreen extends JDialog {
 
 
     private JButton createInteractButton() {
-        attackButton = new JButton("Interact");
-        attackButton.addActionListener(e -> handleInteractAction());
-        return attackButton;
+        interactButton = new JButton("Interact");
+        interactButton.addActionListener(e -> handleInteractAction());
+        return interactButton;
     }
     private JButton createDontInteractButton() {
-        attackButton = new JButton("Don't Interact");
-        attackButton.addActionListener(e -> handleDontInteractAction());
-        return attackButton;
+        interactButton = new JButton("Don't Interact");
+        interactButton.addActionListener(e -> handleDontInteractAction());
+        return interactButton;
     }
 
     private void handleInteractAction() {
