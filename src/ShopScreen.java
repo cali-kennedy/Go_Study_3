@@ -1,42 +1,37 @@
 import javax.swing.*;
 import java.awt.*;
-
+import java.util.List;
 
 public class ShopScreen extends JDialog {
 
-
     private static final int ANIMATION_REFRESH_RATE_MS = 100;
-    private JLayeredPane layeredPane;
 
+    private JLayeredPane layeredPane;
     private JPanel mainPanel;
 
-
     private final Character player;
-
-
-    private boolean questionIsCorrect = false;
-
-
-    private JButton interactButton;
 
     // External components for rendering and collision detection
     private final CollisionDetector collisionDetector;
     private final TmxRenderer tmxRenderer;
-    private String npcName;
-    private java.util.List<Question> questions;
-    // Timer for updating enemy animation
+    private final List<Question> questions;
+    private final GameQuestionPanel questionPanel;
+
+    // Timer for updating NPC animation
     private Timer animationTimer;
-    private GameQuestionPanel questionPanel;
 
     /**
-     * Constructor initializes the FightScreen dialog with specified parameters and starts the animation.
+     * Constructor initializes the ShopScreen dialog with specified parameters and starts the animation.
      *
      * @param parent            The parent JFrame for this modal dialog.
      * @param player            The player's Character object with player-specific stats and actions.
-     * @param collisionDetector CollisionDetector instance for managing and retrieving npc data.
-     * @param tmxRenderer       Renderer instance for displaying the npc's animation.
+     * @param collisionDetector CollisionDetector instance for managing and retrieving NPC data.
+     * @param tmxRenderer       Renderer instance for displaying the NPC's animation.
+     * @param questions         List of questions for the game.
+     * @param questionPanel     Panel for displaying game questions.
      */
-    public ShopScreen(JFrame parent, Character player, CollisionDetector collisionDetector, TmxRenderer tmxRenderer, java.util.List<Question> questions, GameQuestionPanel questionPanel) {
+    public ShopScreen(JFrame parent, Character player, CollisionDetector collisionDetector,
+                      TmxRenderer tmxRenderer, List<Question> questions, GameQuestionPanel questionPanel) {
         super(parent, "NPC Screen", true);
         this.player = player;
         this.collisionDetector = collisionDetector;
@@ -47,63 +42,19 @@ public class ShopScreen extends JDialog {
         startAnimationTimer();
     }
 
-
     private void setupUI() {
         setSize(570, 350);
         setLocationRelativeTo(getParent());
 
-        // Create a main panel with BorderLayout to retain original layout structure
+        // Create a main panel with BorderLayout
         mainPanel = new JPanel(new BorderLayout());
 
-        if (collisionDetector.getNPCName().equalsIgnoreCase("frog_2")) { // Change message depending on NPC shown
-            // Create a container panel for stacked messages
-            JPanel messagePanel = new JPanel();
-            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
-            messagePanel.setOpaque(false); // Make it transparent if desired
+            mainPanel.add(createMessagePanel(), BorderLayout.NORTH);
 
-            // Load custom fonts using FontUtils
-            Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
 
-            // Add the first message with custom styling
-            JLabel primaryMessage = new JLabel("Hello! I'm friendly :) ", SwingConstants.CENTER);
-            primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
-            Color customColor = new Color(21, 97, 50);
-
-            primaryMessage.setForeground(customColor);
-
-            // Add the first message with custom styling
-            JLabel secondaryMessage = new JLabel("Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
-            secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
-            customColor = new Color(21, 97, 83);
-            secondaryMessage.setForeground(customColor);
-
-            customColor = new Color(202, 121, 121);
-
-            // Add the second message with custom styling
-            JLabel thirdMessage = new JLabel("Be careful... Not all like me are this nice.", SwingConstants.CENTER);
-            thirdMessage.setFont(customFont != null ? customFont.deriveFont(17f) : new Font("Arial", Font.ITALIC, 10));
-            thirdMessage.setForeground(customColor);
-
-            // Add both labels to the message panel
-            messagePanel.add(primaryMessage);
-            messagePanel.add(secondaryMessage);
-            messagePanel.add(thirdMessage);
-
-            // Add the message panel to the top of the main panel
-            mainPanel.add(messagePanel, BorderLayout.NORTH);
-        }
-
-        // Add interact button and animation panel
+        // Add animation panel and button panel
         mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
-
-        // Create a button panel to hold both buttons side by side
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
-        buttonPanel.add(createInteractButton());
-        buttonPanel.add(createDontInteractButton());
-
-
-        // Add the button panel to the bottom of the main panel
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        mainPanel.add(createButtonPanel(), BorderLayout.SOUTH);
 
         // Initialize the layered pane as content pane
         layeredPane = new JLayeredPane();
@@ -112,144 +63,171 @@ public class ShopScreen extends JDialog {
 
         // Add mainPanel to the base layer of layeredPane
         mainPanel.setBounds(0, 0, 560, 300);
-        layeredPane.add(mainPanel, Integer.valueOf(0)); // Base layer
-        // Add GameQuestionPanel on a higher layer for overlay
-        questionPanel.setBounds(100, 75, questionPanel.getPreferredSize().width, questionPanel.getPreferredSize().height);
-        layeredPane.add(questionPanel, Integer.valueOf(1)); // Higher layer
+        layeredPane.add(mainPanel, Integer.valueOf(0));
+
         questionPanel.setVisible(false); // Initially hidden
     }
 
+    private JPanel createMessagePanel() {
+        JPanel messagePanel = new JPanel();
+        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+        messagePanel.setOpaque(false); // Make it transparent if desired
 
-    /**
-     * Creates a JPanel for rendering the npc animation.
-     *
-     * @return JPanel for animation display.
-     */
+        // Load custom fonts using FontUtils
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+        System.out.println("shopname: "+ collisionDetector.getShopName());
+        if(collisionDetector.getShopName().equalsIgnoreCase("pink_shop")) {
+            // Add messages with custom styling
+            messagePanel.add(createStyledLabel("Hello! :)", customFont, new Color(21, 97, 50)));
+            messagePanel.add(createStyledLabel("Spend 1 Study Stud for 10 XP.", customFont, new Color(21, 97, 83)));
+            messagePanel.add(createStyledLabel("Spend 3 Study Studs for 10 health.", customFont, new Color(21, 97, 83)));
+            return messagePanel;
+
+        }
+        if(collisionDetector.getShopName().equalsIgnoreCase("brown_shop")) {
+            // Add messages with custom styling
+
+            messagePanel.add(createStyledLabel("Hello! :)", customFont, new Color(21, 97, 50)));
+            messagePanel.add(createStyledLabel("Spend 10 Study Stud for 50 XP.", customFont, new Color(21, 97, 83)));
+            messagePanel.add(createStyledLabel("Spend 30 Study Studs for 150 XP.", customFont, new Color(21, 97, 83)));
+            return messagePanel;
+        }
+        return messagePanel;
+    }
+
+    private JLabel createStyledLabel(String text, Font font, Color color) {
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(font != null ? font : new Font("Arial", Font.BOLD, 12));
+        label.setForeground(color);
+        return label;
+    }
+
+    private JPanel createButtonPanel() {
+        if (collisionDetector.getShopName().equalsIgnoreCase("pink_shop")) {
+            JPanel buttonPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+            buttonPanel.add(createBuyXPButton());
+            buttonPanel.add(createBuyHealthButton());
+            buttonPanel.add(createLeaveButton());
+            return buttonPanel;
+        }
+        if (collisionDetector.getShopName().equalsIgnoreCase("brown_shop")) {
+            JPanel buttonPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+            buttonPanel.add(createBuyMediumXPButton());
+            buttonPanel.add(createBuyLargeXPButton());
+            buttonPanel.add(createLeaveButton());
+            return buttonPanel;
+        }else{
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        buttonPanel.add(createBuyMediumXPButton());
+        buttonPanel.add(createBuyLargeXPButton());
+        buttonPanel.add(createLeaveButton());
+        return buttonPanel; }
+    }
+
     private JPanel createAnimationPanel() {
         return new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                displayNPCAnimation(g);
-
+                displayShopAnimation(g);
             }
         };
     }
 
-
-    private JButton createInteractButton() {
-        interactButton = new JButton("Interact");
-        Color custombgColor = new Color(134, 156, 143);
-        interactButton.setBackground(custombgColor);
-        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 17);
-        interactButton.setFont(customFont);
-        interactButton.addActionListener(e -> handleInteractAction());
-        return interactButton;
-    }
-    private JButton createDontInteractButton() {
-        interactButton = new JButton("Don't Interact");
-        Color custombgColor = new Color(207, 156, 156);
-        interactButton.setBackground(custombgColor);
-        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 17);
-        interactButton.setFont(customFont);
-        interactButton.addActionListener(e -> handleDontInteractAction());
-        return interactButton;
-    }
-
-    private void handleInteractAction() {
-
-        showRandomQuestion(); // Display question and wait for an answer
-
-        SwingWorker<Void, Void> worker = new SwingWorker<>() {
-            @Override
-            protected Void doInBackground() {
-                while (!questionPanel.isAnswered()) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void done() {
-                boolean isCorrect = questionPanel.isCorrect();
-                int xpGain = isCorrect ? 100 : 0; // XP for correct answer
-                String answerFeedback = isCorrect ? "Correct! +100 XP" : "Incorrect! The answer was: " + questionPanel.currentQuestion.getAnswer();
-
-                // 1. Show feedback on answer correctness
-                JOptionPane.showMessageDialog(ShopScreen.this, answerFeedback, "Answer Result", JOptionPane.INFORMATION_MESSAGE);
-
-
-                CloseScreen("Goodbye!", "Nice to meet you!");
-                repaint();
-            }
-        };
-
-        worker.execute();
+    private JButton createBuyHealthButton() {
+        JButton button = new JButton("Buy 10 Health");
+        button.setBackground(new Color(134, 156, 143));
+        button.setFont(loadCustomFont(17));
+        button.addActionListener(e -> handleBuyHealthAction());
+        return button;
     }
 
 
-    private void handleDontInteractAction(){
-        CloseScreen("Goodbye!", "Nice to meet you!");
+
+    private JButton createBuyXPButton() {
+        JButton button = new JButton("Buy 10 XP");
+        button.setBackground(new Color(134, 156, 143));
+        button.setFont(loadCustomFont(17));
+        button.addActionListener(e -> handleBuyXPAction());
+        return button;
+    }
+    private JButton createBuyMediumXPButton() {
+        JButton button = new JButton("Buy 50 XP");
+        button.setBackground(new Color(134, 156, 143));
+        button.setFont(loadCustomFont(17));
+        button.addActionListener(e -> handleBuyXPAction());
+        return button;
+    }
+    private JButton createBuyLargeXPButton() {
+        JButton button = new JButton("Buy 150 XP");
+        button.setBackground(new Color(134, 156, 143));
+        button.setFont(loadCustomFont(17));
+        button.addActionListener(e -> handleBuyXPAction());
+        return button;
     }
 
+    private JButton createLeaveButton() {
+        JButton button = new JButton("Leave");
+        button.setBackground(new Color(207, 156, 156));
+        button.setFont(loadCustomFont(17));
+        button.addActionListener(e -> handleLeaveAction());
+        return button;
+    }
 
-    private void CloseScreen(String message, String title) {
+    private Font loadCustomFont(int size) {
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", size);
+        return customFont != null ? customFont : new Font("Arial", Font.PLAIN, size);
+    }
+
+    private void handleBuyXPAction() {
+        if (player.getStudyStudCount() >= 1) {
+            player.removeStudyStud(1);
+            player.addXP(10);
+            JOptionPane.showMessageDialog(this, "You bought 10 XP for 1 Study Stud.");
+        } else {
+            JOptionPane.showMessageDialog(this, "You don't have enough Study Studs!", "Insufficient Funds", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void handleBuyHealthAction() {
+        if (player.getStudyStudCount() >= 3) {
+            player.removeStudyStud(3);
+            player.addHealth(10);
+            JOptionPane.showMessageDialog(this, "You bought 10 health for 3 Study Studs.");
+        } else {
+            JOptionPane.showMessageDialog(this, "You don't have enough Study Studs!", "Insufficient Funds", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void handleLeaveAction() {
+        closeScreen("Goodbye!", "Nice to meet you!");
+    }
+
+    private void closeScreen(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
         tmxRenderer.repaintMap();
         stopAnimationTimer();
         dispose();
     }
 
-
-    private void displayNPCAnimation(Graphics g) {
+    private void displayShopAnimation(Graphics g) {
         String shopName = collisionDetector.getShopName();
         if (shopName != null) {
             tmxRenderer.renderEnemyAnimation(shopName, 200, 40, g);
         } else {
-            System.err.println("No enemy name found for animation rendering.");
-
+            System.err.println("No shop name found for animation rendering.");
         }
-
-
     }
 
-
-    /**
-     * Starts a timer that repeatedly calls repaint to refresh the animation panel at a specified rate.
-     */
     private void startAnimationTimer() {
         animationTimer = new Timer(ANIMATION_REFRESH_RATE_MS, e -> repaint());
         animationTimer.start();
     }
 
-    /**
-     * Stops the animation timer to prevent further updates after the interaction ends.
-     */
     private void stopAnimationTimer() {
         if (animationTimer != null) {
             animationTimer.stop();
         }
     }
 
-    // Modify showRandomQuestion to display GameQuestionPanel in the layered pane
-    private void showRandomQuestion() {
-        if (!questions.isEmpty()) {
-            int randomIndex = (int) (Math.random() * questions.size());
-            Question randomQuestion = questions.get(randomIndex);
-
-            // Set question and display the panel on the top layer
-            questionPanel.showQuestion(randomQuestion);
-            questionPanel.setVisible(true);
-            questionIsCorrect = questionPanel.isCorrect();
-        }
-    }
-
-
 }
-
-
-

@@ -144,7 +144,7 @@ public class Character {
     }
 
 
-    public int getStudy_stud_count() {
+    public int getStudyStudCount() {
         return study_stud_count;
     }
 

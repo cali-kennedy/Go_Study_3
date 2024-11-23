@@ -248,7 +248,7 @@ public class Main extends JPanel {
         if (result.hasShopCollision() && !isShopDialogOpen) {
             System.out.println("----------main shop");
             long currentTime = System.currentTimeMillis();
-            if (currentTime - lastShopCollisionTime > COOLDOWN_TIME_MS/2) {
+            if (currentTime - lastShopCollisionTime > COOLDOWN_TIME_MS/10) {
                 lastShopCollisionTime = currentTime; // Update the last collision time
 
                 isShopDialogOpen = true;

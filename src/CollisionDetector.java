@@ -247,6 +247,7 @@ public class CollisionDetector {
             } else if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
             }
+
         }
         return object.getName().equalsIgnoreCase("wall") ? "wall" : "unknown";
     }

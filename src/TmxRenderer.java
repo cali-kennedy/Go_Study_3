@@ -236,12 +236,25 @@ public class TmxRenderer {
                     animationFrameCache.put(tileId, frame);
                 }
             }
+         // for me to think about later - cali
+            //   if((frame!= null) && animation.getName().equalsIgnoreCase("gnome")){
+          //      g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
+
+           // }
+            if((frame!= null) && animation.getName().equalsIgnoreCase("brown_shop")){
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
+
+            }
+            if ((frame != null) && animation.getName().equalsIgnoreCase("pink_shop"))
+            {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
+            }
 
             if (frame != null && animation.getName().equalsIgnoreCase("shop")) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
             }
 
-            if (frame != null && !animation.getName().equalsIgnoreCase("shop")) {
+            if (frame != null && !animation.getName().equalsIgnoreCase("shop") && !animation.getName().equalsIgnoreCase("pink_shop") && !animation.getName().equalsIgnoreCase("brown_shop")) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
             }
             //System.out.println("animation.getName(): " +animation.getName());
@@ -286,7 +299,11 @@ public class TmxRenderer {
         }
 
         // Draw the frame if it exists
-        if (frame != null) {
+        if (frame != null && enemyName.equalsIgnoreCase("shop")) {
+            g.drawImage(frame, x/2 + 25, y/2, ENEMY_RENDER_SIZE*2, ENEMY_RENDER_SIZE*2, null);
+        }
+        // Draw the frame if it exists
+        else if (frame != null) {
             g.drawImage(frame, x, y, ENEMY_RENDER_SIZE, ENEMY_RENDER_SIZE, null);
         }
 
