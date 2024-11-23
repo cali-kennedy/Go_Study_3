@@ -93,6 +93,7 @@ public class TmxRenderer {
                         System.err.println("Skipping tile: (" + x + ", " + y + ") is out of bounds for tileset image " + tileset.getImageSource());
                         continue;
                     }
+
                     // Add to tileImages map
                     // Extract the tile as a subimage and store it in `tileImages` with its GID key.
                     tileImages.put(tileset.getFirstGid() + i, tilesetImage.getSubimage(x, y, tileWidth, tileHeight));
@@ -168,26 +169,37 @@ public class TmxRenderer {
     }
     public void markEnemyAsDefeated(String enemyName) {
         defeatedEnemies.add(enemyName);
-        //objects.removeIf(object -> object.getName().equalsIgnoreCase(enemyName));
+
+        // Update animations and mark as defeated
         for (AnimationModel animation : animations) {
             if (animation.getName().equalsIgnoreCase(enemyName)) {
                 animation.setDefeated(true);
                 break;
             }
         }
-        System.out.println("\ntmxrenderer ENEMY NAME : " + enemyName);
-        for (ObjectModel object : objects) {
-            if(object.isDefeated()) {continue;}
-            System.out.println("looping through tmxrenderer OBJECT NAME" + object.getName());
-            if (object.getName().equalsIgnoreCase(enemyName)) {
 
+        System.out.println("\ntmxrenderer ENEMY NAME : " + enemyName);
+
+        // Use an Iterator to safely remove objects from the list
+        Iterator<ObjectModel> iterator = objects.iterator();
+        while (iterator.hasNext()) {
+            ObjectModel object = iterator.next();
+            if (object.isDefeated()) {
+                continue; // Skip already defeated objects
+            }
+            System.out.println("looping through tmxrenderer OBJECT NAME: " + object.getName());
+            if (object.getName().equalsIgnoreCase(enemyName)) {
                 System.out.println("tmxrender OBJECT NAME MATCH : " + object.getName());
                 object.setDefeated(true); // Mark the enemy as defeated
+                iterator.remove(); // Safely remove the object
                 break;
             }
-            updateDefeatedEnemies();
         }
+
+        // Update defeated enemies list after the loop
+        updateDefeatedEnemies();
     }
+
     /**
      * Renders the map, including static tiles and animations, based on the camera's position.
      *
@@ -218,15 +230,22 @@ public class TmxRenderer {
             BufferedImage frame = animationFrameCache.get(tileId);
 
             if (frame == null) {
+
                 frame = tileImages.get(tileId);
                 if (frame != null) {
                     animationFrameCache.put(tileId, frame);
                 }
             }
 
-            if (frame != null) {
+            if (frame != null && animation.getName().equalsIgnoreCase("shop")) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
+            }
+
+            if (frame != null && !animation.getName().equalsIgnoreCase("shop")) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
             }
+            //System.out.println("animation.getName(): " +animation.getName());
+
         }
     }
 

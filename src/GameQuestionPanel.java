@@ -21,6 +21,7 @@ public class GameQuestionPanel extends JPanel {
         this.mainPanel = mainPanel;
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(300, 150));
+
         // Set semi-transparent white background
         setBackground(new Color(255, 255, 255, 220));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -28,6 +29,7 @@ public class GameQuestionPanel extends JPanel {
         // Create and style the question text label
         questionLabel = new JLabel();
         questionLabel.setHorizontalAlignment(JLabel.CENTER);
+
 
 
         // Create input field and submit button

@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 /**
  * The Camera class manages the viewport for displaying a specific area of the game map
@@ -145,6 +144,43 @@ public class Camera {
         int textX = x + (barWidth - fm.stringWidth(healthText)) / 2;
         int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
         g.drawString(healthText, textX, textY);
+    }
+    public void drawStudyStudCount(Graphics g) {
+        int barWidth = 100;
+        int barHeight = 10;
+
+        // Draw health bar background
+        Color customPurpleColor = new Color(207, 187, 232);
+        g.setColor(customPurpleColor);
+        g.fillRect(this.x+125, y, barWidth, barHeight);
+
+        // Calculate health percentage (max health is 100)
+        float healthPercentage = (float) character.getHealth() / 100;
+        int currentHealthWidth = (int) (barWidth * healthPercentage);
+
+        // Draw current health
+        g.setColor(Color.WHITE);
+     //   g.fillRect(x, y, currentHealthWidth, barHeight);
+
+        // Draw border
+        g.setColor(Color.BLACK);
+        g.drawRect(this.x+125, y, barWidth, barHeight);
+
+        // Draw health text
+        g.setColor(Color.WHITE);
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 8);
+
+        g.setFont(customFont);
+        String studyStudText = "Study Stud Count: " + character.getStudy_stud_count();
+        FontMetrics fm = g.getFontMetrics();
+        int textX = x+130;
+        int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
+
+      //  g.drawString(studyStudText, textX, textY);
+        Color customColor = new Color(154, 82, 241);
+        g.setColor(customColor);
+      //  String studyStudCountText = "Study Studs: " + character.getStudy_stud_count();
+        g.drawString(studyStudText, textX, textY);
     }
 
     public void drawXP(Graphics g) {

@@ -29,7 +29,11 @@ public class Main extends JPanel {
     private int old_x;
     private int old_y;
     private boolean isNpcDialogOpen = false;
+    private boolean isShopDialogOpen = false;
+
     private long lastNpcCollisionTime = 0;   // Tracks the last time an NPC collision occurred
+    private long lastShopCollisionTime = 0;   // Tracks the last time an NPC collision occurred
+
     private static final int COOLDOWN_TIME_MS = 90000; // Cooldown period in milliseconds
     public Main() {
         try {
@@ -56,7 +60,8 @@ public class Main extends JPanel {
         JDialog dialog = new JDialog(gameFrame, "Input Questions", true);
         dialog.setSize(400, 500);
         dialog.setLocationRelativeTo(null);
-
+        Color customorangeColor = new Color(237, 211, 195);
+        dialog.setBackground(customorangeColor);
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -198,6 +203,7 @@ public class Main extends JPanel {
             tmxRenderer.render(g);
             camera.drawXP(g);
             camera.drawHealth(g);
+            camera.drawStudyStudCount(g);
             //   character = new Character("resources/rabbit.png",10,10,20,20);
             character.draw(g); // draw the character on the map
 
@@ -220,27 +226,58 @@ public class Main extends JPanel {
 
         CollisionDetector.CollisionResult result = collisionDetector.checkCollisions();
 
+        // Handle enemy collision
         if (result.hasEnemyCollision() && !questionPanel.isQuestionVisible()) {
             System.out.println("---- Main.java CREATING A NEW FIGHT SCREEN ----");
             FightScreen fightScreen = new FightScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel);
             fightScreen.setVisible(true);
         }
 
+        // Handle wall collision
+        if (result.hasWallCollision()) {
+            // Revert to last "safe" position if a wall collision is detected
+            character.setX(old_x);
+            character.setY(old_y);
+        } else {
+            // Update old_x and old_y only if there’s no collision
+            old_x = previousX;
+            old_y = previousY;
+        }
+
+        // Handle shop collision
+        if (result.hasShopCollision() && !isShopDialogOpen) {
+            System.out.println("----------main shop");
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastShopCollisionTime > COOLDOWN_TIME_MS/2) {
+                lastShopCollisionTime = currentTime; // Update the last collision time
+
+                isShopDialogOpen = true;
+
+                ShopScreen shopScreen = new ShopScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel);
+                shopScreen.setVisible(true);
+
+                isShopDialogOpen = false; // Reset flag after ShopScreen is closed
+                System.out.println("----------------------HAD SHOP COLLISION ----------------------------------");
+            }
+        }
+
+        // Handle NPC collision
         if (result.hasNPCCollision() && !isNpcDialogOpen) {
+            System.out.println("----------main NPC");
+
             long currentTime = System.currentTimeMillis();
             if (currentTime - lastNpcCollisionTime > COOLDOWN_TIME_MS) {
-                isNpcDialogOpen = true;
                 lastNpcCollisionTime = currentTime; // Update the last collision time
+                isNpcDialogOpen = true;
 
                 NPCScreen npcScreen = new NPCScreen(gameFrame, character, collisionDetector, tmxRenderer, questions, questionPanel);
                 npcScreen.setVisible(true);
 
                 isNpcDialogOpen = false; // Reset flag after NPCScreen is closed
-                System.out.println("----------------------HAD NPC COLL ----------------------------------------s");
+                System.out.println("----------------------HAD NPC COLLISION -----------------------------------");
             }
         }
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

@@ -217,15 +217,28 @@ public class FightScreen extends JDialog {
 
                 // 1. Show feedback on answer correctness
                 JOptionPane.showMessageDialog(FightScreen.this, answerFeedback, "Answer Result", JOptionPane.INFORMATION_MESSAGE);
-
+                int damage = 0;
                 // 2. Calculate and show damage dealt
-                int damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(5) + 1) : PLAYER_ATTACK_DAMAGE;
-                JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
+                if(player.getLevel() > 1) {
+                    damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(6) + 1) : PLAYER_ATTACK_DAMAGE;
+                    JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
+                    attackEnemy(damage);
+                }else{
+                     damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(4) + 1) : PLAYER_ATTACK_DAMAGE;
+                    JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
+                    attackEnemy(damage);
+                }
+                
 
-                attackEnemy(damage);
                 if (enemyHealth > 0) {
-                    enemyAttack();
+                    if(player.getLevel() > 1) {
+                        damage = isCorrect ? ENEMY_ATTACK_DAMAGE : (int) (ENEMY_ATTACK_DAMAGE * 2);
+                        enemyAttack(damage);
+                        JOptionPane.showMessageDialog(FightScreen.this, "The enemy dealt " + damage + " damage!", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
 
+                    }
+                    damage = isCorrect ? ENEMY_ATTACK_DAMAGE / (new Random().nextInt(2) + 1) : ENEMY_ATTACK_DAMAGE;
+                    enemyAttack(damage);
                     JOptionPane.showMessageDialog(FightScreen.this, "The enemy dealt " + damage + " damage!", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
                 }
 
@@ -254,8 +267,8 @@ public class FightScreen extends JDialog {
     /**
      * Executes the enemy's attack, reducing the player's health and updating the player's health label.
      */
-    private void enemyAttack() {
-        player.removeHealth(ENEMY_ATTACK_DAMAGE);
+    private void enemyAttack(int damage) {
+        player.removeHealth(damage);
         playerHealthLabel.setText("Player Health: " + player.getHealth());
     }
 

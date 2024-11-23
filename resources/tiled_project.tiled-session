@@ -87,6 +87,9 @@
             "scaleInDock": 1,
             "scaleInEditor": 16
         },
+        "shop.tsx": {
+            "scaleInDock": 1
+        },
         "small_test.tmx": {
             "expandedObjectLayers": [
                 7,
@@ -98,6 +101,9 @@
                 "x": 160.16666666666666,
                 "y": 160.16666666666669
             }
+        },
+        "study_stud.tsx": {
+            "scaleInDock": 1
         }
     },
     "frame.defaultDuration": 300,
@@ -134,7 +140,7 @@
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 64,
+        "width": 64
     }
 }

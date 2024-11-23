@@ -1,6 +1,7 @@
 import models.ObjectModel;
 import models.ObjectPropertiesModel;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,10 +23,11 @@ public class CollisionDetector {
     private boolean isAnsweringQuestion = false;
     private ObjectModel lastCollidedEnemy = null;
     private String enemyName;
-
+    private String shopName;
     private int old_x;
     private int old_y;
     private String npcName;
+    private Rectangle2D objectBounds;
 
     public boolean isWallFlag() {
         return wallFlag;
@@ -35,6 +37,13 @@ public class CollisionDetector {
         this.wallFlag = wallFlag;
     }
 
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+    public String getShopName(){
+        return this.shopName;
+    }
+
     /**
      * Inner class to store collision results for walls and enemies.
      */
@@ -42,23 +51,28 @@ public class CollisionDetector {
         private final boolean wallCollision;
         private final boolean enemyCollision;
         private boolean npcCollision;
+        private boolean shopCollision;
 
-        public CollisionResult(boolean wallCollision, boolean enemyCollision, boolean npcCollision) {
+        public CollisionResult(boolean wallCollision, boolean enemyCollision, boolean npcCollision, boolean shopCollision) {
             this.npcCollision = npcCollision;
             this.wallCollision = wallCollision;
             this.enemyCollision = enemyCollision;
+            this.shopCollision = shopCollision;
         }
 
         public boolean hasWallCollision() {
             return wallCollision;
         }
 
-
         public boolean hasEnemyCollision() {
             return enemyCollision;
         }
         public boolean hasNPCCollision() {
             return npcCollision;
+        }
+
+        public boolean hasShopCollision() {
+            return shopCollision;
         }
     }
 
@@ -85,6 +99,7 @@ public class CollisionDetector {
         collidedWithWall = false;
         boolean enemyCollision = false;
         boolean npcCollision = false;
+        boolean shopCollision = false;
 
         // Iterate through the objects and check for collisions
         Iterator<ObjectModel> iterator = objects.iterator();
@@ -117,11 +132,20 @@ public class CollisionDetector {
                         setNPCName(object.getName());
                         npcCollision = true;
                     }
+                    case "study_stud" ->{
+                        character.addStudyStud(1);
+                        tmxRenderer.markEnemyAsDefeated(object.getName());
+                    }
+                    case "shop" -> {
+                        setShopName(object.getName());
+                        shopCollision = true;
+
+                    }
 
                 }System.out.println("Collided w wall: " + collidedWithWall);
             }
         }
-        return new CollisionResult(collidedWithWall, enemyCollision, npcCollision);
+        return new CollisionResult(collidedWithWall, enemyCollision, npcCollision, shopCollision);
     }
 
     /**
@@ -147,19 +171,33 @@ public class CollisionDetector {
      * @return true if there is a collision, otherwise false.
      */
     private boolean isColliding(Character character, ObjectModel object) {
-       // System.out.println("Colliding w: " + object.getName());
+        // System.out.println("Colliding w: " + object.getName());
+      double object_width = object.getWidth()/2;
+      double object_height = object.getHeight()/2;
+
         Rectangle charBounds = new Rectangle(
                 character.getX(),
                 character.getY(),
                 character.getWidth(),
                 character.getHeight()
         );
-        Rectangle objectBounds = new Rectangle(
-                (int) object.getX(),
-                (int) object.getY()-30,
-                (int) object.getWidth(),
-                (int) object.getHeight()
-        );
+        if(object.getName().equalsIgnoreCase("wall")){
+        objectBounds = null;
+            objectBounds = new Rectangle2D.Double(
+                    object.getX(),
+                    object.getY(),
+                    object.getWidth(),
+                    object.getHeight()
+            );} else {
+            objectBounds = null;
+            objectBounds = new Rectangle2D.Double(
+                    object.getX(),
+                    object.getY(),
+                    object_width,
+                    object_height);
+        }
+
+
         return charBounds.intersects(objectBounds);
     }
 
@@ -194,6 +232,18 @@ public class CollisionDetector {
             if (property.getPropertyName().equalsIgnoreCase("is_wall") &&
                     property.getValue().equalsIgnoreCase("true")) {
                 return "wall";
+            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
+                return property.getValue();
+            }
+            if (property.getPropertyName().equalsIgnoreCase("is_study_stud") &&
+                    property.getValue().equalsIgnoreCase("true")) {
+                return "study_stud";
+            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
+                return property.getValue();
+            }
+            if (property.getPropertyName().equalsIgnoreCase("is_shop") &&
+                    property.getValue().equalsIgnoreCase("true")) {
+                return "shop";
             } else if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
             }

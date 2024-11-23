@@ -19,6 +19,7 @@ public class Character {
     private int levelProgression;
     private int levelCap;
     private int health;
+    private int study_stud_count;
     private List<ObjectModel> objects;
 
     // Constructor
@@ -32,7 +33,7 @@ public class Character {
         this.levelProgression = 0; // Starting level progression
         this.levelCap = 500; // XP needed for the first level up
         this.health = MAX_HEALTH; // Start with full health
-
+        this.study_stud_count = 0;
 
         try {
             this.sprite = ImageIO.read(new File("resources/rabbit2.png"));
@@ -143,5 +144,16 @@ public class Character {
     }
 
 
+    public int getStudy_stud_count() {
+        return study_stud_count;
+    }
+
+    public void addStudyStud(int study_stud_count) {
+        this.study_stud_count = this.study_stud_count + study_stud_count;
+    }
+
+    public void removeStudyStud(int study_stud_count) {
+        this.study_stud_count = this.study_stud_count - study_stud_count;
+    }
 }
 
