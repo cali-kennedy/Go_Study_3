@@ -26,7 +26,7 @@
  <tileset firstgid="501" source="snail_hurt.tsx"/>
  <tileset firstgid="507" source="rabbit2_attack.tsx"/>
  <tileset firstgid="513" source="talk_to_me_sign.tsx"/>
- <tileset firstgid="514" source="../../Final_Project_Tester/resources/assets/Grass.tsx"/>
+ <tileset firstgid="514" source="Grass.tsx"/>
  <tileset firstgid="591" source="dandelion2_hurt.tsx"/>
  <tileset firstgid="600" source="gnome_hurt.tsx"/>
  <tileset firstgid="612" source="shop_sign.tsx"/>
@@ -533,7 +533,7 @@
    </properties>
   </object>
   <object id="50" name="snail" gid="317" x="247.583" y="183.917" width="32" height="32"/>
-  <object id="54" name="dandy" gid="440" x="381.75" y="122.5" width="32" height="32">
+  <object id="54" name="dandy" gid="440" x="381" y="124.25" width="32" height="32">
    <properties>
     <property name="is_enemy" type="bool" value="true"/>
    </properties>
