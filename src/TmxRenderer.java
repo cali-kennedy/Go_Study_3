@@ -4,9 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.*;
 import java.util.List;
 
@@ -14,7 +12,7 @@ public class TmxRenderer {
     private static final int FRAME_DURATION_MS = 300;      // Default duration for animation frames in milliseconds
     private static final int TILE_RENDER_SIZE = 32;        // Size in pixels for rendering tiles
     private static final int ENEMY_RENDER_SIZE = 128;      // Size in pixels for rendering enemies
-    private Set<String> defeatedEnemies = new HashSet<>();
+    private Set<String> encounteredObjects = new HashSet<>();
     private TmxMapModel mapModel;
     private HashMap<Integer, BufferedImage> tileImages;
     private List<LayerModel> layers;
@@ -170,37 +168,29 @@ public class TmxRenderer {
 
         return null;
     }
-    public void markEnemyAsDefeated(String enemyName) {
-        defeatedEnemies.add(enemyName);
+
+    public void markObjectAsEncountered(String objectName) {
+        encounteredObjects.add(objectName);
 
         // Update animations and mark as defeated
         for (AnimationModel animation : animations) {
-            if (animation.getName().equalsIgnoreCase(enemyName)) {
+            if (animation.getName().equalsIgnoreCase(objectName)) {
                 animation.setDefeated(true);
                 break;
             }
         }
 
-        System.out.println("\ntmxrenderer ENEMY NAME : " + enemyName);
-
-        // Use an Iterator to safely remove objects from the list
+        // Remove object from objects list
         Iterator<ObjectModel> iterator = objects.iterator();
         while (iterator.hasNext()) {
             ObjectModel object = iterator.next();
-            if (object.isDefeated()) {
-                continue; // Skip already defeated objects
-            }
-            System.out.println("looping through tmxrenderer OBJECT NAME: " + object.getName());
-            if (object.getName().equalsIgnoreCase(enemyName)) {
-                System.out.println("tmxrender OBJECT NAME MATCH : " + object.getName());
-                object.setDefeated(true); // Mark the enemy as defeated
-                iterator.remove(); // Safely remove the object
+            if (object.getName().equalsIgnoreCase(objectName)) {
+                object.setDefeated(true);
+                iterator.remove(); // This causes the exception
                 break;
             }
         }
 
-        // Update defeated enemies list after the loop
-        updateDefeatedEnemies();
     }
 
     /**
@@ -263,23 +253,22 @@ public class TmxRenderer {
     /**
      * Renders a specific enemy animation at given screen coordinates.
      *
-     * @param enemyName The name of the enemy animation to render.
+     * @param objectName The name of the enemy animation to render.
      * @param x         The x-coordinate for rendering.
      * @param y         The y-coordinate for rendering.
      * @param g         The graphics context.
      */
-    public void renderEnemyAnimation(String enemyName, int x, int y, Graphics g) {
-        updateDefeatedEnemies();
+    public void renderIndividualAnimation(String objectName, int x, int y, Graphics g) {
         AnimationModel enemyAnimation = null;
         for (AnimationModel animation : animations) {
-            if (animation.getName().equalsIgnoreCase(enemyName)) {
+            if (animation.getName().equalsIgnoreCase(objectName)) {
                 enemyAnimation = animation;
                 break;
             }
         }
 
         if (enemyAnimation == null) {
-            System.out.println("Enemy animation not found for: " + enemyName);
+            System.out.println("Enemy animation not found for: " + objectName);
             return;
         }
 
@@ -296,7 +285,7 @@ public class TmxRenderer {
         }
 
         // Draw the frame if it exists
-        if (frame != null && enemyName.equalsIgnoreCase("shop")) {
+        if (frame != null && objectName.equalsIgnoreCase("shop")) {
             g.drawImage(frame, x/2 + 25, y/2, ENEMY_RENDER_SIZE*2, ENEMY_RENDER_SIZE*2, null);
         }
         // Draw the frame if it exists
@@ -312,10 +301,7 @@ public class TmxRenderer {
         }
     }
 
-    public void updateDefeatedEnemies() {
-            animations.removeIf(AnimationModel::isDefeated);
-            objects.removeIf(ObjectModel::isDefeated); // Clean up objects as well
-        }
+
 
     }
 

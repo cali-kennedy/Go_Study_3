@@ -253,7 +253,7 @@ public class ShopScreen extends JDialog {
     private void displayShopAnimation(Graphics g) {
         String shopName = collisionDetector.getShopName();
         if (shopName != null) {
-            tmxRenderer.renderEnemyAnimation(shopName, 200, 40, g);
+            tmxRenderer.renderIndividualAnimation(shopName, 200, 40, g);
         } else {
             System.err.println("No shop name found for animation rendering.");
         }

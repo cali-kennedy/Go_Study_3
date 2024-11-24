@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -21,6 +22,7 @@ public class GameQuestionPanel extends JPanel {
         this.mainPanel = mainPanel;
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(300, 150));
+        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2); // Thickness of 2 pixels
 
         // Set semi-transparent white background
         setBackground(new Color(255, 255, 255, 220));
@@ -37,6 +39,7 @@ public class GameQuestionPanel extends JPanel {
         submitButton = new JButton("Submit");
         Font customFont = FontUtils.loadFont("/fonts/RubikMonoOne-Regular.ttf", 15);
         submitButton.setFont(customFont);
+        submitButton.setBorder(blackBorder);
         Color customColor = new Color(200, 255, 223);
         submitButton.setBackground(customColor);
         questionLabel.setFont(customFont);

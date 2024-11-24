@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.Border;
 import javax.xml.parsers.ParserConfigurationException;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -57,31 +58,46 @@ public class Main extends JPanel {
 
     private void showQuestionInputDialog() {
         questions = new ArrayList<>();
+        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2); // Thickness of 2 pixels
+        Border thinBlackBorder = BorderFactory.createLineBorder(Color.BLACK, 1); // Thickness of 2 pixels
+
         JDialog dialog = new JDialog(gameFrame, "Input Questions", true);
         dialog.setSize(400, 500);
         dialog.setLocationRelativeTo(null);
-        Color customorangeColor = new Color(237, 211, 195);
-        dialog.setBackground(customorangeColor);
+        Color customorangeColor = new Color(237, 203, 181);
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBackground(customorangeColor);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+
         JPanel inputPanel = new JPanel(new GridBagLayout());
+        inputPanel.setBackground(customorangeColor);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 5, 5, 5);
+
+
         Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
         Color customgreenColor = new Color(145, 175, 156);
         Color customLightgreenColor = new Color(195, 213, 200);
         Color customRedColor = new Color(174, 141, 137);
 
+
         JTextField questionField = new JTextField(20);
         questionField.setFont(customFont);
+        questionField.setBorder(thinBlackBorder);
+
+
         JTextField answerField = new JTextField(20);
+        answerField.setBorder(thinBlackBorder);
+
+
         answerField.setFont(customFont);
         JButton addButton = new JButton("Add Question");
         addButton.setFont(customFont);
         addButton.setBackground(customLightgreenColor);
+        addButton.setBorder(blackBorder);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         JList<String> questionList = new JList<>(listModel);
@@ -90,9 +106,10 @@ public class Main extends JPanel {
 
         JLabel inputquestionLabel = new JLabel("Question: ");
         inputquestionLabel.setFont(customFont);
+
         inputPanel.add(inputquestionLabel, gbc);
         inputPanel.add(questionField, gbc);
-        JLabel inputAnswerLabel = new JLabel("Question: ");
+        JLabel inputAnswerLabel = new JLabel("Answer: ");
         inputAnswerLabel.setFont(customFont);
         inputPanel.add(inputAnswerLabel, gbc);
         inputPanel.add(answerField, gbc);
@@ -101,13 +118,15 @@ public class Main extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton startButton = new JButton("Start Game");
         startButton.setFont(customFont);
+        startButton.setBorder(blackBorder);
         startButton.setBackground(customgreenColor);
         JButton removeButton = new JButton("Remove Selected");
         removeButton.setFont(customFont);
         removeButton.setBackground(customRedColor);
+        removeButton.setBorder(blackBorder);
         buttonPanel.add(removeButton);
         buttonPanel.add(startButton);
-
+        buttonPanel.setBackground(customorangeColor);
         addButton.addActionListener(e -> {
             String q = questionField.getText().trim();
             String a = answerField.getText().trim();

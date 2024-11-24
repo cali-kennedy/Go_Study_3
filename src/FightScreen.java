@@ -280,7 +280,7 @@ public class FightScreen extends JDialog {
         if (isFightWon()) {
             //enemyName = collisionDetector.getEnemyName();
             if (enemyName != null) {
-                // tmxRenderer.markEnemyAsDefeated(enemyName);            }
+                // tmxRenderer.markObjectAsEncountered(enemyName);            }
             }
             showFightResult("You have won the fight!", "Victory");
         } else if (player.getHealth() <= 0) {
@@ -296,7 +296,7 @@ public class FightScreen extends JDialog {
      */
     private void showFightResult(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
-        tmxRenderer.markEnemyAsDefeated(enemyName);
+        tmxRenderer.markObjectAsEncountered(enemyName);
         System.out.println("Enemy name from Fightscreen passed to tmx renderer: " + enemyName);
         tmxRenderer.repaintMap();
         stopAnimationTimer();
@@ -311,7 +311,7 @@ public class FightScreen extends JDialog {
     private void displayEnemyAnimation(Graphics g) {
         enemyName = collisionDetector.getEnemyName();
         if (enemyName != null) {
-            tmxRenderer.renderEnemyAnimation(enemyName, 200, 40, g);
+            tmxRenderer.renderIndividualAnimation(enemyName, 200, 40, g);
         } else {
             System.err.println("No enemy name found for animation rendering.");
 

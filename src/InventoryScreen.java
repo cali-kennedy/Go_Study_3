@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -34,11 +35,27 @@ public class InventoryScreen extends JDialog {
 
         // Create the button panel
         JPanel buttonPanel = new JPanel();
+        // Load custom fonts using FontUtils
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+        Color customColor = new Color(237, 214, 156);
+        Color customRedColor = new Color(237, 156, 165);
+
+        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2); // Thickness of 2 pixels
+
         JButton useButton = new JButton("Use Item");
+        useButton.setBackground(customColor);
+        useButton.setFont(customFont);
+        useButton.setBorder(blackBorder);
+        Border padding = BorderFactory.createEmptyBorder(5, 15, 5, 15); // Adjust padding as needed
+
+
         useButton.addActionListener(e -> handleUseItem());
         buttonPanel.add(useButton);
 
         JButton closeButton = new JButton("Close");
+        closeButton.setBackground(customRedColor);
+        closeButton.setFont(customFont);
+        closeButton.setBorder(blackBorder);
         closeButton.addActionListener(e -> dispose());
         buttonPanel.add(closeButton);
 

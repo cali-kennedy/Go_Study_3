@@ -2,6 +2,7 @@ import models.ObjectModel;
 import models.ObjectPropertiesModel;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -95,16 +96,19 @@ public class CollisionDetector {
      *
      * @return CollisionResult indicating if the character has collided with a wall or enemy.
      */
-    public CollisionResult checkCollisions() { //being checked constantly during runtime
+    public CollisionResult checkCollisions() {
         collidedWithWall = false;
         boolean enemyCollision = false;
         boolean npcCollision = false;
         boolean shopCollision = false;
 
-        // Iterate through the objects and check for collisions
-        Iterator<ObjectModel> iterator = objects.iterator();
-        while (iterator.hasNext()) {
-            ObjectModel object = iterator.next();
+        // Lists to keep track of objects and enemies to process after iteration
+        List<ObjectModel> objectsToRemove = new ArrayList<>();
+        List<String> enemiesToDefeat = new ArrayList<>();
+        List<String> itemsToCollect = new ArrayList<>();
+
+        // Iterate through a copy of the objects list to avoid concurrent modification
+        for (ObjectModel object : new ArrayList<>(objects)) {
             if (isColliding(character, object)) {
                 String objectType = getObjectType(object);
                 switch (objectType) {
@@ -113,45 +117,77 @@ public class CollisionDetector {
                         collidedWithWall = true;
                     }
                     case "enemy" -> {
-                        // Register collision with a new enemy only if not answering a question
                         if (!isAnsweringQuestion || !object.equals(lastCollidedEnemy)) {
                             enemyCollision = true;
                             isAnsweringQuestion = true;
-                            lastCollidedEnemy = object; // Set the current enemy for fight
-                            setEnemyName(object.getName()); // Update the enemy
-                            System.out.println("CollisionDetecor.java enemy name: " + enemyName);
-                            object.isDefeated();
+                            lastCollidedEnemy = object;
+                            setEnemyName(object.getName());
+                            // Add to list to process after iteration
+                            enemiesToDefeat.add(object.getName());
                         }
                     }
                     case "apple" -> {
-                        character.addHealth(HEALTH_REWARD);
-                        Item apple = new Item("Apple", "Restores health when used", 1, true);
-                        System.out.println("COLLIDED WITH AN APPLE");
-                        character.addItem(apple);
-                        System.out.println("Picked up an apple!");
-                        tmxRenderer.markEnemyAsDefeated(object.getName());
+                        // Add to character's health after iteration
+                        itemsToCollect.add(object.getName());
+                        objectsToRemove.add(object);
                     }
                     case "npc" -> {
                         setNPCName(object.getName());
-                        System.out.println(object.getName());
                         npcCollision = true;
                     }
-                    case "study_stud" ->{
-                        Item studyStud = new Item("Study Stud", "A valuable item used for trading", 1, true);
-                        character.addItem(studyStud);
-                        System.out.println("Picked up a Study Stud!");
-                        tmxRenderer.markEnemyAsDefeated(object.getName());
+                    case "study_stud" -> {
+                        itemsToCollect.add(object.getName());
+                        objectsToRemove.add(object);
                     }
                     case "shop" -> {
                         setShopName(object.getName());
                         shopCollision = true;
-
                     }
-
-                }System.out.println("Collided w wall: " + collidedWithWall);
+                }
             }
         }
+
+        // Process items to collect
+        for (String itemName : itemsToCollect) {
+            // Find the object by name
+            ObjectModel itemObject = findObjectByName(itemName);
+            if (itemObject != null) {
+                String objectType = getObjectType(itemObject);
+                switch (objectType) {
+                    case "apple" -> {
+                        Item apple = new Item("Apple", "Restores health when used", 1, true);
+                        character.addItem(apple);
+                        System.out.println("Collected an apple.");
+                    }
+                    case "study_stud" -> {
+                        Item studyStud = new Item("Study Stud", "A valuable item used for trading", 1, true);
+                        character.addItem(studyStud);
+                        System.out.println("Collected a Study Stud.");
+                    }
+                }
+                tmxRenderer.markObjectAsEncountered(itemName);
+            }
+        }
+
+        // Process enemies to defeat
+        for (String enemyName : enemiesToDefeat) {
+            tmxRenderer.markObjectAsEncountered(enemyName);
+        }
+
+        // Remove defeated objects after processing
+        objects.removeAll(objectsToRemove);
+
         return new CollisionResult(collidedWithWall, enemyCollision, npcCollision, shopCollision);
+    }
+
+    // Helper method to find an object by name
+    private ObjectModel findObjectByName(String name) {
+        for (ObjectModel object : objects) {
+            if (object.getName().equalsIgnoreCase(name)) {
+                return object;
+            }
+        }
+        return null;
     }
 
     /**

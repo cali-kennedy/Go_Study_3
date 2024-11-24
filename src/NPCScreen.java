@@ -258,7 +258,7 @@ public class NPCScreen extends JDialog {
     private void displayNPCAnimation(Graphics g) {
         npcName = collisionDetector.getNPCName();
         if (npcName != null) {
-            tmxRenderer.renderEnemyAnimation(npcName, 200, 40, g);
+            tmxRenderer.renderIndividualAnimation(npcName, 200, 40, g);
         } else {
             System.err.println("No enemy name found for animation rendering.");
 
