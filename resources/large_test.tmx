@@ -409,7 +409,7 @@
   </object>
   <object id="60" name="buy_info_frog" gid="432" x="603.75" y="34.25" width="32" height="32">
    <properties>
-    <property name="is_buy_info_frog" type="bool" value="true"/>
+    <property name="is_npc" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
@@ -513,7 +513,7 @@
     <property name="is_study_stud" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="72" name="study_stud" gid="462" x="86.5" y="202" width="20" height="20">
+  <object id="72" name="study_stud" gid="462" x="91.8333" y="227.333" width="20" height="20">
    <properties>
     <property name="is_study_stud" type="bool" value="true"/>
    </properties>
@@ -523,13 +523,17 @@
     <property name="is_study_stud" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="75" gid="420" x="709.333" y="133.333" width="16" height="16"/>
-  <object id="77" name="gnome" gid="500" x="727.333" y="61.6667" width="64" height="64">
+  <object id="75" name="apple" gid="420" x="709.333" y="133.333" width="16" height="16">
+   <properties>
+    <property name="is_apple" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="77" name="gnome" gid="500" x="730.333" y="51.6667" width="64" height="64">
    <properties>
     <property name="is_enemy" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="78" name="gnome" gid="500" x="645" y="72.6667" width="64" height="64">
+  <object id="78" name="gnome" gid="500" x="701.333" y="63" width="64" height="64">
    <properties>
     <property name="is_enemy" type="bool" value="true"/>
    </properties>

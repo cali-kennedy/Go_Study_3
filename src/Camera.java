@@ -171,7 +171,14 @@ public class Camera {
         Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 8);
 
         g.setFont(customFont);
-        String studyStudText = "Study Stud Count: " + character.getStudyStudCount();
+        int studyStudCount = 0;
+        for (Item item : character.getInventory()) {
+            if (item.getName().equalsIgnoreCase("Study Stud")) {
+                studyStudCount = item.getQuantity();
+                break;
+            }
+        }
+        String studyStudText = "Study Stud Count: " + studyStudCount;
         FontMetrics fm = g.getFontMetrics();
         int textX = x+130;
         int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();

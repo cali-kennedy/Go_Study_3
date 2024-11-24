@@ -125,15 +125,21 @@ public class CollisionDetector {
                     }
                     case "apple" -> {
                         character.addHealth(HEALTH_REWARD);
+                        Item apple = new Item("Apple", "Restores health when used", 1, true);
                         System.out.println("COLLIDED WITH AN APPLE");
+                        character.addItem(apple);
+                        System.out.println("Picked up an apple!");
                         tmxRenderer.markEnemyAsDefeated(object.getName());
                     }
                     case "npc" -> {
                         setNPCName(object.getName());
+                        System.out.println(object.getName());
                         npcCollision = true;
                     }
                     case "study_stud" ->{
-                        character.addStudyStud(1);
+                        Item studyStud = new Item("Study Stud", "A valuable item used for trading", 1, true);
+                        character.addItem(studyStud);
+                        System.out.println("Picked up a Study Stud!");
                         tmxRenderer.markEnemyAsDefeated(object.getName());
                     }
                     case "shop" -> {

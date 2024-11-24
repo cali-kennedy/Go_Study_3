@@ -18,6 +18,8 @@ public class NPCScreen extends JDialog {
 
 
     private JButton interactButton;
+    private JButton okayButton;
+
 
     // External components for rendering and collision detection
     private final CollisionDetector collisionDetector;
@@ -77,10 +79,10 @@ public class NPCScreen extends JDialog {
             customColor = new Color(21, 97, 83);
             secondaryMessage.setForeground(customColor);
 
-            customColor = new Color(202, 121, 121);
+            customColor = new Color(121, 147, 202);
 
             // Add the second message with custom styling
-            JLabel thirdMessage = new JLabel("Be careful... Not all like me are this nice.", SwingConstants.CENTER);
+            JLabel thirdMessage = new JLabel("Fight enemies around the map to gain more XP!", SwingConstants.CENTER);
             thirdMessage.setFont(customFont != null ? customFont.deriveFont(17f) : new Font("Arial", Font.ITALIC, 10));
             thirdMessage.setForeground(customColor);
 
@@ -92,18 +94,58 @@ public class NPCScreen extends JDialog {
             // Add the message panel to the top of the main panel
             mainPanel.add(messagePanel, BorderLayout.NORTH);
         }
+        if (collisionDetector.getNPCName().equalsIgnoreCase("buy_info_frog")) { // Change message depending on NPC shown
+            // Create a container panel for stacked messages
+            JPanel messagePanel = new JPanel();
+            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+            messagePanel.setOpaque(false); // Make it transparent if desired
+
+            // Load custom fonts using FontUtils
+            Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+
+            // Add the first message with custom styling
+            JLabel primaryMessage = new JLabel("Collect Study Studs to buy potions, health, and XP. ", SwingConstants.CENTER);
+            primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+            Color customColor = new Color(110, 60, 163);
+
+            primaryMessage.setForeground(customColor);
+
+            // Add the first message with custom styling
+            JLabel secondaryMessage = new JLabel("Good luck!", SwingConstants.CENTER);
+            secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+            customColor = new Color(160, 106, 218);
+            secondaryMessage.setForeground(customColor);
+
+            // Add both labels to the message panel
+            messagePanel.add(primaryMessage);
+            messagePanel.add(secondaryMessage);
+
+
+            // Add the message panel to the top of the main panel
+            mainPanel.add(messagePanel, BorderLayout.NORTH);
+        }
 
         // Add interact button and animation panel
         mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
 
-        // Create a button panel to hold both buttons side by side
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
-        buttonPanel.add(createInteractButton());
-        buttonPanel.add(createDontInteractButton());
+        if(collisionDetector.getNPCName().equalsIgnoreCase("frog_2")) {
+            // Create a button panel to hold both buttons side by side
+            JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
+            buttonPanel.add(createInteractButton());
+            buttonPanel.add(createDontInteractButton());
+            // Add the button panel to the bottom of the main panel
+            mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        }
+
+        if(collisionDetector.getNPCName().equalsIgnoreCase("buy_info_frog")) {
+            // Create a button panel to hold both buttons side by side
+            JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
+            buttonPanel.add(createOkayButton());
+            // Add the button panel to the bottom of the main panel
+            mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        }
 
 
-        // Add the button panel to the bottom of the main panel
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         // Initialize the layered pane as content pane
         layeredPane = new JLayeredPane();
@@ -135,7 +177,15 @@ public class NPCScreen extends JDialog {
             }
         };
     }
-
+    private JButton createOkayButton() {
+        okayButton = new JButton("Okay!");
+        Color custombgColor = new Color(134, 156, 143);
+        okayButton.setBackground(custombgColor);
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 17);
+        okayButton.setFont(customFont);
+        okayButton.addActionListener(e -> handleDontInteractAction());
+        return okayButton;
+    }
 
     private JButton createInteractButton() {
         interactButton = new JButton("Interact");

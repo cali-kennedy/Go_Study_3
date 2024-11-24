@@ -165,6 +165,34 @@ public class ShopScreen extends JDialog {
         button.addActionListener(e -> handleBuyXPAction());
         return button;
     }
+    private void handleBuyHealthPotionAction() {
+        Item studyStud = findItemInInventory("Study Stud");
+        if (studyStud != null && studyStud.getQuantity() >= 3) {
+            // Remove Study Studs from inventory
+            studyStud.setQuantity(studyStud.getQuantity() - 3);
+            if (studyStud.getQuantity() <= 0) {
+                player.removeItem(studyStud);
+            }
+
+            // Add Health Potion to inventory
+            Item healthPotion = new Item("Health Potion", "Restores health when used", 1, true);
+            player.addItem(healthPotion);
+
+            JOptionPane.showMessageDialog(this, "You bought a Health Potion for 3 Study Studs.");
+        } else {
+            JOptionPane.showMessageDialog(this, "You don't have enough Study Studs!", "Insufficient Funds", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private Item findItemInInventory(String itemName) {
+        for (Item item : player.getInventory()) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
 
     private JButton createLeaveButton() {
         JButton button = new JButton("Leave");
@@ -180,20 +208,32 @@ public class ShopScreen extends JDialog {
     }
 
     private void handleBuyXPAction() {
-        if (player.getStudyStudCount() >= 1) {
-            player.removeStudyStud(1);
-            player.addXP(10);
-            JOptionPane.showMessageDialog(this, "You bought 10 XP for 1 Study Stud.");
+        Item studyStud = findItemInInventory("Study Stud");
+        if (studyStud != null && studyStud.getQuantity() >= 1) {
+            // Remove Study Studs from inventory
+            studyStud.setQuantity(studyStud.getQuantity() - 1);
+            if (studyStud.getQuantity() <= 0) {
+                player.removeItem(studyStud);
+                player.addXP(10);
+                JOptionPane.showMessageDialog(this, "You bought 10 XP for 1 Study Stud.");
+
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "You don't have enough Study Studs!", "Insufficient Funds", JOptionPane.WARNING_MESSAGE);
         }
     }
 
     private void handleBuyHealthAction() {
-        if (player.getStudyStudCount() >= 3) {
-            player.removeStudyStud(3);
-            player.addHealth(10);
-            JOptionPane.showMessageDialog(this, "You bought 10 health for 3 Study Studs.");
+        Item studyStud = findItemInInventory("Study Stud");
+        if (studyStud != null && studyStud.getQuantity() >= 3) {
+            // Remove Study Studs from inventory
+            studyStud.setQuantity(studyStud.getQuantity() - 3);
+            if (studyStud.getQuantity() <= 0) {
+                player.removeItem(studyStud);
+                JOptionPane.showMessageDialog(this, "You bought 10 health for 3 Study Stud.");
+
+            }
         } else {
             JOptionPane.showMessageDialog(this, "You don't have enough Study Studs!", "Insufficient Funds", JOptionPane.WARNING_MESSAGE);
         }

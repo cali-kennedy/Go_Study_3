@@ -3,8 +3,10 @@ import models.ObjectModel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Character {
@@ -21,6 +23,8 @@ public class Character {
     private int health;
     private int study_stud_count;
     private List<ObjectModel> objects;
+    private List<Item> inventory;
+
 
     // Constructor
     public Character(String spritePath, int startX, int startY, int width, int height) {
@@ -34,6 +38,8 @@ public class Character {
         this.levelCap = 500; // XP needed for the first level up
         this.health = MAX_HEALTH; // Start with full health
         this.study_stud_count = 0;
+        this.inventory = new ArrayList<>();
+
 
         try {
             this.sprite = ImageIO.read(new File("resources/rabbit2.png"));
@@ -154,6 +160,58 @@ public class Character {
 
     public void removeStudyStud(int study_stud_count) {
         this.study_stud_count = this.study_stud_count - study_stud_count;
+    }
+
+    // Inventory Methods
+    public void addItem(Item item) {
+        // Check if item is stackable and already exists in inventory
+        if (item.isStackable()) {
+            for (Item invItem : inventory) {
+                if (invItem.getName().equals(item.getName())) {
+                    invItem.setQuantity(invItem.getQuantity() + item.getQuantity());
+                    return;
+                }
+            }
+        }
+        // If item is not stackable or doesn't exist in inventory
+        inventory.add(item);
+    }
+
+    public void removeItem(Item item) {
+        inventory.remove(item);
+    }
+
+    public void useItem(Item item) {
+        switch (item.getName()) {
+            case "Apple":
+                addHealth(10);
+                System.out.println("You gained 10 health!");
+                break;
+            case "Study Stud":
+                // Define what happens when using a Study Stud, or maybe it's not usable directly
+                System.out.println("You can't use Study Stud directly.");
+                return; // Early exit if the item is not consumed
+            // Add more cases for other items
+            default:
+                System.out.println("Item has no use effect.");
+                return; // Early exit if the item is not consumed
+        }
+
+        // Decrease quantity and remove if necessary
+        item.setQuantity(item.getQuantity() - 1);
+        if (item.getQuantity() <= 0) {
+            removeItem(item);
+        }
+    }
+    public void displayInventory() {
+        SwingUtilities.invokeLater(() -> {
+            InventoryScreen inventoryScreen = new InventoryScreen( this);
+            inventoryScreen.setVisible(true);
+        });
+    }
+
+    public List<Item> getInventory() {
+        return inventory;
     }
 }
 

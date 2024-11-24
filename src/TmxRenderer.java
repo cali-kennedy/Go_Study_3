@@ -25,6 +25,7 @@ public class TmxRenderer {
     private Map<Integer, BufferedImage> animationFrameCache = new HashMap<>();
     private Component displayComponent;
     private Graphics2D g2d;
+    private Set<String> sixtyFourBitObjects;
     /**
      * Initializes the renderer with the necessary models, layers, and camera view.
      *
@@ -45,6 +46,8 @@ public class TmxRenderer {
         this.tilesets = tilesets;
         this.tileImages = new HashMap<>();
         this.camera = camera;
+        sixtyFourBitObjects = new HashSet<>(Arrays.asList("pink_shop", "brown_shop", "shop","gnome","gnome_1","gnome_2"));
+
 
         loadTilesetImages();
         initializeAnimations();
@@ -241,23 +244,17 @@ public class TmxRenderer {
           //      g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
 
            // }
-            if((frame!= null) && animation.getName().equalsIgnoreCase("brown_shop")){
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
+            if (frame != null) {
+                String animationName = animation.getName().toLowerCase();
 
+                if (sixtyFourBitObjects.contains(animationName)) {
+                    g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30,
+                            TILE_RENDER_SIZE * 2, TILE_RENDER_SIZE * 2, null);
+                } else {
+                    g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30,
+                            TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
+                }
             }
-            if ((frame != null) && animation.getName().equalsIgnoreCase("pink_shop"))
-            {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
-            }
-
-            if (frame != null && animation.getName().equalsIgnoreCase("shop")) {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
-            }
-
-            if (frame != null && !animation.getName().equalsIgnoreCase("shop") && !animation.getName().equalsIgnoreCase("pink_shop") && !animation.getName().equalsIgnoreCase("brown_shop")) {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
-            }
-            //System.out.println("animation.getName(): " +animation.getName());
 
         }
     }
