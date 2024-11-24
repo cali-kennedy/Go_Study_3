@@ -1,4 +1,7 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,6 +26,7 @@ public class FightScreen extends JDialog {
     // Player and enemy attributes
     private final Character player;
     private int enemyHealth;
+    private boolean showAttackEffect = false;
 
     private boolean questionIsCorrect = false;
     // Player character image
@@ -143,6 +147,8 @@ public class FightScreen extends JDialog {
      * @return Configured JButton for attacking.
      */
     private JButton createAttackButton() {
+
+
         attackButton = new JButton("Attack");
         Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
         attackButton.setFont(customFont);
@@ -164,6 +170,10 @@ public class FightScreen extends JDialog {
                 super.paintComponent(g);
                 displayEnemyAnimation(g);
 
+                if (showAttackEffect) {
+                    // Draw an overlay effect (e.g., a slash image)
+                    tmxRenderer.renderIndividualAnimation(enemyName+"_hurt",200,40,g);
+                }
             }
         };
     }
@@ -195,7 +205,15 @@ public class FightScreen extends JDialog {
      */
     private void handleAttackAction() {
         showRandomQuestion(); // Display question and wait for an answer
-
+        showAttackEffect = true;
+        repaint();
+        // Schedule to turn off the effect after 200ms
+        Timer effectTimer = new Timer(5000, e -> {
+            showAttackEffect = false;
+            repaint();
+        });
+        effectTimer.setRepeats(false);
+        effectTimer.start();
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
@@ -224,11 +242,11 @@ public class FightScreen extends JDialog {
                     JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
                     attackEnemy(damage);
                 }else{
-                     damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(4) + 1) : PLAYER_ATTACK_DAMAGE;
+                    damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(4) + 1) : PLAYER_ATTACK_DAMAGE;
                     JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
                     attackEnemy(damage);
                 }
-                
+
 
                 if (enemyHealth > 0) {
                     if(player.getLevel() > 1) {
@@ -259,6 +277,7 @@ public class FightScreen extends JDialog {
      * @param damage Amount of damage inflicted on the enemy.
      */
     private void attackEnemy(int damage) {
+
         enemyHealth = Math.max(0, enemyHealth - damage);
         enemyHealthLabel.setText("Enemy Health: " + enemyHealth);
     }
@@ -280,7 +299,7 @@ public class FightScreen extends JDialog {
         if (isFightWon()) {
             //enemyName = collisionDetector.getEnemyName();
             if (enemyName != null) {
-                // tmxRenderer.markObjectAsEncountered(enemyName);            }
+                // tmxRenderer.markEnemyAsDefeated(enemyName);            }
             }
             showFightResult("You have won the fight!", "Victory");
         } else if (player.getHealth() <= 0) {
@@ -329,6 +348,16 @@ public class FightScreen extends JDialog {
         return enemyHealth <= 0;
 
     }
+    private void playSound(String soundFile) {
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(soundFile));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Starts a timer that repeatedly calls repaint to refresh the animation panel at a specified rate.
@@ -362,6 +391,3 @@ public class FightScreen extends JDialog {
 
 
 }
-
-
-

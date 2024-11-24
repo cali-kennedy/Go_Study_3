@@ -147,6 +147,7 @@ public class TmxRenderer {
             } else {
                 System.out.println("Object with GID " + gid + " does not have an animated tileset; skipping animation setup.");
             }
+
         }
     }
 
