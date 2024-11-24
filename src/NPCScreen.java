@@ -57,7 +57,7 @@ public class NPCScreen extends JDialog {
         // Create a main panel with BorderLayout to retain original layout structure
         mainPanel = new JPanel(new BorderLayout());
 
-        if (collisionDetector.getNPCName().equalsIgnoreCase("frog_2")) { // Change message depending on NPC shown
+        if (collisionDetector.getNPCName().equalsIgnoreCase("frog")) { // Change message depending on NPC shown
             // Create a container panel for stacked messages
             JPanel messagePanel = new JPanel();
             messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
@@ -67,29 +67,32 @@ public class NPCScreen extends JDialog {
             Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
 
             // Add the first message with custom styling
-            JLabel primaryMessage = new JLabel("Hello! I'm friendly :) ", SwingConstants.CENTER);
+            JLabel primaryMessage = new JLabel("Hello! I'm here to help :) ", SwingConstants.CENTER);
             primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
             Color customColor = new Color(21, 97, 50);
 
             primaryMessage.setForeground(customColor);
 
-            // Add the first message with custom styling
-            JLabel secondaryMessage = new JLabel("Answer the provided question correctly to gain 100XP.", SwingConstants.CENTER);
-            secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
-            customColor = new Color(21, 97, 83);
-            secondaryMessage.setForeground(customColor);
+
 
             customColor = new Color(121, 147, 202);
 
             // Add the second message with custom styling
             JLabel thirdMessage = new JLabel("Fight enemies around the map to gain more XP!", SwingConstants.CENTER);
-            thirdMessage.setFont(customFont != null ? customFont.deriveFont(17f) : new Font("Arial", Font.ITALIC, 10));
+            thirdMessage.setFont(customFont != null ? customFont.deriveFont(18f) : new Font("Arial", Font.ITALIC, 10));
             thirdMessage.setForeground(customColor);
+            JLabel fifthMessage = new JLabel("Press i to open your inventory.", SwingConstants.CENTER);
+            fifthMessage.setFont(customFont != null ? customFont.deriveFont(18f) : new Font("Arial", Font.ITALIC, 10));
+            fifthMessage.setForeground(customColor);
 
             // Add both labels to the message panel
             messagePanel.add(primaryMessage);
-            messagePanel.add(secondaryMessage);
+
             messagePanel.add(thirdMessage);
+
+            messagePanel.add(fifthMessage);
+
+
 
             // Add the message panel to the top of the main panel
             mainPanel.add(messagePanel, BorderLayout.NORTH);
@@ -128,11 +131,10 @@ public class NPCScreen extends JDialog {
         // Add interact button and animation panel
         mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
 
-        if(collisionDetector.getNPCName().equalsIgnoreCase("frog_2")) {
+        if(collisionDetector.getNPCName().equalsIgnoreCase("frog")) {
             // Create a button panel to hold both buttons side by side
             JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
-            buttonPanel.add(createInteractButton());
-            buttonPanel.add(createDontInteractButton());
+            buttonPanel.add(createOkayButton());
             // Add the button panel to the bottom of the main panel
             mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         }

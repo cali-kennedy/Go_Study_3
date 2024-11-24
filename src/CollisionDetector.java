@@ -1,7 +1,12 @@
 import models.ObjectModel;
 import models.ObjectPropertiesModel;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -133,6 +138,7 @@ public class CollisionDetector {
                     }
                     case "npc" -> {
                         setNPCName(object.getName());
+                        System.out.println("npc Name: " + object.getName());
                         npcCollision = true;
                     }
                     case "study_stud" -> {
@@ -160,6 +166,7 @@ public class CollisionDetector {
                         System.out.println("Collected an apple.");
                     }
                     case "study_stud" -> {
+                        playSound("resources/collect_study_stud.wav");
                         Item studyStud = new Item("Study Stud", "A valuable item used for trading", 1, true);
                         character.addItem(studyStud);
                         System.out.println("Collected a Study Stud.");
@@ -340,5 +347,16 @@ public class CollisionDetector {
             }
         }
         return null;
+    }
+
+    private void playSound(String soundFile) {
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(soundFile));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

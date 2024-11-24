@@ -80,7 +80,7 @@ public class ShopScreen extends JDialog {
             // Add messages with custom styling
             messagePanel.add(createStyledLabel("Hello! :)", customFont, new Color(21, 97, 50)));
             messagePanel.add(createStyledLabel("Spend 1 Study Stud for 10 XP.", customFont, new Color(21, 97, 83)));
-            messagePanel.add(createStyledLabel("Spend 3 Study Studs for 10 health.", customFont, new Color(21, 97, 83)));
+            messagePanel.add(createStyledLabel("Spend 3 Study Studs for an apple.", customFont, new Color(21, 97, 83)));
             return messagePanel;
 
         }
@@ -231,8 +231,9 @@ public class ShopScreen extends JDialog {
             studyStud.setQuantity(studyStud.getQuantity() - 3);
             if (studyStud.getQuantity() <= 0) {
                 player.removeItem(studyStud);
-                JOptionPane.showMessageDialog(this, "You bought 10 health for 3 Study Stud.");
-
+                JOptionPane.showMessageDialog(this, "You bought an apple for 3 Study Studs.");
+                Item apple = new Item("Apple", "Restores health when used", 1, true);
+                player.addItem(apple);
             }
         } else {
             JOptionPane.showMessageDialog(this, "You don't have enough Study Studs!", "Insufficient Funds", JOptionPane.WARNING_MESSAGE);

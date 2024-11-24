@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
+import java.util.Queue;
 
 /**
  * FightScreen class represents a dialog where the player engages in a fight.
@@ -27,7 +29,9 @@ public class FightScreen extends JDialog {
     private final Character player;
     private int enemyHealth;
     private boolean showAttackEffect = false;
-
+    private MessageOverlayPanel messageOverlay;
+    private Queue<String> messageQueue = new LinkedList<>();
+    private boolean isMessageDisplayed = false;
     private boolean questionIsCorrect = false;
     // Player character image
     private BufferedImage playerImage;
@@ -64,7 +68,8 @@ public class FightScreen extends JDialog {
         this.tmxRenderer = tmxRenderer;
         this.questions = questions;
         this.questionPanel = questionPanel;
-        loadPlayerImage();  // Ensure player image is loaded
+        // Initialize the message overlay panel
+
         setupUI();
         startAnimationTimer();
     }
@@ -118,7 +123,15 @@ public class FightScreen extends JDialog {
 
         mainPanel.setBounds(0, 0, 500, 300);
         layeredPane.add(mainPanel, Integer.valueOf(0));
+        messageOverlay = new MessageOverlayPanel();
+        messageOverlay.setVisible(false); // Start hidden
 
+
+
+        JLayeredPane layeredPane = getLayeredPane();
+        layeredPane.add(messageOverlay, JLayeredPane.POPUP_LAYER);
+        messageOverlay.setBounds(0, 0, getWidth(), getHeight());
+        loadPlayerImage();  // Ensure player image is loaded
         questionPanel.setBounds(100, 75, questionPanel.getPreferredSize().width, questionPanel.getPreferredSize().height);
         layeredPane.add(questionPanel, Integer.valueOf(1));
         questionPanel.setVisible(false);
@@ -196,8 +209,9 @@ public class FightScreen extends JDialog {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                displayEnemyAnimation(g);
-
+                if(!showAttackEffect) {
+                    displayEnemyAnimation(g);
+                }
                 if (showAttackEffect) {
                     // Draw an overlay effect (e.g., a slash image)
                     tmxRenderer.renderIndividualAnimation("rabbit2_attack",-5,40,g);
@@ -246,7 +260,7 @@ public class FightScreen extends JDialog {
         showAttackEffect = true;
         repaint();
         // Schedule to turn off the effect after 200ms
-        Timer effectTimer = new Timer(5000, e -> {
+        Timer effectTimer = new Timer(8000, e -> {
             showAttackEffect = false;
             repaint();
         });
@@ -272,16 +286,17 @@ public class FightScreen extends JDialog {
                 String answerFeedback = isCorrect ? "Correct! +100 XP" : "Incorrect! The answer was: " + questionPanel.currentQuestion.getAnswer();
 
                 // 1. Show feedback on answer correctness
-                JOptionPane.showMessageDialog(FightScreen.this, answerFeedback, "Answer Result", JOptionPane.INFORMATION_MESSAGE);
+                showOverlayMessage(answerFeedback);
                 int damage = 0;
                 // 2. Calculate and show damage dealt
                 if(player.getLevel() > 1) {
                     damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(6) + 1) : PLAYER_ATTACK_DAMAGE;
-                    JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
+                    showOverlayMessage("You dealt " + damage + " damage.");
+
                     attackEnemy(damage);
                 }else{
                     damage = isCorrect ? PLAYER_ATTACK_DAMAGE * (new Random().nextInt(4) + 1) : PLAYER_ATTACK_DAMAGE;
-                    JOptionPane.showMessageDialog(FightScreen.this, "You dealt " + damage + " damage.", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
+                    showOverlayMessage("You dealt " + damage + " damage.");
                     attackEnemy(damage);
                 }
 
@@ -299,16 +314,48 @@ public class FightScreen extends JDialog {
         worker.execute();
 
     }
+
     private void handleDefendAction() {
         // Set player's defending state
         player.setDefending(true);
 
         // Provide feedback to the player
-        JOptionPane.showMessageDialog(this, "You brace yourself for the next attack!", "Defend", JOptionPane.INFORMATION_MESSAGE);
+        showOverlayMessage("You Brace yourself for the next attack!");
 
         // Enemy attacks after the player defends
         enemyTurn();
     }
+
+    private void showOverlayMessage(String message) {
+        messageQueue.offer(message);
+        displayNextMessage();
+    }
+
+    private void displayNextMessage() {
+        if (isMessageDisplayed || messageQueue.isEmpty()) {
+            return;
+        }
+
+        isMessageDisplayed = true;
+        String message = messageQueue.poll();
+        messageOverlay.setMessage(message);
+        messageOverlay.setSize(getWidth(), getHeight()); // Ensure it covers the entire frame
+        messageOverlay.setVisible(true);
+
+        // Repaint and revalidate to ensure the message is displayed
+        messageOverlay.revalidate();
+        messageOverlay.repaint();
+
+        // Hide the overlay after a few seconds (e.g., 3 seconds)
+        Timer timer = new Timer(2000, e -> {
+            messageOverlay.setVisible(false);
+            isMessageDisplayed = false;
+            displayNextMessage(); // Display the next message in the queue
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
 
 
     /**
@@ -319,7 +366,7 @@ public class FightScreen extends JDialog {
     private void attackEnemy(int damage) {
 
         enemyHealth = Math.max(0, enemyHealth - damage);
-        enemyHealthLabel.setText("Enemy Health: " + enemyHealth);
+        enemyHealthLabel.setText("Enemy : " + enemyHealth);
     }
 
 
@@ -329,7 +376,7 @@ public class FightScreen extends JDialog {
     private void enemyAttack(int damage) {
         if (player.isDefending()) {
             damage = damage / 2; // Reduce damage by 50%
-            JOptionPane.showMessageDialog(this, "Your defense reduces the damage by half!", "Defend", JOptionPane.INFORMATION_MESSAGE);
+            showOverlayMessage("Your defense reduces the damage by half!");
         }
         player.removeHealth(damage);
         playerHealthLabel.setText("Player Health: " + player.getHealth());
@@ -338,7 +385,7 @@ public class FightScreen extends JDialog {
     private void enemyTurn() {
         int damage = ENEMY_ATTACK_DAMAGE;
         enemyAttack(damage);
-        JOptionPane.showMessageDialog(this, "The enemy dealt " + damage + " damage!", "Enemy Attack", JOptionPane.INFORMATION_MESSAGE);
+        showOverlayMessage("The enemy dealt " + damage + " damage.");
 
         // Reset player's defending state
         player.setDefending(false);
@@ -372,7 +419,7 @@ public class FightScreen extends JDialog {
      * @param title   The title of the result dialog.
      */
     private void showFightResult(String message, String title) {
-        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+        showOverlayMessage(message);
         if(enemyHealth <= 0) {
             tmxRenderer.markObjectAsEncountered(enemyName);
         }
