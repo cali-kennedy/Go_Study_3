@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="105">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="118">
  <tileset firstgid="1" source="Grass.tsx"/>
  <tileset firstgid="78" source="new_mroom_idle.tsx"/>
  <tileset firstgid="94" source="Water.tsx"/>
@@ -423,7 +423,7 @@
 </data>
  </layer>
  <objectgroup id="12" name="Collision_Layer">
-  <object id="56" name="wall" x="4.5" y="230.667" width="328.125" height="1.33">
+  <object id="56" name="wall" x="26.5" y="230.667" width="291.5" height="1.33">
    <properties>
     <property name="is_wall" type="bool" value="true"/>
    </properties>
@@ -435,6 +435,71 @@
   </object>
   <object id="88" gid="513" x="88.5" y="323.25" width="32" height="32"/>
   <object id="91" gid="513" x="648.208" y="48.2083" width="32" height="32"/>
+  <object id="105" name="wall" x="380.438" y="231.335" width="86.625" height="1.33">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="106" name="wall" x="475.688" y="2.335" width="1.95833" height="225.997">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="107" name="wall" x="175.354" y="1.335" width="301.625" height="1.33">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="108" name="wall" x="189.687" y="57.585" width="86.625" height="51.9967">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="109" name="wall" x="-1.22917" y="132.002" width="37.125" height="1.33">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="110" name="wall" x="87.3542" y="135.668" width="87.125" height="3.08">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="111" name="wall" x="89.8958" y="99.6683" width="65.0417" height="5.58">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="112" name="wall" x="1.35415" y="11.585" width="1.7917" height="119.83">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="113" name="wall" x="171.4" y="1.335" width="3.74625" height="157.08">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="114" name="wall" x="41.8542" y="26.835" width="92.2917" height="51.08">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="115" name="wall" x="19.6042" y="71.335" width="8.7917" height="7.33">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="116" name="wall" x="153.854" y="41.835" width="10.0417" height="7.33">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="117" name="wall" x="164.188" y="125.46" width="14.625" height="15.58">
+   <properties>
+    <property name="is_wall" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="11" name="Object_Layer">
   <object id="26" name="snail" gid="317" x="133.409" y="274.091" width="32" height="32">
