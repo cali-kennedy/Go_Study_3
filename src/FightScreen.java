@@ -36,6 +36,8 @@ public class FightScreen extends JDialog {
     private JLabel playerHealthLabel;
     private JLabel enemyHealthLabel;
     private JButton attackButton;
+    private JButton runButton;
+
 
     // External components for rendering and collision detection
     private final CollisionDetector collisionDetector;
@@ -81,41 +83,45 @@ public class FightScreen extends JDialog {
         }
     }
 
-    /**
-     * Sets up the user interface components for health display, attack button, and animation rendering.
-     */
     private void setupUI() {
         setSize(500, 350);
         setLocationRelativeTo(getParent());
 
-        // Create a main panel with BorderLayout to retain original layout structure
         mainPanel = new JPanel(new BorderLayout());
 
-        // Add health panel, attack button, and animation panel to mainPanel
         mainPanel.add(createHealthPanel(), BorderLayout.NORTH);
-        mainPanel.add(createAttackButton(), BorderLayout.SOUTH);
         mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
 
-        // Add player image panel on the left side
+        // Button Panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JButton attackButton = createAttackButton();
+        JButton defendButton = createDefendButton();
+        JButton runButton = createRunButton();
+
+        buttonPanel.add(attackButton);
+        buttonPanel.add(defendButton);
+        buttonPanel.add(runButton);
+
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
         JPanel playerImagePanel = createPlayerImagePanel();
         playerImagePanel.setPreferredSize(new Dimension(100, 100));
         mainPanel.add(playerImagePanel, BorderLayout.LINE_START);
+
         Color customColor = new Color(255, 169, 178);
         mainPanel.setBackground(customColor);
-        // Initialize the layered pane as content pane
+
         layeredPane = new JLayeredPane();
         layeredPane.setBackground(customColor);
         layeredPane.setPreferredSize(new Dimension(500, 300));
         setContentPane(layeredPane);
 
-        // Add mainPanel to the base layer of layeredPane
         mainPanel.setBounds(0, 0, 500, 300);
-        layeredPane.add(mainPanel, Integer.valueOf(0));  // Base layer
+        layeredPane.add(mainPanel, Integer.valueOf(0));
 
-        // Add GameQuestionPanel on a higher layer for overlay
         questionPanel.setBounds(100, 75, questionPanel.getPreferredSize().width, questionPanel.getPreferredSize().height);
-        layeredPane.add(questionPanel, Integer.valueOf(1));  // Higher layer
-        questionPanel.setVisible(false);  // Initially hidden
+        layeredPane.add(questionPanel, Integer.valueOf(1));
+        questionPanel.setVisible(false);
     }
 
     /**
@@ -148,7 +154,6 @@ public class FightScreen extends JDialog {
      */
     private JButton createAttackButton() {
 
-
         attackButton = new JButton("Attack");
         Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
         attackButton.setFont(customFont);
@@ -156,6 +161,29 @@ public class FightScreen extends JDialog {
         attackButton.setBackground(Color.pink);
         attackButton.addActionListener(e -> handleAttackAction());
         return attackButton;
+    }
+
+    private JButton createDefendButton() {
+        JButton defendButton = new JButton("Defend");
+        Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+        defendButton.setFont(customFont);
+        defendButton.setForeground(Color.BLUE);
+        defendButton.setBackground(Color.CYAN);
+        defendButton.addActionListener(e -> handleDefendAction());
+        return defendButton;
+    }
+
+    private JButton createRunButton() {
+        runButton = new JButton("Run");
+               Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+        runButton.setFont(customFont);
+        Color customBgColor = new Color(79, 164, 209);
+        Color customFgColor = new Color(8, 41, 62);
+
+        runButton.setForeground(customFgColor);
+        runButton.setBackground(customBgColor);
+        runButton.addActionListener(e -> handleRunAction());
+                     return runButton;
     }
 
     /**
@@ -200,6 +228,10 @@ public class FightScreen extends JDialog {
         };
 
         return imagePanel;
+    }
+
+    private void handleRunAction() {
+        showFightResult("Too scared?", "Loser!");
     }
 
     /**
@@ -254,18 +286,10 @@ public class FightScreen extends JDialog {
                 }
 
 
+
                 if (enemyHealth > 0) {
-                    if(player.getLevel() > 1) {
-                        damage = isCorrect ? ENEMY_ATTACK_DAMAGE : (int) (ENEMY_ATTACK_DAMAGE * 2);
-                        enemyAttack(damage);
-                        JOptionPane.showMessageDialog(FightScreen.this, "The enemy dealt " + damage + " damage!", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
-
-                    }
-                    damage = isCorrect ? ENEMY_ATTACK_DAMAGE / (new Random().nextInt(2) + 1) : ENEMY_ATTACK_DAMAGE;
-                    enemyAttack(damage);
-                    JOptionPane.showMessageDialog(FightScreen.this, "The enemy dealt " + damage + " damage!", "Damage Dealt", JOptionPane.INFORMATION_MESSAGE);
+                    enemyTurn();
                 }
-
                 // 3. Check and show fight status
                 checkFightStatus();
                 repaint();
@@ -273,8 +297,18 @@ public class FightScreen extends JDialog {
         };
 
         worker.execute();
-    }
 
+    }
+    private void handleDefendAction() {
+        // Set player's defending state
+        player.setDefending(true);
+
+        // Provide feedback to the player
+        JOptionPane.showMessageDialog(this, "You brace yourself for the next attack!", "Defend", JOptionPane.INFORMATION_MESSAGE);
+
+        // Enemy attacks after the player defends
+        enemyTurn();
+    }
 
 
     /**
@@ -293,9 +327,27 @@ public class FightScreen extends JDialog {
      * Executes the enemy's attack, reducing the player's health and updating the player's health label.
      */
     private void enemyAttack(int damage) {
+        if (player.isDefending()) {
+            damage = damage / 2; // Reduce damage by 50%
+            JOptionPane.showMessageDialog(this, "Your defense reduces the damage by half!", "Defend", JOptionPane.INFORMATION_MESSAGE);
+        }
         player.removeHealth(damage);
         playerHealthLabel.setText("Player Health: " + player.getHealth());
     }
+
+    private void enemyTurn() {
+        int damage = ENEMY_ATTACK_DAMAGE;
+        enemyAttack(damage);
+        JOptionPane.showMessageDialog(this, "The enemy dealt " + damage + " damage!", "Enemy Attack", JOptionPane.INFORMATION_MESSAGE);
+
+        // Reset player's defending state
+        player.setDefending(false);
+
+        // Check fight status
+        checkFightStatus();
+        repaint();
+    }
+
 
     /**
      * Checks if the fight has been won or lost and displays the appropriate result.
@@ -321,7 +373,9 @@ public class FightScreen extends JDialog {
      */
     private void showFightResult(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
-        tmxRenderer.markObjectAsEncountered(enemyName);
+        if(enemyHealth <= 0) {
+            tmxRenderer.markObjectAsEncountered(enemyName);
+        }
         System.out.println("Enemy name from Fightscreen passed to tmx renderer: " + enemyName);
         tmxRenderer.repaintMap();
         stopAnimationTimer();

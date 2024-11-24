@@ -22,6 +22,8 @@ public class Character {
     private int levelCap;
     private int health;
     private int study_stud_count;
+    private boolean defending = false;
+
     private List<ObjectModel> objects;
     private List<Item> inventory;
 
@@ -212,6 +214,15 @@ public class Character {
 
     public List<Item> getInventory() {
         return inventory;
+    }
+
+    // Getter and Setter for defending
+    public boolean isDefending() {
+        return defending;
+    }
+
+    public void setDefending(boolean defending) {
+        this.defending = defending;
     }
 }
 
