@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TmxRenderer {
     private static final int FRAME_DURATION_MS = 300;      // Default duration for animation frames in milliseconds
-    private static final int TILE_RENDER_SIZE = 32;        // Size in pixels for rendering tiles
+    private static final int TILE_RENDER_SIZE = 64;        // Size in pixels for rendering tiles
     private static final int ENEMY_RENDER_SIZE = 128;      // Size in pixels for rendering enemies
     private Set<String> encounteredObjects = new HashSet<>();
     private TmxMapModel mapModel;
@@ -231,21 +231,21 @@ public class TmxRenderer {
                 }
             }
          // for me to think about later - cali
-            //   if((frame!= null) && animation.getName().equalsIgnoreCase("gnome")){
-          //      g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY()-30, TILE_RENDER_SIZE*2, TILE_RENDER_SIZE*2, null);
+            if ((frame != null) && animation.getName().matches("(?i)apple(_\\d+)?")) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE / 4, TILE_RENDER_SIZE / 4, null);
+            }
+            if ((frame != null) && animation.getName().matches("brown_shop") || animation.getName().matches("pink_shop") || animation.getName().matches("(?i)gnome(_\\d+)?")) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE, TILE_RENDER_SIZE , null);
+            }
 
-           // }
-            if (frame != null) {
+            if (frame != null && !animation.getName().matches("(?i)apple(_\\d+)?") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome(_\\d+)?")) {
                 String animationName = animation.getName().toLowerCase();
 
-                if (sixtyFourBitObjects.contains(animationName)) {
+
                     g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30,
-                            TILE_RENDER_SIZE * 2, TILE_RENDER_SIZE * 2, null);
-                } else {
-                    g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30,
-                            TILE_RENDER_SIZE, TILE_RENDER_SIZE, null);
+                            TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
                 }
-            }
+
 
         }
     }
@@ -290,6 +290,8 @@ public class TmxRenderer {
         if (frame != null && objectName.equalsIgnoreCase("shop")) {
             g.drawImage(frame, x/2 + 25, y/2, ENEMY_RENDER_SIZE*2, ENEMY_RENDER_SIZE*2, null);
         }
+
+
         // Draw the frame if it exists
         else if (frame != null) {
             g.drawImage(frame, x, y, ENEMY_RENDER_SIZE, ENEMY_RENDER_SIZE, null);

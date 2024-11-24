@@ -215,7 +215,9 @@ public class FightScreen extends JDialog {
                 if (showAttackEffect) {
                     // Draw an overlay effect (e.g., a slash image)
                     tmxRenderer.renderIndividualAnimation("rabbit2_attack",-5,40,g);
-                    tmxRenderer.renderIndividualAnimation(enemyName+"_hurt",200,40,g);
+                    String baseEnemyName = enemyName.replaceAll("\\d", "");
+
+                    tmxRenderer.renderIndividualAnimation(baseEnemyName+"_hurt",200,40,g);
                 }
             }
         };

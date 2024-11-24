@@ -20,10 +20,4 @@ public class Item {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-    // Optional: Override toString for better display in lists
-    @Override
-    public String toString() {
-        return name + " x" + quantity;
-    }
 }

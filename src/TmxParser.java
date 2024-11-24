@@ -168,7 +168,7 @@ public class TmxParser {
 
         // If the base name exists, append a count to make it unique
         if (count > 0) {
-            uniqueName = baseName + "_" + count;
+            uniqueName = baseName + count;
         }
 
         // Update the name count in the map
