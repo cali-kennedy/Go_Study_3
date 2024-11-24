@@ -262,6 +262,7 @@ public class TmxRenderer {
     public void renderIndividualAnimation(String objectName, int x, int y, Graphics g) {
         AnimationModel enemyAnimation = null;
         for (AnimationModel animation : animations) {
+
             if (animation.getName().equalsIgnoreCase(objectName)) {
                 enemyAnimation = animation;
                 break;

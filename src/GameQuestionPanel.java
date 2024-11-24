@@ -25,7 +25,7 @@ public class GameQuestionPanel extends JPanel {
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2); // Thickness of 2 pixels
 
         // Set semi-transparent white background
-        setBackground(new Color(255, 255, 255, 220));
+        setBackground(new Color(255, 255, 255, 130));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Create and style the question text label

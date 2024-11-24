@@ -161,7 +161,7 @@ public class FightScreen extends JDialog {
     /**
      * Creates a JPanel for rendering the enemy animation.
      *
-     * @return JPanel for animation display.
+     * @return JPanel for animation display.s
      */
     private JPanel createAnimationPanel() {
         return new JPanel() {
@@ -172,6 +172,7 @@ public class FightScreen extends JDialog {
 
                 if (showAttackEffect) {
                     // Draw an overlay effect (e.g., a slash image)
+                    tmxRenderer.renderIndividualAnimation("rabbit2_attack",-5,40,g);
                     tmxRenderer.renderIndividualAnimation(enemyName+"_hurt",200,40,g);
                 }
             }
@@ -188,10 +189,12 @@ public class FightScreen extends JDialog {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (playerImage != null) {
-                    g.drawImage(playerImage, 10, 40, 128, 128, null);  // Draw image with padding
-                } else {
-                    System.err.println("Player image is not available for rendering.");
+                if (!showAttackEffect) {
+                    if (playerImage != null) {
+                        g.drawImage(playerImage, 10, 40, 128, 128, null);  // Draw image with padding
+                    } else {
+                        System.err.println("Player image is not available for rendering.");
+                    }
                 }
             }
         };
@@ -205,6 +208,9 @@ public class FightScreen extends JDialog {
      */
     private void handleAttackAction() {
         showRandomQuestion(); // Display question and wait for an answer
+        playSound("resources/attack_sound.wav");
+
+
         showAttackEffect = true;
         repaint();
         // Schedule to turn off the effect after 200ms
