@@ -247,9 +247,18 @@ public class FightScreen extends JDialog {
     }
 
     private void handleRunAction() {
-        showFightResult("Too scared?", "Loser!");
-    }
+        Random random = new Random();
+        int chance = random.nextInt(100); // Generates a number between 0 and 99
+        int successRate = 50; // 50% chance to run successfully
 
+        if (chance < successRate) {
+            showFightResult("You successfully ran away!", "Escaped");
+        } else {
+            showOverlayMessage("Failed to run away! The enemy attacks!");
+            enemyAttack(ENEMY_ATTACK_DAMAGE); // Enemy gets a free attack
+            checkFightStatus(); // Check if the player is still alive
+        }
+    }
     /**
      * Executes the player attack action, reducing enemy health and initiating an enemy counterattack.
      * Refreshes the screen to update health displays and animations.
@@ -319,7 +328,7 @@ public class FightScreen extends JDialog {
 
     private void handleDefendAction() {
         Random random = new Random();
-        int chance = random.nextInt(100);
+        int chance = random.nextInt(100); // Generates a number between 0 and 99
         int successRate = 50; // 50% chance to successfully defend
 
         if (chance < successRate) {
