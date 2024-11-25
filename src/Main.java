@@ -64,10 +64,14 @@ public class Main extends JPanel {
         JDialog dialog = new JDialog(gameFrame, "Input Questions", true);
         dialog.setSize(400, 500);
         dialog.setLocationRelativeTo(null);
+
         Color customorangeColor = new Color(237, 203, 181);
+
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBackground(customorangeColor);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        dialog.setBackground(customorangeColor);
 
 
         JPanel inputPanel = new JPanel(new GridBagLayout());
@@ -82,15 +86,18 @@ public class Main extends JPanel {
         Color customgreenColor = new Color(145, 175, 156);
         Color customLightgreenColor = new Color(195, 213, 200);
         Color customRedColor = new Color(174, 141, 137);
+        Color customLightOrangeColor = new Color(250, 234, 224);
 
 
         JTextField questionField = new JTextField(20);
         questionField.setFont(customFont);
         questionField.setBorder(thinBlackBorder);
+        questionField.setBackground(customLightOrangeColor);
 
 
         JTextField answerField = new JTextField(20);
         answerField.setBorder(thinBlackBorder);
+        answerField.setBackground(customLightOrangeColor);
 
 
         answerField.setFont(customFont);
@@ -102,6 +109,8 @@ public class Main extends JPanel {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         JList<String> questionList = new JList<>(listModel);
         questionList.setFont(customFont);
+
+        questionList.setBackground(customLightOrangeColor);
         JScrollPane scrollPane = new JScrollPane(questionList);
 
         JLabel inputquestionLabel = new JLabel("Question: ");
@@ -203,6 +212,7 @@ public class Main extends JPanel {
 
             // Initialize the renderer with parsed map data
             tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera);
+            tmxRenderer.printObjectNames();
             collisionDetector = new CollisionDetector(character, objects, this.tmxRenderer);
         } catch (IOException | ParserConfigurationException | SAXException e) {
             System.err.println("Error initializing TmxRenderer: " + e.getMessage());
@@ -280,12 +290,14 @@ public class Main extends JPanel {
             }
         }
 
+
+
         // Handle NPC collision
         if (result.hasNPCCollision() && !isNpcDialogOpen) {
             System.out.println("----------main NPC");
 
             long currentTime = System.currentTimeMillis();
-            if (currentTime - lastNpcCollisionTime > COOLDOWN_TIME_MS) {
+            if (currentTime - lastNpcCollisionTime > 3500) {
                 lastNpcCollisionTime = currentTime; // Update the last collision time
                 isNpcDialogOpen = true;
 
@@ -294,13 +306,14 @@ public class Main extends JPanel {
 
                 isNpcDialogOpen = false; // Reset flag after NPCScreen is closed
                 System.out.println("----------------------HAD NPC COLLISION -----------------------------------");
+
             }
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            gameFrame = new JFrame("TMX Map Renderer");
+            gameFrame = new JFrame("Go Study!");
             Main mainPanel = new Main();
 
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

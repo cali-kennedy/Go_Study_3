@@ -1,5 +1,5 @@
 {
-    "activeFile": "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
+    "activeFile": "large_test.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -8,7 +8,7 @@
             "scaleInEditor": 1
         },
         "Basic_Plants.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 3
         },
         "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx": {
             "scaleInDock": 1,
@@ -18,7 +18,7 @@
             "scaleInDock": 1
         },
         "Fences.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 3
         },
         "GiantCrab.tsx": {
             "scaleInDock": 1
@@ -36,17 +36,17 @@
             "scaleInEditor": 1
         },
         "Tilled_Dirt_Wide.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 2
         },
         "Water.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "Wooden_House_Roof_Tilset.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 3
         },
         "Wooden_House_Walls_Tilset.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 4
         },
         "apple.tsx": {
             "scaleInDock": 1,
@@ -59,15 +59,21 @@
         "dandelion2.tsx": {
             "scaleInDock": 1
         },
+        "dandelion2_hurt.tsx": {
+            "scaleInDock": 1
+        },
         "frog.tsx": {
             "scaleInDock": 1
         },
+        "gnome_hurt.tsx": {
+            "scaleInDock": 1
+        },
         "large_test.tmx": {
-            "scale": 1.1019999999999999,
-            "selectedLayer": 0,
+            "scale": 2,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 850.7259528130674,
-                "y": 426.950998185118
+                "x": 473.25,
+                "y": 366.75
             }
         },
         "new_apple_attmpt.tsx": {
@@ -87,16 +93,26 @@
             "scaleInDock": 1,
             "scaleInEditor": 16
         },
+        "pink_shop.tsx": {
+            "scaleInDock": 1
+        },
+        "rabbit2_attack.tsx": {
+            "scaleInDock": 1
+        },
         "red_gnome.tsx": {
+            "scaleInDock": 1,
             "scaleInEditor": 2
         },
         "shop.tsx": {
             "scaleInDock": 1
         },
+        "shop_sign.tsx": {
+            "scaleInDock": 1
+        },
         "small_test.tmx": {
             "expandedObjectLayers": [
-                7,
-                4
+                4,
+                7
             ],
             "scale": 3,
             "selectedLayer": 5,
@@ -105,7 +121,16 @@
                 "y": 160.16666666666669
             }
         },
+        "snail.tsx": {
+            "scaleInDock": 1
+        },
+        "snail_hurt.tsx": {
+            "scaleInDock": 1
+        },
         "study_stud.tsx": {
+            "scaleInDock": 1
+        },
+        "talk_to_me_sign.tsx": {
             "scaleInDock": 1
         }
     },
@@ -128,22 +153,22 @@
     "project": "",
     "property.type": "bool",
     "recentFiles": [
-        "red_gnome.tsx",
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
         "Hills.tsx",
-        "large_test.tmx",
-        "new_mroom_idle.tsx",
-        "small_test.tmx",
-        "Tilled_Dirt.tsx",
-        "apple.tsx",
-        "pink_apple.tsx",
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
+        "dandelion.tsx",
         "onion.tsx",
-        "dandelion.tsx"
+        "pink_apple.tsx",
+        "apple.tsx",
+        "Tilled_Dirt.tsx",
+        "small_test.tmx",
+        "new_mroom_idle.tsx",
+        "large_test.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 64,
-        "width": 64
+        "height": 32,
+        "width": 32
     }
 }

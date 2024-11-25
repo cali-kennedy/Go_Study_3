@@ -13,7 +13,7 @@ public class NPCScreen extends JDialog {
 
     private final Character player;
 
-
+    private boolean XPCollected;
     private boolean questionIsCorrect = false;
 
 
@@ -128,10 +128,82 @@ public class NPCScreen extends JDialog {
             mainPanel.add(messagePanel, BorderLayout.NORTH);
         }
 
+        if(collisionDetector.getNPCName().equalsIgnoreCase("help_npc") && (tmxRenderer.checkIfHelped("help_npc") == true)) {
+            // Create a container panel for stacked messages
+            JPanel messagePanel = new JPanel();
+            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+            messagePanel.setOpaque(false); // Make it transparent if desired
+
+            // Load custom fonts using FontUtils
+            Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 20);
+
+            // Add the first message with custom styling
+            JLabel primaryMessage = new JLabel("Thank you so Much! ", SwingConstants.CENTER);
+            primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+            Color customColor = new Color(94, 119, 50);
+
+            primaryMessage.setForeground(customColor);
+
+            if (!NPCInteractionTracker.isXpCollected("help_npc")) {
+                JLabel secondaryMessage = new JLabel("Here's 100 XP!", SwingConstants.CENTER);
+                player.addXP(100);
+                secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+                secondaryMessage.setForeground(customColor);
+                messagePanel.add(secondaryMessage);
+                NPCInteractionTracker.setXpCollected("help_npc");
+            }
+            // Add both labels to the message panel
+            messagePanel.add(primaryMessage);
+
+
+
+            // Add the message panel to the top of the main panel
+            mainPanel.add(messagePanel, BorderLayout.NORTH);
+        }
+        System.out.println("NPC SCREEN CHECK IF HELPED ----------------------------------------------" + tmxRenderer.checkIfHelped("help_npc"));
+        if(collisionDetector.getNPCName().equalsIgnoreCase("help_npc") && (tmxRenderer.checkIfHelped("help_npc") == false)) {
+
+            // Create a container panel for stacked messages
+            JPanel messagePanel = new JPanel();
+            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+            messagePanel.setOpaque(false); // Make it transparent if desired
+
+            // Load custom fonts using FontUtils
+            Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 20);
+
+            // Add the first message with custom styling
+            JLabel primaryMessage = new JLabel("The onion is blocking my way home! ", SwingConstants.CENTER);
+            primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+            Color customColor = new Color(232, 108, 108);
+
+            primaryMessage.setForeground(customColor);
+
+            // Add the first message with custom styling
+            JLabel secondaryMessage = new JLabel("Can you Help?", SwingConstants.CENTER);
+            secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+            secondaryMessage.setForeground(customColor);
+
+            // Add both labels to the message panel
+            messagePanel.add(primaryMessage);
+            messagePanel.add(secondaryMessage);
+
+
+            // Add the message panel to the top of the main panel
+            mainPanel.add(messagePanel, BorderLayout.NORTH);
+        }
+
         // Add interact button and animation panel
         mainPanel.add(createAnimationPanel(), BorderLayout.CENTER);
 
         if(collisionDetector.getNPCName().equalsIgnoreCase("frog")) {
+            // Create a button panel to hold both buttons side by side
+            JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
+            buttonPanel.add(createOkayButton());
+            // Add the button panel to the bottom of the main panel
+            mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        }
+
+        if(collisionDetector.getNPCName().equalsIgnoreCase("help_npc")) {
             // Create a button panel to hold both buttons side by side
             JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 row, 2 columns, with horizontal spacing
             buttonPanel.add(createOkayButton());
@@ -188,6 +260,7 @@ public class NPCScreen extends JDialog {
         okayButton.addActionListener(e -> handleDontInteractAction());
         return okayButton;
     }
+
 
     private JButton createInteractButton() {
         interactButton = new JButton("Interact");

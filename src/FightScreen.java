@@ -426,6 +426,11 @@ public class FightScreen extends JDialog {
             tmxRenderer.markObjectAsEncountered(enemyName);
         }
         System.out.println("Enemy name from Fightscreen passed to tmx renderer: " + enemyName);
+        System.out.println(enemyName);
+        if(enemyName.equalsIgnoreCase("npcEnemy")){
+            collisionDetector.markNpcAsHelped("help_npc");
+            System.out.println("NPC MARKED AS HELPED");
+        }
         tmxRenderer.repaintMap();
         stopAnimationTimer();
         dispose();

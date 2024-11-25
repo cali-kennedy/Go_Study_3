@@ -14,6 +14,7 @@ public class ObjectModel {
     private String layerName;
     // Inside ObjectModel class
     private boolean defeated = false;
+    private boolean isHelped = false;
 
 
 
@@ -109,5 +110,13 @@ public class ObjectModel {
     // Method to check if the enemy is defeated
     public boolean isDefeated() {
         return defeated;
+    }
+
+    public boolean isHelped() {
+        return isHelped;
+    }
+
+    public void setIsHelped(boolean helped){
+        this.isHelped = helped;
     }
 }

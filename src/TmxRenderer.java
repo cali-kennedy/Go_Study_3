@@ -238,7 +238,22 @@ public class TmxRenderer {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE, TILE_RENDER_SIZE , null);
             }
 
-            if (frame != null && !animation.getName().matches("(?i)apple(_\\d+)?") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome(_\\d+)?")) {
+            if ((frame != null) && animation.getName().matches("(?i)help_npc(_\\d+)?") ) {
+
+                System.out.println("TMX RENDERER CHECK IF HELPED -------------------" + checkIfHelped(animation.getName()));
+                if(checkIfHelped(animation.getName()) == false) {
+                    g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
+                }
+                else if(checkIfHelped(animation.getName())== true){
+                    System.out.println(checkIfHelped(animation.getName()));
+                    animation.setY(53);
+                    animation.setX(88);
+                    setObjectXandY(animation.getName(), 53, 88);
+                    g2d.drawImage(frame, (int) animation.getX(), (int) (int) animation.getY(), TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
+                }
+            }
+
+            if (frame != null && !animation.getName().matches("(?i)apple(_\\d+)?") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome(_\\d+)?") && !animation.getName().matches("(?i)help_npc(_\\d+)?")) {
                 String animationName = animation.getName().toLowerCase();
 
 
@@ -247,8 +262,35 @@ public class TmxRenderer {
                 }
 
 
+
         }
     }
+
+    public boolean checkIfHelped(String animationName) {
+        System.out.println("checkIfHelped called with animationName: " + animationName);
+        for (ObjectModel object : objects) {
+        //    System.out.println("checkIfHelped: checking object name: " + object.getName());
+            if (object.getName().equalsIgnoreCase(animationName)) {
+                System.out.println("CHECK IF HELPED: " + object.isHelped());
+        //        System.out.println("Object instance in TmxRenderer: " + System.identityHashCode(object));
+                return object.isHelped();
+            }
+        }
+      //  System.out.println("Object with name " + animationName + " not found.");
+        return false;
+    }
+
+    private void setObjectXandY(String animationName, int x, int y){
+        for (ObjectModel object : objects) {
+            if(object.getName().equalsIgnoreCase(animationName)){
+                object.setX(x);
+                object.setY(y);
+            }
+            System.out.println("Object name: " + object.getName());
+
+        }
+    }
+
 
 
     /**
@@ -302,6 +344,13 @@ public class TmxRenderer {
     public void repaintMap() {
         if (displayComponent != null) {
             displayComponent.repaint(); // Forces a full repaint
+        }
+    }
+
+    public void printObjectNames() {
+        System.out.println("Objects in TmxRenderer:");
+        for (ObjectModel object : objects) {
+            System.out.println("Object name: " + object.getName());
         }
     }
 

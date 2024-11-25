@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -141,6 +140,12 @@ public class CollisionDetector {
                         System.out.println("npc Name: " + object.getName());
                         npcCollision = true;
                     }
+                    case "needsHelpNpc" -> {
+                        setNPCName(object.getName());
+                        //object.setIsHelped(false);
+                        System.out.println("npc Name: " + object.getName());
+                        npcCollision = true;
+                    }
                     case "study_stud" -> {
                         itemsToCollect.add(object.getName());
                         objectsToRemove.add(object);
@@ -212,6 +217,18 @@ public class CollisionDetector {
         enemyName = null; // Clear enemy name to register new collisions
     }
 
+    public void markNpcAsHelped(String npcName) {
+        for (ObjectModel object : objects) {
+            if (object.getName().equalsIgnoreCase(npcName)) {
+                object.setIsHelped(true); // NPC has been helped
+                System.out.println("NPC " + npcName + " isHelped set to: " + object.isHelped());
+                System.out.println("Object instance in CollisionDetector: " + System.identityHashCode(object));
+                break;
+            }
+        }
+    }
+
+
     /**
      * Checks if there is a collision between the character and a specific object.
      *
@@ -260,46 +277,14 @@ public class CollisionDetector {
      */
     private String getObjectType(ObjectModel object) {
         for (ObjectPropertiesModel property : object.getProperties()) {
-            if (property.getPropertyName().equalsIgnoreCase("is_enemy") &&
-                    property.getValue().equalsIgnoreCase("true")) {
-                return "enemy";
-            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
+             if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
             }
-            if (property.getPropertyName().equalsIgnoreCase("is_apple") &&
-                    property.getValue().equalsIgnoreCase("true")) {
-                return "apple";
-            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
-                return property.getValue();
-            }
-            if (property.getPropertyName().equalsIgnoreCase("is_npc") &&
-                    property.getValue().equalsIgnoreCase("true")) {
-                return "npc";
-            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
-                return property.getValue();
-            }
-            if (property.getPropertyName().equalsIgnoreCase("is_wall") &&
-                    property.getValue().equalsIgnoreCase("true")) {
-                return "wall";
-            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
-                return property.getValue();
-            }
-            if (property.getPropertyName().equalsIgnoreCase("is_study_stud") &&
-                    property.getValue().equalsIgnoreCase("true")) {
-                return "study_stud";
-            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
-                return property.getValue();
-            }
-            if (property.getPropertyName().equalsIgnoreCase("is_shop") &&
-                    property.getValue().equalsIgnoreCase("true")) {
-                return "shop";
-            } else if (property.getPropertyName().equalsIgnoreCase("type")) {
-                return property.getValue();
-            }
-
         }
         return object.getName().equalsIgnoreCase("wall") ? "wall" : "unknown";
     }
+
+
     public boolean CollidedWithWall(){
         return this.collidedWithWall;
     }

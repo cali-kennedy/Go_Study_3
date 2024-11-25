@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="118">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="136">
  <tileset firstgid="1" source="Grass.tsx"/>
  <tileset firstgid="78" source="new_mroom_idle.tsx"/>
  <tileset firstgid="94" source="Water.tsx"/>
@@ -22,27 +22,28 @@
  <tileset firstgid="457" source="study_stud.tsx"/>
  <tileset firstgid="463" source="pink_shop.tsx"/>
  <tileset firstgid="469" source="red_gnome.tsx"/>
- <tileset firstgid="485" source="red_gnome.tsx"/>
- <tileset firstgid="501" source="snail_hurt.tsx"/>
- <tileset firstgid="507" source="rabbit2_attack.tsx"/>
- <tileset firstgid="513" source="talk_to_me_sign.tsx"/>
- <tileset firstgid="514" source="Grass.tsx"/>
- <tileset firstgid="591" source="dandelion2_hurt.tsx"/>
- <tileset firstgid="600" source="gnome_hurt.tsx"/>
- <tileset firstgid="612" source="shop_sign.tsx"/>
+ <tileset firstgid="485" source="snail_hurt.tsx"/>
+ <tileset firstgid="491" source="rabbit2_attack.tsx"/>
+ <tileset firstgid="497" source="talk_to_me_sign.tsx"/>
+ <tileset firstgid="498" source="dandelion2_hurt.tsx"/>
+ <tileset firstgid="507" source="gnome_hurt.tsx"/>
+ <tileset firstgid="519" source="shop_sign.tsx"/>
+ <tileset firstgid="520" source="mroom_hurt.tsx"/>
+ <tileset firstgid="526" source="../../Final_Project_Tester/resources/assets/Grass.tsx"/>
  <objectgroup id="13" name="Hidden_Objects">
-  <object id="81" name="snail_hurt" gid="506" x="-372.091" y="409.545" width="32" height="32">
+  <object id="81" name="snail_hurt" gid="490" x="-372.091" y="409.545" width="32" height="32">
    <properties>
     <property name="is_snail_hurt" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="82" name="rabbit2_attack" gid="511" x="-259.886" y="682.068" width="32" height="32">
+  <object id="82" name="rabbit2_attack" gid="495" x="-259.886" y="682.068" width="32" height="32">
    <properties>
     <property name="is_rabbit2_attack" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="96" name="dandy_hurt" gid="599" x="-361.333" y="306.333" width="32" height="32"/>
-  <object id="97" name="gnome_hurt" gid="611" x="-263.25" y="138" width="64" height="64"/>
+  <object id="96" name="dandy_hurt" gid="506" x="-361.333" y="306.333" width="32" height="32"/>
+  <object id="97" name="gnome_hurt" gid="518" x="-263.25" y="138" width="64" height="64"/>
+  <object id="131" name="mroom_hurt" gid="525" x="-328" y="347.5" width="32" height="32"/>
  </objectgroup>
  <layer id="1" name="Grass_Layer" width="50" height="50">
   <data encoding="csv">
@@ -175,7 +176,7 @@
 0,197,194,199,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,189,0,0,0,0,0,0,
 0,0,189,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,0,67,189,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,189,0,0,0,0,0,0,
 0,0,189,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,189,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,189,0,0,0,0,0,0,
-0,0,189,0,0,0,0,0,94,95,96,94,95,0,69,0,0,0,0,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,189,0,0,0,0,0,0,
+0,0,189,0,0,0,0,0,94,95,96,94,95,0,69,0,0,0,0,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,0,0,189,0,0,0,0,599,0,189,0,0,0,0,0,0,
 0,0,189,0,0,0,0,94,96,94,95,96,94,95,0,0,0,0,0,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,0,0,189,0,0,0,0,0,0,189,0,0,0,0,0,0,
 0,0,189,0,0,0,94,95,94,95,96,94,95,96,96,0,0,0,0,0,0,0,0,62,0,0,0,190,209,209,209,209,209,209,209,209,216,209,209,209,209,209,209,215,0,0,0,0,0,0,
 0,0,189,0,0,94,96,94,96,94,95,96,94,95,96,96,96,0,0,0,0,0,0,65,0,0,0,189,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -371,18 +372,18 @@
  <layer id="6" name="Tree_Layer" width="50" height="50">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,253,254,252,0,0,0,0,0,0,0,0,0,252,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,262,263,261,0,0,0,64,0,0,0,0,0,261,0,95,96,253,254,0,266,0,0,260,0,0,0,0,0,0,0,578,0,0,0,266,0,0,273,0,
-0,0,0,0,0,0,0,0,0,253,254,266,0,0,0,0,0,0,0,0,294,0,0,0,94,295,96,262,263,269,0,0,0,586,0,0,267,0,577,0,0,0,0,260,0,0,260,0,0,0,
-0,0,0,0,0,0,0,0,0,262,263,0,0,0,0,0,0,0,0,0,0,0,0,0,0,96,95,96,96,0,259,0,257,0,0,0,0,0,269,0,0,575,0,0,0,0,0,0,587,0,
+0,0,0,0,0,0,0,0,0,0,0,262,263,261,0,0,0,64,0,0,0,0,0,261,0,95,96,253,254,0,266,0,0,260,0,0,0,0,0,0,0,65,0,0,0,266,0,0,273,0,
+0,0,0,0,0,0,0,0,0,253,254,266,0,0,0,0,0,0,0,0,294,0,0,0,94,295,96,262,263,269,0,0,0,73,0,0,267,0,64,0,0,0,0,260,0,0,260,0,0,0,
+0,0,0,0,0,0,0,0,0,262,263,0,0,0,0,0,0,0,0,0,0,0,0,0,0,96,95,96,96,0,259,0,257,0,0,0,0,0,269,0,0,62,0,0,0,0,0,0,74,0,
 0,252,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,293,0,0,0,0,0,0,0,0,0,0,0,0,0,0,258,0,211,0,0,267,0,0,0,0,268,0,0,
 0,261,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,253,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,279,279,279,0,0,0,0,0,0,0,0,0,0,0,0,262,263,0,296,0,0,0,0,0,0,0,223,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,276,0,0,0,0,0,0,0,0,576,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,276,0,0,0,0,0,0,0,0,63,0,0,0,0,0,0,
 0,278,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,74,0,0,0,0,0,0,0,63,0,267,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,287,0,0,0,0,0,0,0,0,275,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,280,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,276,0,0,0,0,56,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,266,0,0,0,0,277,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,72,0,0,0,0,0,0,0,0,0,0,0,253,254,0,0,0,64,0,0,0,0,0,0,0,0,267,0,0,0,0,0,0,0,0,253,254,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,56,0,0,0,262,263,0,0,0,0,0,0,0,0,0,576,65,0,0,0,0,0,0,0,0,0,0,262,263,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,56,0,0,0,262,263,0,0,0,0,0,0,0,0,0,63,65,0,0,0,0,0,0,0,0,0,0,262,263,0,0,0,0,0,0,0,0,0,0,0,0,
 0,58,0,0,0,0,0,266,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,276,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,252,253,254,0,0,0,0,0,0,0,0,0,0,252,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,261,262,263,269,0,0,67,0,0,0,0,0,0,261,0,0,280,0,0,280,0,0,0,0,0,0,0,0,0,0,0,0,0,61,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -425,16 +426,16 @@
  <objectgroup id="12" name="Collision_Layer">
   <object id="56" name="wall" x="26.5" y="230.667" width="291.5" height="1.33">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="60" name="buy_info_frog" gid="432" x="621.417" y="58.4167" width="32" height="32">
    <properties>
-    <property name="is_npc" type="bool" value="true"/>
+    <property name="type" value="npc"/>
    </properties>
   </object>
-  <object id="88" gid="513" x="88.5" y="323.25" width="32" height="32"/>
-  <object id="91" gid="513" x="648.208" y="48.2083" width="32" height="32"/>
+  <object id="88" gid="497" x="88.5" y="323.25" width="32" height="32"/>
+  <object id="91" gid="497" x="648.208" y="48.2083" width="32" height="32"/>
   <object id="105" name="wall" x="380.438" y="231.335" width="86.625" height="1.33">
    <properties>
     <property name="is_wall" type="bool" value="true"/>
@@ -442,7 +443,7 @@
   </object>
   <object id="106" name="wall" x="475.688" y="2.335" width="1.95833" height="225.997">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="107" name="wall" x="175.354" y="1.335" width="301.625" height="1.33">
@@ -452,12 +453,12 @@
   </object>
   <object id="108" name="wall" x="189.687" y="57.585" width="86.625" height="51.9967">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="109" name="wall" x="-1.22917" y="132.002" width="37.125" height="1.33">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="110" name="wall" x="87.3542" y="135.668" width="87.125" height="3.08">
@@ -467,12 +468,12 @@
   </object>
   <object id="111" name="wall" x="89.8958" y="99.6683" width="65.0417" height="5.58">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="112" name="wall" x="1.35415" y="11.585" width="1.7917" height="119.83">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="113" name="wall" x="171.4" y="1.335" width="3.74625" height="157.08">
@@ -487,12 +488,12 @@
   </object>
   <object id="115" name="wall" x="19.6042" y="71.335" width="8.7917" height="7.33">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="116" name="wall" x="153.854" y="41.835" width="10.0417" height="7.33">
    <properties>
-    <property name="is_wall" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
   <object id="117" name="wall" x="164.188" y="125.46" width="14.625" height="15.58">
@@ -500,107 +501,146 @@
     <property name="is_wall" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="119" name="wall" x="463.188" y="223.335" width="21.625" height="16.58">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="120" name="wall" x="604.6" y="140.063" width="119.293" height="69.2381">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="121" name="wall" x="465.762" y="300.68" width="86.625" height="51.9967">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="122" name="wall" x="286.996" y="343.33" width="133.812" height="51.9967">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="123" name="wall" x="124.564" y="339.7" width="79.3655" height="100.999">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="124" name="wall" x="98.2483" y="367.831" width="140.164" height="43.8297">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="126" name="wall" x="304.691" y="35.2539" width="112.941" height="43.8297">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="11" name="Object_Layer">
   <object id="26" name="snail" gid="317" x="133.409" y="274.091" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="30" name="mroom" gid="93" x="376.333" y="433" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="33" name="apple" gid="420" x="420.833" y="197.083" width="16" height="16">
    <properties>
-    <property name="is_apple" type="bool" value="true"/>
+    <property name="type" value="apple"/>
    </properties>
   </object>
   <object id="34" name="apple" gid="420" x="282.896" y="256.188" width="16" height="16">
    <properties>
-    <property name="is_apple" type="bool" value="true"/>
+    <property name="type" value="apple"/>
    </properties>
   </object>
   <object id="39" name="apple" gid="420" x="16" y="380.167" width="16" height="16">
    <properties>
-    <property name="is_apple" type="bool" value="true"/>
+    <property name="type" value="apple"/>
    </properties>
   </object>
   <object id="47" name="frog" gid="432" x="73.1136" y="323.886" width="32" height="32">
    <properties>
-    <property name="is_npc" type="bool" value="true"/>
+    <property name="type" value="npc"/>
    </properties>
   </object>
-  <object id="50" name="snail" gid="317" x="247.583" y="183.917" width="32" height="32"/>
+  <object id="50" name="snail" gid="317" x="247.583" y="183.917" width="32" height="32">
+   <properties>
+    <property name="type" value="enemy"/>
+   </properties>
+  </object>
   <object id="54" name="dandy" gid="440" x="381" y="124.25" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="55" name="dandy" gid="440" x="439" y="113.75" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="61" name="study_stud" gid="462" x="551.25" y="171.75" width="20" height="20">
    <properties>
-    <property name="is_study_stud" type="bool" value="true"/>
+    <property name="type" value="study_stud"/>
    </properties>
   </object>
   <object id="62" name="dandy" gid="440" x="293.167" y="103.917" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="63" name="study_stud" gid="462" x="486.333" y="192.667" width="20" height="20">
    <properties>
-    <property name="is_study_stud" type="bool" value="true"/>
+    <property name="type" value="study_stud"/>
    </properties>
   </object>
   <object id="64" name="study_stud" gid="462" x="539" y="227" width="20" height="20">
    <properties>
-    <property name="is_study_stud" type="bool" value="true"/>
+    <property name="type" value="study_stud"/>
    </properties>
   </object>
   <object id="68" name="pink_shop" gid="468" x="535.417" y="34.6667" width="64" height="64">
    <properties>
-    <property name="is_shop" type="bool" value="true"/>
+    <property name="type" value="shop"/>
    </properties>
   </object>
   <object id="69" name="brown_shop" gid="454" x="677" y="35.0833" width="64" height="64">
    <properties>
-    <property name="is_shop" type="bool" value="true"/>
+    <property name="type" value="shop"/>
    </properties>
   </object>
   <object id="70" name="study_stud" gid="462" x="188.25" y="46.75" width="20" height="20">
    <properties>
-    <property name="is_study_stud" type="bool" value="true"/>
+    <property name="type" value="study_stud"/>
    </properties>
   </object>
   <object id="71" name="study_stud" gid="462" x="220.25" y="32" width="20" height="20">
    <properties>
-    <property name="is_study_stud" type="bool" value="true"/>
+    <property name="type" value="study_stud"/>
    </properties>
   </object>
-  <object id="73" name="study_stud" gid="462" x="7.75" y="32.5" width="20" height="20">
+  <object id="73" name="study_stud" gid="462" x="22.25" y="27.75" width="20" height="20">
    <properties>
-    <property name="is_study_stud" type="bool" value="true"/>
+    <property name="type" value="study_stud"/>
    </properties>
   </object>
   <object id="75" name="apple" gid="420" x="734.667" y="117.333" width="16" height="16">
    <properties>
-    <property name="is_apple" type="bool" value="true"/>
+    <property name="type" value="apple"/>
    </properties>
   </object>
-  <object id="77" name="gnome" gid="500" x="635.917" y="109" width="64" height="64">
+  <object id="77" name="gnome" gid="484" x="635.917" y="109" width="64" height="64">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
-  <object id="78" name="gnome" gid="500" x="611.417" y="285.833" width="55.6667" height="45">
+  <object id="78" name="gnome" gid="484" x="611.417" y="285.833" width="55.6667" height="45">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="89" name="apple_frog" gid="432" x="252.25" y="254" width="16" height="16">
@@ -610,26 +650,64 @@
   </object>
   <object id="90" name="onion" gid="325" x="225.333" y="347.75" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
-  <object id="92" name="onion" gid="325" x="-87.6667" y="136.917" width="32" height="32">
+  <object id="92" name="npcEnemy" gid="325" x="36.3333" y="106.167" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="npc_related" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="94" name="snail" gid="317" x="224.333" y="481" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
   <object id="95" name="mroom" gid="93" x="49" y="480" width="32" height="32">
    <properties>
-    <property name="is_enemy" type="bool" value="true"/>
+    <property name="type" value="enemy"/>
    </properties>
   </object>
-  <object id="102" gid="612" x="192.25" y="249.25" width="32" height="32"/>
-  <object id="103" gid="612" x="417.75" y="249.75" width="32" height="32"/>
-  <object id="104" gid="612" x="490.5" y="34.25" width="32" height="32"/>
+  <object id="102" gid="519" x="192.25" y="249.25" width="32" height="32"/>
+  <object id="103" gid="519" x="417.75" y="249.75" width="32" height="32"/>
+  <object id="104" gid="519" x="490.5" y="34.25" width="32" height="32"/>
+  <object id="127" name="study_stud" gid="462" x="773" y="112" width="20" height="20">
+   <properties>
+    <property name="type" value="study_stud"/>
+   </properties>
+  </object>
+  <object id="128" name="study_stud" gid="462" x="734" y="184.5" width="20" height="20">
+   <properties>
+    <property name="type" value="study_stud"/>
+   </properties>
+  </object>
+  <object id="129" name="study_stud" gid="462" x="760.5" y="269" width="20" height="20">
+   <properties>
+    <property name="type" value="study_stud"/>
+   </properties>
+  </object>
+  <object id="130" name="study_stud" gid="462" x="712" y="337.5" width="20" height="20">
+   <properties>
+    <property name="type" value="study_stud"/>
+   </properties>
+  </object>
+  <object id="133" name="study_stud" gid="462" x="54.75" y="21.5" width="20" height="20">
+   <properties>
+    <property name="type" value="study_stud"/>
+   </properties>
+  </object>
+  <object id="134" name="study_stud" gid="462" x="93.25" y="21.25" width="20" height="20">
+   <properties>
+    <property name="type" value="study_stud"/>
+   </properties>
+  </object>
+  <object id="135" name="help_npc" gid="432" x="26.75" y="191.5" width="32" height="32">
+   <properties>
+    <property name="final_x" type="int" value="88"/>
+    <property name="final_y" type="int" value="93"/>
+    <property name="type" value="needsHelpNpc"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
