@@ -318,11 +318,17 @@ public class FightScreen extends JDialog {
     }
 
     private void handleDefendAction() {
-        // Set player's defending state
-        player.setDefending(true);
+        Random random = new Random();
+        int chance = random.nextInt(100);
+        int successRate = 50; // 50% chance to successfully defend
 
-        // Provide feedback to the player
-        showOverlayMessage("You Brace yourself for the next attack!");
+        if (chance < successRate) {
+            player.setDefending(true);
+            showOverlayMessage("You brace yourself and prepare to block the attack!");
+        } else {
+            player.setDefending(false);
+            showOverlayMessage("Your defense failed!");
+        }
 
         // Enemy attacks after the player defends
         enemyTurn();
