@@ -30,7 +30,7 @@ public class Character {
 
     // Constructor
     public Character(String spritePath, int startX, int startY, int width, int height) {
-        this.x = startX;
+        this.x = startX; // Sprite starting position
         this.y = startY;
         this.width = width;
         this.height = height;
@@ -42,13 +42,14 @@ public class Character {
         this.study_stud_count = 0;
         this.inventory = new ArrayList<>();
 
-
+        // Loads character model
         try {
             this.sprite = ImageIO.read(new File("resources/rabbit2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    // Draws character model
     public void draw(Graphics g) {
         g.drawImage(sprite, x, y, width, height, null);
     }
@@ -66,15 +67,15 @@ public class Character {
         this.health = Math.min(this.health + healthToAdd, MAX_HEALTH); // Ensure health doesn't exceed max
         System.out.println("You gained " + healthToAdd + " health");
     }
-
+    // Removes player health
     public void removeHealth(int healthToRemove) {
         this.health = Math.max(this.health - healthToRemove, 0); // Ensure health doesn't go below zero
     }
-
+    // Sets player health
     public void setHealth(int health) {
         this.health = Math.max(0, Math.min(health, MAX_HEALTH)); // Health within range
     }
-
+    // Returns health of player
     public int getHealth() {
         return this.health;
     }
@@ -104,7 +105,7 @@ public class Character {
             this.health = 100;
         }
     }
-
+    // Returns player Xp
     public int getXP() {
         return this.XP;
     }
@@ -113,15 +114,15 @@ public class Character {
         addXP(XPToAdd);
         return this.levelProgression;
     }
-
+    // Returns player level
     public int getLevel() {
         return this.level;
     }
-
+    // Returns xp progression
     public int getLevelProgression() {
         return this.levelProgression;
     }
-
+    // Returns level cap
     public int getLevelCap() {
         return this.levelCap;
     }
@@ -178,11 +179,11 @@ public class Character {
         // If item is not stackable or doesn't exist in inventory
         inventory.add(item);
     }
-
+    // Removes item from inventory
     public void removeItem(Item item) {
         inventory.remove(item);
     }
-
+    // Uses an item
     public void useItem(Item item) {
         switch (item.getName()) {
             case "Apple":
@@ -205,13 +206,14 @@ public class Character {
             removeItem(item);
         }
     }
+    // Displays player inventory on screen
     public void displayInventory() {
         SwingUtilities.invokeLater(() -> {
             InventoryScreen inventoryScreen = new InventoryScreen( this);
             inventoryScreen.setVisible(true);
         });
     }
-
+    // Returns player inventory
     public List<Item> getInventory() {
         return inventory;
     }

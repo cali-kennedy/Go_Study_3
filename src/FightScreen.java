@@ -247,9 +247,20 @@ public class FightScreen extends JDialog {
     }
 
     private void handleRunAction() {
-        showFightResult("Too scared?", "Loser!");
-    }
+        Random random = new Random();
+        int playerLevel = player.getLevel();
+        // Base success rate starts at 50% and is capped at 90% also increases by 5% each level
+        int successRate = Math.min(90, 50 + playerLevel * 5);
+        int chance = random.nextInt(100); // Generates a number between 0 and 99
 
+        if (chance < successRate) {
+            showFightResult("You successfully ran away!", "Escaped");
+        } else {
+            showOverlayMessage("Failed to run away! The enemy attacks!");
+            enemyAttack(ENEMY_ATTACK_DAMAGE); // Enemy gets a free attack
+            checkFightStatus(); // Check if the player is still alive
+        }
+    }
     /**
      * Executes the player attack action, reducing enemy health and initiating an enemy counterattack.
      * Refreshes the screen to update health displays and animations.
@@ -318,11 +329,19 @@ public class FightScreen extends JDialog {
     }
 
     private void handleDefendAction() {
-        // Set player's defending state
-        player.setDefending(true);
+        Random random = new Random();
+        int playerLevel = player.getLevel();
+        // Base success rate starts at 50% and is capped at 90% also increases by 5% each level
+        int successRate = Math.min(90, 50 + playerLevel * 5);
+        int chance = random.nextInt(100); // Generates a number between 0 and 99
 
-        // Provide feedback to the player
-        showOverlayMessage("You Brace yourself for the next attack!");
+        if (chance < successRate) {
+            player.setDefending(true);
+            showOverlayMessage("You brace yourself and prepare to block the attack!");
+        } else {
+            player.setDefending(false);
+            showOverlayMessage("Your defense failed!");
+        }
 
         // Enemy attacks after the player defends
         enemyTurn();
@@ -387,7 +406,16 @@ public class FightScreen extends JDialog {
     private void enemyTurn() {
         int damage = ENEMY_ATTACK_DAMAGE;
         enemyAttack(damage);
-        showOverlayMessage("The enemy dealt " + damage + " damage.");
+
+        // Display a different message if the player is defending or not
+        if (player.isDefending()) {
+            damage = damage / 2;
+            showOverlayMessage("The enemy dealt " + damage + " damage!");
+        }
+        else {
+            showOverlayMessage("The enemy dealt " + damage + " damage.");
+
+        }
 
         // Reset player's defending state
         player.setDefending(false);
