@@ -406,7 +406,16 @@ public class FightScreen extends JDialog {
     private void enemyTurn() {
         int damage = ENEMY_ATTACK_DAMAGE;
         enemyAttack(damage);
-        showOverlayMessage("The enemy dealt " + damage + " damage.");
+
+        // Display a different message if the player is defending or not
+        if (player.isDefending()) {
+            damage = damage / 2;
+            showOverlayMessage("The enemy dealt " + damage + " damage!");
+        }
+        else {
+            showOverlayMessage("The enemy dealt " + damage + " damage.");
+
+        }
 
         // Reset player's defending state
         player.setDefending(false);
