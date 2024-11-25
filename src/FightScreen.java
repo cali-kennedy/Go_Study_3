@@ -248,8 +248,10 @@ public class FightScreen extends JDialog {
 
     private void handleRunAction() {
         Random random = new Random();
+        int playerLevel = player.getLevel();
+        // Base success rate starts at 50% and is capped at 90% also increases by 5% each level
+        int successRate = Math.min(90, 50 + playerLevel * 5);
         int chance = random.nextInt(100); // Generates a number between 0 and 99
-        int successRate = 50; // 50% chance to run successfully
 
         if (chance < successRate) {
             showFightResult("You successfully ran away!", "Escaped");
@@ -328,8 +330,10 @@ public class FightScreen extends JDialog {
 
     private void handleDefendAction() {
         Random random = new Random();
+        int playerLevel = player.getLevel();
+        // Base success rate starts at 50% and is capped at 90% also increases by 5% each level
+        int successRate = Math.min(90, 50 + playerLevel * 5);
         int chance = random.nextInt(100); // Generates a number between 0 and 99
-        int successRate = 50; // 50% chance to successfully defend
 
         if (chance < successRate) {
             player.setDefending(true);
