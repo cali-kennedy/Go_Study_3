@@ -128,6 +128,39 @@ public class NPCScreen extends JDialog {
             mainPanel.add(messagePanel, BorderLayout.NORTH);
         }
 
+        if(collisionDetector.getNPCName().equalsIgnoreCase("LowXPChest")) {
+            // Create a container panel for stacked messages
+            JPanel messagePanel = new JPanel();
+            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+            messagePanel.setOpaque(false); // Make it transparent if desired
+
+            // Load custom fonts using FontUtils
+            Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 20);
+
+            // Add the first message with custom styling
+            JLabel primaryMessage = new JLabel("Congrats! You Found a Chest", SwingConstants.CENTER);
+            primaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+            Color customColor = new Color(94, 119, 50);
+
+            primaryMessage.setForeground(customColor);
+
+            if (!NPCInteractionTracker.isXpCollected("chest")) {
+                JLabel secondaryMessage = new JLabel("Here's 100 XP!", SwingConstants.CENTER);
+                player.addXP(100);
+                secondaryMessage.setFont(customFont != null ? customFont : new Font("Arial", Font.BOLD, 12));
+                secondaryMessage.setForeground(customColor);
+                messagePanel.add(secondaryMessage);
+                NPCInteractionTracker.setXpCollected("chest");
+            }
+            // Add both labels to the message panel
+            messagePanel.add(primaryMessage);
+
+
+
+            // Add the message panel to the top of the main panel
+            mainPanel.add(messagePanel, BorderLayout.NORTH);
+        }
+
         if(collisionDetector.getNPCName().equalsIgnoreCase("help_npc") && (tmxRenderer.checkIfHelped("help_npc") == true)) {
             // Create a container panel for stacked messages
             JPanel messagePanel = new JPanel();

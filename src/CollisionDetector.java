@@ -178,7 +178,9 @@ public class CollisionDetector {
                         transitionObject = object;
                     }
                     case "lowXPChest" ->{
-                        // for later
+                        setNPCName(object.getName());
+                        npcCollision = true;
+                        objectsToRemove.add(object);
                     }
                 }
             }
@@ -226,7 +228,21 @@ public class CollisionDetector {
             }
         }
 
-        // Remove defeated objects after processing
+        // Process objects to remove
+        for (ObjectModel obj : objectsToRemove) {
+            String objName = obj.getName().toLowerCase();
+            if (main.getCurrentMapState().getEncounteredObjects().contains(objName)) {
+                continue;
+            }
+            // Add to MapState
+            MapState currentMapState = main.getCurrentMapState();
+            if (currentMapState != null) {
+                currentMapState.addEncounteredObject(objName);
+                System.out.println("Added to encounteredObjects: " + objName);
+            }
+            tmxRenderer.markObjectAsEncountered(objName);
+            objects.remove(obj);
+        }
         objects.removeAll(objectsToRemove);
 
         return new CollisionResult(collidedWithWall, enemyCollision, npcCollision, shopCollision, transitionCollision, transitionObject);

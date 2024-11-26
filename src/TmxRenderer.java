@@ -175,7 +175,7 @@ public class TmxRenderer {
     }
 
     public void markObjectAsEncountered(String objectName) {
-        encounteredObjects.add(objectName);
+        encounteredObjects.add(objectName.toLowerCase());
 
         // Update animations and mark as defeated
         for (AnimationModel animation : animations) {
@@ -191,12 +191,12 @@ public class TmxRenderer {
             ObjectModel object = iterator.next();
             if (object.getName().equalsIgnoreCase(objectName)) {
                 object.setDefeated(true);
-                iterator.remove(); // This causes the exception
+                iterator.remove();
                 break;
             }
         }
-
     }
+
 
     /**
      * Renders the map, including static tiles and animations, based on the camera's position.
