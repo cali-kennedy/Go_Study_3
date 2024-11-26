@@ -14,6 +14,9 @@
         "Basic_Plants.tsx": {
             "scaleInDock": 3
         },
+        "Boats.tsx": {
+            "dynamicWrapping": false
+        },
         "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -70,6 +73,9 @@
         "dandelion2_hurt.tsx": {
             "scaleInDock": 1
         },
+        "fountain.tsx": {
+            "dynamicWrapping": true
+        },
         "frog.tsx": {
             "scaleInDock": 1
         },
@@ -80,11 +86,11 @@
             "expandedObjectLayers": [
                 6
             ],
-            "scale": 5.5,
+            "scale": 4,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 100.27272727272728,
-                "y": 122.27272727272728
+                "x": 100.875,
+                "y": 72.375
             }
         },
         "house_2.tmx": {
@@ -100,15 +106,15 @@
         },
         "large_test.tmx": {
             "expandedObjectLayers": [
-                11,
                 13,
+                11,
                 12
             ],
             "scale": 2,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 227.25,
-                "y": 298.25
+                "x": 493.25,
+                "y": 340.25
             }
         },
         "new_apple_attmpt.tsx": {
@@ -123,6 +129,9 @@
         "onion.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 11
+        },
+        "onion_hurt.tsx": {
+            "dynamicWrapping": false
         },
         "pink_apple.tsx": {
             "scaleInDock": 1,
@@ -146,14 +155,14 @@
         },
         "small_test.tmx": {
             "expandedObjectLayers": [
-                4,
-                7
+                7,
+                4
             ],
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 159.83333333333331,
-                "y": 160.16666666666669
+                "x": 491.16666666666663,
+                "y": 180.16666666666669
             }
         },
         "snail.tsx": {
@@ -171,16 +180,15 @@
     },
     "frame.defaultDuration": 300,
     "last.imagePath": "C:/Users/calik/IdeaProjects/Go_Study_3/resources",
-    "map.height": 20,
+    "map.height": 40,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 19,
+    "map.width": 40,
     "openFiles": [
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
         "Hills.tsx",
-        "large_test.tmx",
         "new_mroom_idle.tsx",
         "small_test.tmx",
         "Tilled_Dirt.tsx",
@@ -188,7 +196,17 @@
         "pink_apple.tsx",
         "onion.tsx",
         "dandelion.tsx",
-        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
+        "mroom_hurt.tsx",
+        "squirrel.tsx",
+        "help_sign.tsx",
+        "large_test.tmx",
+        "house_1.tmx",
+        "onion_hurt.tsx",
+        "Basic_Furniture.tsx",
+        "Chest.tsx",
+        "fountain.tsx",
+        "fountain.tsx"
     ],
     "project": "",
     "property.type": "string",
@@ -208,7 +226,7 @@
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 34,
-        "width": 50
+        "height": 32,
+        "width": 32
     }
 }
