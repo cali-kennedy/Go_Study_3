@@ -23,6 +23,7 @@ public class CollisionDetector {
     private final Character character;
     private final List<ObjectModel> objects;
     private TmxRenderer tmxRenderer;
+    private Main main; // Reference to Main class to access mapStates
 
     // Collision state management
     private boolean isAnsweringQuestion = false;
@@ -57,12 +58,19 @@ public class CollisionDetector {
         private final boolean enemyCollision;
         private boolean npcCollision;
         private boolean shopCollision;
+        private boolean transitionCollision;
+        private ObjectModel transitionObject;
 
-        public CollisionResult(boolean wallCollision, boolean enemyCollision, boolean npcCollision, boolean shopCollision) {
-            this.npcCollision = npcCollision;
+
+
+        public CollisionResult(boolean wallCollision, boolean enemyCollision, boolean npcCollision, boolean shopCollision,
+                               boolean transitionCollision, ObjectModel transitionObject) {
             this.wallCollision = wallCollision;
             this.enemyCollision = enemyCollision;
+            this.npcCollision = npcCollision;
             this.shopCollision = shopCollision;
+            this.transitionCollision = transitionCollision;
+            this.transitionObject = transitionObject;
         }
 
         public boolean hasWallCollision() {
@@ -79,6 +87,10 @@ public class CollisionDetector {
         public boolean hasShopCollision() {
             return shopCollision;
         }
+
+        public boolean hasTransitionCollision() { return transitionCollision; }
+
+        public ObjectModel getTransitionObject() { return transitionObject; }
     }
 
     /**
@@ -87,12 +99,13 @@ public class CollisionDetector {
      * @param character Character involved in the collision detection.
      * @param objects   List of objects that the character may collide with.
      */
-    public CollisionDetector(Character character, List<ObjectModel> objects, TmxRenderer tmxRenderer) {
+    public CollisionDetector(Character character, List<ObjectModel> objects, TmxRenderer tmxRenderer, Main main) {
         System.out.println("----COLLISION DETECTOR INVOKED-----");
         System.out.println("Character: " + character);
         this.character = character;
         this.objects = objects;
         this.tmxRenderer = tmxRenderer;
+        this.main = main;
     }
 
     /**
@@ -105,6 +118,8 @@ public class CollisionDetector {
         boolean enemyCollision = false;
         boolean npcCollision = false;
         boolean shopCollision = false;
+        boolean transitionCollision = false;
+        ObjectModel transitionObject = null;
 
         // Lists to keep track of objects and enemies to process after iteration
         List<ObjectModel> objectsToRemove = new ArrayList<>();
@@ -114,6 +129,9 @@ public class CollisionDetector {
         // Iterate through a copy of the objects list to avoid concurrent modification
         for (ObjectModel object : new ArrayList<>(objects)) {
             if (isColliding(character, object)) {
+                if (main.getCurrentMapState().getEncounteredObjects().contains(object.getName().toLowerCase())) {
+                    continue;
+                }
                 String objectType = getObjectType(object);
                 switch (objectType) {
                     case "wall" -> {
@@ -154,13 +172,23 @@ public class CollisionDetector {
                         setShopName(object.getName());
                         shopCollision = true;
                     }
+                    case "transition" -> {
+                        System.out.println("----------------------------- COLLISION DETECTOR FOUND A TRANSITION ------------------------");
+                        transitionCollision = true;
+                        transitionObject = object;
+
+                    }
                 }
             }
         }
 
         // Process items to collect
         for (String itemName : itemsToCollect) {
+            if (main.getCurrentMapState().getEncounteredObjects().contains(itemName.toLowerCase())) {
+                continue;
+            }
             // Find the object by name
+
             ObjectModel itemObject = findObjectByName(itemName);
             if (itemObject != null) {
                 String objectType = getObjectType(itemObject);
@@ -177,6 +205,11 @@ public class CollisionDetector {
                         System.out.println("Collected a Study Stud.");
                     }
                 }
+                // Add to MapState
+                MapState currentMapState = main.getCurrentMapState();
+                if (currentMapState != null) {
+                    currentMapState.addEncounteredObject(itemName);
+                }
                 tmxRenderer.markObjectAsEncountered(itemName);
             }
         }
@@ -184,12 +217,17 @@ public class CollisionDetector {
         // Process enemies to defeat
         for (String enemyName : enemiesToDefeat) {
             tmxRenderer.markObjectAsEncountered(enemyName);
+            // Add to MapState
+            MapState currentMapState = main.getCurrentMapState();
+            if (currentMapState != null) {
+                currentMapState.addEncounteredObject(enemyName);
+            }
         }
 
         // Remove defeated objects after processing
         objects.removeAll(objectsToRemove);
 
-        return new CollisionResult(collidedWithWall, enemyCollision, npcCollision, shopCollision);
+        return new CollisionResult(collidedWithWall, enemyCollision, npcCollision, shopCollision, transitionCollision, transitionObject);
     }
 
     // Helper method to find an object by name
@@ -228,6 +266,10 @@ public class CollisionDetector {
         }
     }
 
+    public void updateObjects(List<ObjectModel> newObjects) {
+        this.objects.clear();
+        this.objects.addAll(newObjects);
+    }
 
     /**
      * Checks if there is a collision between the character and a specific object.
@@ -279,6 +321,8 @@ public class CollisionDetector {
         for (ObjectPropertiesModel property : object.getProperties()) {
              if (property.getPropertyName().equalsIgnoreCase("type")) {
                 return property.getValue();
+     //       } else if (object.getName().startsWith("transition_") || object.getName().startsWith("transition")) {
+     //            return "transition";
             }
         }
         return object.getName().equalsIgnoreCase("wall") ? "wall" : "unknown";

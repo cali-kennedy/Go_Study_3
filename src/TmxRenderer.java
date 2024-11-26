@@ -35,7 +35,7 @@ public class TmxRenderer {
      * @param camera     Camera to control which part of the map is visible.
      */
     public TmxRenderer(TmxMapModel mapModel, List<LayerModel> layers, List<ObjectModel> objects,
-                       List<AnimationModel> animations, List<TilesetModel> tilesets, Camera camera) {
+                       List<AnimationModel> animations, List<TilesetModel> tilesets, Camera camera, Set<String> encounteredObjects) {
         System.out.println("---- TMX RENDERER INVOKED ----");
         this.mapModel = mapModel;
         this.layers = layers;
@@ -45,6 +45,7 @@ public class TmxRenderer {
         this.tileImages = new HashMap<>();
         this.camera = camera;
         sixtyFourBitObjects = new HashSet<>(Arrays.asList("pink_shop", "brown_shop", "shop","gnome","gnome_1","gnome_2"));
+        this.encounteredObjects = encounteredObjects;
 
 
         loadTilesetImages();
@@ -139,6 +140,9 @@ public class TmxRenderer {
                         // Add the frame to the animation, maintaining a sequence within tile bounds.
                         animation.addFrame(frame);
                     }
+                    if (encounteredObjects.contains(animation.getName().toLowerCase())) {
+                        animation.setDefeated(true);
+                    }
 
                     animations.add(animation);
                     System.out.println("TmxRenderer.java - initalizeAnimations: Initialized animation for GID " + gid + " with frames at position (" +
@@ -217,7 +221,7 @@ public class TmxRenderer {
 
         // Render animated objects, skipping defeated ones
         for (AnimationModel animation : animations) {
-            if (animation.isDefeated()){ continue;} // Skip defeated animations
+            if (animation.isDefeated()|| encounteredObjects.contains(animation.getName())){ continue;} // Skip defeated animations
 
             animation.update();  // Update animation to get the current frame
             int tileId = animation.getCurrentTileId();
@@ -240,7 +244,7 @@ public class TmxRenderer {
 
             if ((frame != null) && animation.getName().matches("(?i)help_npc(_\\d+)?") ) {
 
-                System.out.println("TMX RENDERER CHECK IF HELPED -------------------" + checkIfHelped(animation.getName()));
+              //  System.out.println("TMX RENDERER CHECK IF HELPED -------------------" + checkIfHelped(animation.getName()));
                 if(checkIfHelped(animation.getName()) == false) {
                     g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
                 }
@@ -267,11 +271,11 @@ public class TmxRenderer {
     }
 
     public boolean checkIfHelped(String animationName) {
-        System.out.println("checkIfHelped called with animationName: " + animationName);
+    //    System.out.println("checkIfHelped called with animationName: " + animationName);
         for (ObjectModel object : objects) {
         //    System.out.println("checkIfHelped: checking object name: " + object.getName());
             if (object.getName().equalsIgnoreCase(animationName)) {
-                System.out.println("CHECK IF HELPED: " + object.isHelped());
+          //      System.out.println("CHECK IF HELPED: " + object.isHelped());
         //        System.out.println("Object instance in TmxRenderer: " + System.identityHashCode(object));
                 return object.isHelped();
             }
@@ -286,7 +290,7 @@ public class TmxRenderer {
                 object.setX(x);
                 object.setY(y);
             }
-            System.out.println("Object name: " + object.getName());
+            System.out.println(" Changed x and y of Object name: " + object.getName());
 
         }
     }

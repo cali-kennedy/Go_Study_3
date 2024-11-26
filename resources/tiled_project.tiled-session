@@ -1,4 +1,8 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
     "activeFile": "large_test.tmx",
     "expandedProjectPaths": [
     ],
@@ -68,12 +72,28 @@
         "gnome_hurt.tsx": {
             "scaleInDock": 1
         },
-        "large_test.tmx": {
-            "scale": 2,
-            "selectedLayer": 9,
+        "house_1.tmx": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 5.51,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 473.25,
-                "y": 366.75
+                "x": 79.94555353901997,
+                "y": 103.72050816696914
+            }
+        },
+        "large_test.tmx": {
+            "expandedObjectLayers": [
+                11,
+                13,
+                12
+            ],
+            "scale": 3,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 291.83333333333337,
+                "y": 324.16666666666663
             }
         },
         "new_apple_attmpt.tsx": {
@@ -136,6 +156,11 @@
     },
     "frame.defaultDuration": 300,
     "last.imagePath": "C:/Users/calik/IdeaProjects/Go_Study_3/resources",
+    "map.height": 10,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 10,
     "openFiles": [
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
@@ -151,7 +176,7 @@
         "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
     ],
     "project": "",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",

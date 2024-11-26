@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="2">
+ <tileset firstgid="1" source="Wooden_House_Walls_Tilset.tsx"/>
+ <tileset firstgid="16" source="Grass.tsx"/>
+ <tileset firstgid="93" source="Fences.tsx"/>
+ <tileset firstgid="109" source="Basic_Plants.tsx"/>
+ <tileset firstgid="121" source="Doors.tsx"/>
+ <layer id="1" name="Floor_Layer" width="10" height="10">
+  <data encoding="csv">
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28,
+28,7,7,7,7,7,7,7,7,28
+</data>
+ </layer>
+ <layer id="3" name="Fence_Layer" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,107,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,110,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,110,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,124,0,0,0,107
+</data>
+ </layer>
+ <layer id="2" name="Wall_Layer" width="10" height="10">
+  <data encoding="csv">
+1,2,2,2,2,2,2,2,2,3,
+6,0,0,0,0,0,0,0,0,8,
+6,0,0,0,0,0,0,0,0,8,
+6,0,0,0,0,0,0,0,0,8,
+6,0,0,0,0,0,0,0,0,8,
+6,0,0,0,0,0,0,0,0,8,
+6,0,0,0,0,0,0,0,0,8,
+6,0,0,0,0,0,0,0,0,8,
+6,0,0,0,0,0,0,0,0,8,
+11,12,12,14,12,0,14,12,12,13
+</data>
+ </layer>
+ <objectgroup id="4" name="Object_Layer">
+  <object id="1" name="transition" x="80.5808" y="143.739" width="16" height="16">
+   <properties>
+    <property name="destinationMap" value="large_test.tmx"/>
+    <property name="spawnX" type="int" value="320"/>
+    <property name="spawnY" type="int" value="420"/>
+    <property name="type" value="transition"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.border.Border;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -32,10 +34,14 @@ public class Main extends JPanel {
     private boolean isNpcDialogOpen = false;
     private boolean isShopDialogOpen = false;
 
+    private Map<String, MapState> mapStates = new HashMap<>();
+
     private long lastNpcCollisionTime = 0;   // Tracks the last time an NPC collision occurred
     private long lastShopCollisionTime = 0;   // Tracks the last time an NPC collision occurred
 
     private static final int COOLDOWN_TIME_MS = 90000; // Cooldown period in milliseconds
+    private String currentMapFileName;
+
     public Main() {
         try {
             // import look and feel from faltlaf
@@ -179,17 +185,34 @@ public class Main extends JPanel {
         setLayout(null);
 
         try {
+            // Set the current map file name
+            currentMapFileName = "large_test.tmx";
+            String initialMapFilePath = "resources/" + currentMapFileName;
+
             // Parse .tmx file and tileset files to populate models
-            tmxParser = new TmxParser("resources/large_test.tmx");
+            tmxParser = new TmxParser(initialMapFilePath);
             TmxMapModel mapModel = tmxParser.getMapModel();
             List<LayerModel> layers = tmxParser.getLayers();
             List<ObjectModel> objects = tmxParser.getObjects();
             List<AnimationModel> animations = tmxParser.getAnimations();
             List<TilesetModel> tilesets = tmxParser.getTilesets();
 
+            // Initialize MapState for the initial map
+            MapState mapState = mapStates.get(currentMapFileName);
+            if (mapState == null) {
+                mapState = new MapState(currentMapFileName);
+                mapStates.put(currentMapFileName, mapState);
+            } else {
+                // Remove encountered objects
+                MapState finalMapState = mapState;
+                objects.removeIf(obj -> finalMapState.getEncounteredObjects().contains(obj.getName().toLowerCase()));
+            }
+
+            // Initialize character and camera
             character = new Character("resources/rabbit2.png", 50, 250, 32, 32);
             camera = new Camera(700, 700,  3.0f, character);
 
+            // Initialize question panel
             questionPanel = new GameQuestionPanel(character, this);
             questionPanel.setLocation(50, 50);
             add(questionPanel);
@@ -204,16 +227,18 @@ public class Main extends JPanel {
                 }
             });
 
+            // Initialize input handler
             inputHandler = new InputHandler(character, this);
-
 
             setFocusable(true);
             requestFocusInWindow();
 
-            // Initialize the renderer with parsed map data
-            tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera);
+            // Initialize the renderer with parsed map data and encountered objects
+            tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera, mapState.getEncounteredObjects());
             tmxRenderer.printObjectNames();
-            collisionDetector = new CollisionDetector(character, objects, this.tmxRenderer);
+
+            // Initialize collision detector
+            collisionDetector = new CollisionDetector(character, objects, this.tmxRenderer, this);
         } catch (IOException | ParserConfigurationException | SAXException e) {
             System.err.println("Error initializing TmxRenderer: " + e.getMessage());
         }
@@ -290,6 +315,10 @@ public class Main extends JPanel {
             }
         }
 
+        if (result.hasTransitionCollision()) {
+            ObjectModel transitionObject = result.getTransitionObject();
+            handleMapTransition(transitionObject);
+        }
 
 
         // Handle NPC collision
@@ -311,6 +340,70 @@ public class Main extends JPanel {
         }
     }
 
+    public void loadMap(String mapFileName, int spawnX, int spawnY) {
+        currentMapFileName = mapFileName;
+        try {
+            // Parse the new .tmx file
+            tmxParser = new TmxParser("resources/" + mapFileName);
+            TmxMapModel mapModel = tmxParser.getMapModel();
+            List<LayerModel> layers = tmxParser.getLayers();
+            List<ObjectModel> objects = tmxParser.getObjects();
+            List<AnimationModel> animations = tmxParser.getAnimations();
+            List<TilesetModel> tilesets = tmxParser.getTilesets();
+
+            // Check if a MapState exists for this map
+            MapState mapState = mapStates.get(mapFileName);
+            if (mapState == null) {
+                mapState = new MapState(mapFileName);
+                mapStates.put(mapFileName, mapState);
+            } else {
+                // Remove encountered objects
+                MapState finalMapState = mapState;
+                objects.removeIf(obj -> finalMapState.getEncounteredObjects().contains(obj.getName().toLowerCase()));
+            }
+
+            // Update the renderer and collision detector with new map data
+            tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera,  mapState.getEncounteredObjects());
+            collisionDetector.updateObjects(objects);
+            tmxRenderer.printObjectNames();
+
+            // Set character position to spawn point
+            character.setX(spawnX);
+            character.setY(spawnY);
+
+        } catch (IOException | ParserConfigurationException | SAXException e) {
+            System.err.println("Error loading new map: " + e.getMessage());
+        }
+    }
+    public MapState getCurrentMapState() {
+        return mapStates.get(currentMapFileName);
+    }
+
+
+    private void handleMapTransition(ObjectModel transitionObject) {
+        String destinationMap = null;
+        int spawnX = 0;
+        int spawnY = 0;
+
+        // Extract properties from the transition object
+        for (ObjectPropertiesModel property : transitionObject.getProperties()) {
+            if (property.getPropertyName().equalsIgnoreCase("destinationMap")) {
+                destinationMap = property.getValue();
+            } else if (property.getPropertyName().equalsIgnoreCase("spawnX")) {
+                spawnX = Integer.parseInt(property.getValue());
+            } else if (property.getPropertyName().equalsIgnoreCase("spawnY")) {
+                spawnY = Integer.parseInt(property.getValue());
+            }
+        }
+
+        if (destinationMap != null) {
+            loadMap(destinationMap, spawnX, spawnY);
+        } else {
+            System.err.println("Transition object missing destinationMap property.");
+        }
+    }
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             gameFrame = new JFrame("Go Study!");
@@ -327,4 +420,5 @@ public class Main extends JPanel {
             timer.start();
         });
     }
+
 }

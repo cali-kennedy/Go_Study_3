@@ -281,6 +281,8 @@ public class NPCScreen extends JDialog {
         return interactButton;
     }
 
+
+
     private void handleInteractAction() {
 
         showRandomQuestion(); // Display question and wait for an answer
