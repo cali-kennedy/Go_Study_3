@@ -18,6 +18,10 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Chest.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 5.5
+        },
         "Doors.tsx": {
             "scaleInDock": 1
         },
@@ -74,13 +78,24 @@
         },
         "house_1.tmx": {
             "expandedObjectLayers": [
-                4
+                6
             ],
-            "scale": 5.51,
-            "selectedLayer": 3,
+            "scale": 5.5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 79.94555353901997,
-                "y": 103.72050816696914
+                "x": 100.27272727272728,
+                "y": 122.27272727272728
+            }
+        },
+        "house_2.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 2.755,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 151.9056261343013,
+                "y": 128.31215970961887
             }
         },
         "large_test.tmx": {
@@ -89,11 +104,11 @@
                 13,
                 12
             ],
-            "scale": 3,
+            "scale": 2,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 291.83333333333337,
-                "y": 324.16666666666663
+                "x": 227.25,
+                "y": 298.25
             }
         },
         "new_apple_attmpt.tsx": {
@@ -156,11 +171,11 @@
     },
     "frame.defaultDuration": 300,
     "last.imagePath": "C:/Users/calik/IdeaProjects/Go_Study_3/resources",
-    "map.height": 10,
+    "map.height": 20,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 10,
+    "map.width": 19,
     "openFiles": [
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
@@ -178,6 +193,8 @@
     "project": "",
     "property.type": "string",
     "recentFiles": [
+        "Chest.tsx",
+        "house_1.tmx",
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
         "Hills.tsx",
@@ -187,13 +204,11 @@
         "pink_apple.tsx",
         "apple.tsx",
         "Tilled_Dirt.tsx",
-        "small_test.tmx",
-        "new_mroom_idle.tsx",
-        "large_test.tmx"
+        "small_test.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 64,
-        "width": 64
+        "height": 34,
+        "width": 50
     }
 }

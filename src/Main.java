@@ -183,7 +183,8 @@ public class Main extends JPanel {
 
     private void initializeGame() {
         setLayout(null);
-
+        Color customColor = new Color(208, 222, 117);
+        setBackground(customColor);
         try {
             // Set the current map file name
             currentMapFileName = "large_test.tmx";

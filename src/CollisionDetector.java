@@ -176,7 +176,9 @@ public class CollisionDetector {
                         System.out.println("----------------------------- COLLISION DETECTOR FOUND A TRANSITION ------------------------");
                         transitionCollision = true;
                         transitionObject = object;
-
+                    }
+                    case "lowXPChest" ->{
+                        // for later
                     }
                 }
             }
