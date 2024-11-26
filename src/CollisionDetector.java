@@ -298,8 +298,8 @@ public class CollisionDetector {
      */
     private boolean isColliding(Character character, ObjectModel object) {
         // System.out.println("Colliding w: " + object.getName());
-      double object_width = object.getWidth()/2;
-      double object_height = object.getHeight()/2;
+      double object_width = object.getWidth()/4;
+      double object_height = object.getHeight()/4;
 
         Rectangle charBounds = new Rectangle(
                 character.getX(),

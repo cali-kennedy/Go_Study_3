@@ -241,6 +241,9 @@ public class TmxRenderer {
             if ((frame != null) && animation.getName().matches("brown_shop") || animation.getName().matches("pink_shop") || animation.getName().matches("(?i)gnome(_\\d+)?")) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE, TILE_RENDER_SIZE , null);
             }
+            if ((frame != null) && animation.getName().matches("fountain")) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -95, 96, 96 , null);
+            }
 
             if ((frame != null) && animation.getName().matches("(?i)help_npc(_\\d+)?") ) {
 
@@ -257,7 +260,7 @@ public class TmxRenderer {
                 }
             }
 
-            if (frame != null && !animation.getName().matches("(?i)apple(_\\d+)?") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome(_\\d+)?") && !animation.getName().matches("(?i)help_npc(_\\d+)?")) {
+            if (frame != null && !animation.getName().matches("(?i)apple(_\\d+)?") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome(_\\d+)?") && !animation.getName().matches("(?i)help_npc(_\\d+)?") && !animation.getName().matches("fountain") ) {
                 String animationName = animation.getName().toLowerCase();
 
 
