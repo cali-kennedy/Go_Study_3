@@ -79,7 +79,7 @@ public class FightScreen extends JDialog {
      */
     private void loadPlayerImage() {
         try {
-            playerImage = ImageIO.read(new File("resources/rabbit2.png"));  // Ensure path is correct
+            playerImage = ImageIO.read(new File("resources/B_witch.png"));  // Ensure path is correct
             if (playerImage == null) {
                 System.err.println("Player image is null after loading.");
             }
@@ -214,7 +214,8 @@ public class FightScreen extends JDialog {
                 }
                 if (showAttackEffect) {
                     // Draw an overlay effect (e.g., a slash image)
-                    tmxRenderer.renderIndividualAnimation("rabbit2_attack",-5,40,g);
+                    // need to edit tmxrenderer to detect b_witch_attack and make it 104x46
+                    tmxRenderer.renderIndividualAnimation("B_witch_attack",-5,40,g);
                     String baseEnemyName = enemyName.replaceAll("\\d", "");
 
                     tmxRenderer.renderIndividualAnimation(baseEnemyName+"_hurt",200,40,g);

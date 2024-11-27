@@ -44,7 +44,7 @@ public class Character {
 
         // Loads character model
         try {
-            this.sprite = ImageIO.read(new File("resources/rabbit2.png"));
+            this.sprite = ImageIO.read(new File("resources/B_witch.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

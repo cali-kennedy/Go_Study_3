@@ -235,7 +235,7 @@ public class Main extends JPanel {
             }
 
             // Initialize character and camera
-            character = new Character("resources/rabbit2.png", 50, 250, 32, 32);
+            character = new Character("resources/B_witch.png", 50, 250, 32, 32);
             camera = new Camera(700, 700,  3.0f, character);
 
             // Initialize question panel
