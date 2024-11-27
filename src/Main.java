@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.border.Border;
 import javax.xml.parsers.ParserConfigurationException;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import com.formdev.flatlaf.FlatLightLaf;
 import models.*;
 import org.xml.sax.SAXException;
@@ -33,6 +35,7 @@ public class Main extends JPanel {
     private int old_y;
     private boolean isNpcDialogOpen = false;
     private boolean isShopDialogOpen = false;
+    private Clip backgroundClip;
 
     private Map<String, MapState> mapStates = new HashMap<>();
 
@@ -59,6 +62,28 @@ public class Main extends JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "No questions added. Game will exit.");
             System.exit(0);
+        }
+    }
+
+    private void playBackgroundMusic(String musicFilePath) {
+        try {
+            // Open an audio input stream.
+            File musicFile = new File(musicFilePath);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(musicFile);
+
+            // Get a sound clip resource.
+            backgroundClip = AudioSystem.getClip();
+
+            // Open audio clip and load samples from the audio input stream.
+            backgroundClip.open(audioIn);
+
+            // Set the clip to loop continuously.
+            backgroundClip.loop(Clip.LOOP_CONTINUOUSLY);
+
+            // Start playing the background music.
+            backgroundClip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -240,6 +265,10 @@ public class Main extends JPanel {
 
             // Initialize collision detector
             collisionDetector = new CollisionDetector(character, objects, this.tmxRenderer, this);
+
+
+            playBackgroundMusic("resources/2016_ Clement Panchout_ Life is full of Joy.wav");
+
         } catch (IOException | ParserConfigurationException | SAXException e) {
             System.err.println("Error initializing TmxRenderer: " + e.getMessage());
         }

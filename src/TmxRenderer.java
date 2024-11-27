@@ -235,14 +235,27 @@ public class TmxRenderer {
                 }
             }
          // for me to think about later - cali
-            if ((frame != null) && animation.getName().matches("apple(_\\d+)?")) {
-                g2d.drawImage(frame, (int) animation.getX()-30, (int) animation.getY() - 30, TILE_RENDER_SIZE / 4, TILE_RENDER_SIZE / 4, null);
+            if ((frame != null) && animation.getName().matches("(?i)apple.*")) {
+                g2d.drawImage(frame, (int) animation.getX()+10, (int) animation.getY() - 15, TILE_RENDER_SIZE / 4, TILE_RENDER_SIZE / 4, null);
             }
-            if ((frame != null) && animation.getName().matches("brown_shop") || animation.getName().matches("pink_shop") || animation.getName().matches("(?i)gnome(_\\d+)?")) {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE, TILE_RENDER_SIZE , null);
+            if ((frame != null) && animation.getName().matches("(?i)study_stud.*")) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 15, TILE_RENDER_SIZE / 4, TILE_RENDER_SIZE / 4, null);
+            }
+            if ((frame != null) && animation.getName().matches("brown_shop") || animation.getName().matches("pink_shop"))
+            {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -30, TILE_RENDER_SIZE, TILE_RENDER_SIZE , null);
             }
             if ((frame != null) && animation.getName().matches("fountain")) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -95, 96, 96 , null);
+            }
+            if ((frame != null) && animation.getName().matches("bus")) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 120, TILE_RENDER_SIZE * 2, TILE_RENDER_SIZE * 2, null);
+            }
+
+
+            if((frame != null) && animation.getName().matches("(?i)slime.*") ) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2 , null);
+
             }
 
             if ((frame != null) && animation.getName().matches("(?i)help_npc(_\\d+)?") ) {
@@ -260,7 +273,7 @@ public class TmxRenderer {
                 }
             }
 
-            if (frame != null && !animation.getName().matches("(?i)apple(_\\d+)?") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome(_\\d+)?") && !animation.getName().matches("(?i)help_npc(_\\d+)?") && !animation.getName().matches("fountain") ) {
+            if (frame != null && !animation.getName().matches("(?i)apple.*") &&  !animation.getName().matches("bus") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome_.*") && !animation.getName().matches("(?i)help_npc(_\\d+)?") && !animation.getName().matches("fountain") && !animation.getName().matches("(?i)study_stud.*") && !animation.getName().matches("(?i)slime.*")) {
                 String animationName = animation.getName().toLowerCase();
                     g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30,
                             TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);

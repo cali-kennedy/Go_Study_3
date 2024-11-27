@@ -7,6 +7,14 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "Barn structures.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 4
+        },
+        "Basic_Furniture.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Basic_Grass_Biom_things.tsx": {
             "scaleInDock": 4,
             "scaleInEditor": 1
@@ -15,13 +23,23 @@
             "scaleInDock": 3
         },
         "Boats.tsx": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "Bridge_Wood.tsx": {
+            "scaleInDock": 1
+        },
+        "Bush_Tiles.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 5.5
         },
         "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "Chest.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 5.5
         },
@@ -39,7 +57,38 @@
             "scaleInEditor": 1
         },
         "Hills.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "Mushrooms, Flowers, Stones.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "Outdoor_Decor_Free.tsx": {
+            "scaleInDock": 3
+        },
+        "Piknik basket.tsx": {
             "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Piknik blanket.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
+        "Sheep.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Slime_Green.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Slime_Green_hurt.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX_Props.tsx": {
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "Tilled_Dirt.tsx": {
@@ -47,7 +96,23 @@
             "scaleInEditor": 1
         },
         "Tilled_Dirt_Wide.tsx": {
-            "scaleInDock": 2
+            "scaleInDock": 8
+        },
+        "Trees, stumps and bushes.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
+        "Water Objects.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "Water tray.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "Water well.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Water.tsx": {
             "scaleInDock": 1,
@@ -63,6 +128,13 @@
             "scaleInDock": 1,
             "scaleInEditor": 16
         },
+        "bus.tsx": {
+            "scaleInEditor": 1
+        },
+        "cham_Idle.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "dandelion.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 16
@@ -74,13 +146,19 @@
             "scaleInDock": 1
         },
         "fountain.tsx": {
-            "dynamicWrapping": true
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "frog.tsx": {
             "scaleInDock": 1
         },
         "gnome_hurt.tsx": {
             "scaleInDock": 1
+        },
+        "help_sign.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "house_1.tmx": {
             "expandedObjectLayers": [
@@ -89,8 +167,8 @@
             "scale": 4,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 100.875,
-                "y": 72.375
+                "x": 140.625,
+                "y": 78.875
             }
         },
         "house_2.tmx": {
@@ -104,18 +182,34 @@
                 "y": 128.31215970961887
             }
         },
+        "item-shadow.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "large_test.tmx": {
             "expandedObjectLayers": [
                 13,
-                11,
-                12
+                12,
+                11
             ],
             "scale": 2,
-            "selectedLayer": 8,
+            "selectedLayer": 10,
             "viewCenter": {
-                "x": 493.25,
-                "y": 340.25
+                "x": 596.25,
+                "y": 259.75
             }
+        },
+        "left_facing_light_cow.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "light_cow.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        },
+        "mroom_hurt.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "new_apple_attmpt.tsx": {
             "dynamicWrapping": false,
@@ -131,17 +225,39 @@
             "scaleInEditor": 11
         },
         "onion_hurt.tsx": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "pink_apple.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 16
         },
+        "pink_cow.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 4
+        },
         "pink_shop.tsx": {
             "scaleInDock": 1
         },
+        "purple_cow.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 4
+        },
+        "purple_slime.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "purple_slime_hurt.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "rabbit2_attack.tsx": {
             "scaleInDock": 1
+        },
+        "raddish_Idle.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "red_gnome.tsx": {
             "scaleInDock": 1,
@@ -155,24 +271,41 @@
         },
         "small_test.tmx": {
             "expandedObjectLayers": [
-                7,
-                4
+                4,
+                7
             ],
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 491.16666666666663,
-                "y": 180.16666666666669
+                "x": 656.8333333333333,
+                "y": 190.16666666666669
             }
         },
         "snail.tsx": {
             "scaleInDock": 1
         },
+        "snail2_idle.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "snail_hurt.tsx": {
             "scaleInDock": 1
         },
+        "squirrel.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "stone_wall.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 3
+        },
         "study_stud.tsx": {
             "scaleInDock": 1
+        },
+        "study_stud2.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3,
+            "scaleInEditor": 1
         },
         "talk_to_me_sign.tsx": {
             "scaleInDock": 1
@@ -200,33 +333,59 @@
         "mroom_hurt.tsx",
         "squirrel.tsx",
         "help_sign.tsx",
-        "large_test.tmx",
         "house_1.tmx",
         "onion_hurt.tsx",
         "Basic_Furniture.tsx",
         "Chest.tsx",
         "fountain.tsx",
-        "fountain.tsx"
+        "Boats.tsx",
+        "Bush_Tiles.tsx",
+        "Mushrooms, Flowers, Stones.tsx",
+        "Trees, stumps and bushes.tsx",
+        "Water Objects.tsx",
+        "item-shadow.tsx",
+        "Water well.tsx",
+        "Piknik blanket.tsx",
+        "Piknik basket.tsx",
+        "Sheep.tsx",
+        "pink_cow.tsx",
+        "purple_cow.tsx",
+        "light_cow.tsx",
+        "left_facing_light_cow.tsx",
+        "Barn structures.tsx",
+        "Water tray.tsx",
+        "study_stud2.tsx",
+        "Slime_Green.tsx",
+        "Slime_Green.tsx",
+        "Slime_Green_hurt.tsx",
+        "purple_slime.tsx",
+        "purple_slime_hurt.tsx",
+        "TX_Props.tsx",
+        "large_test.tmx",
+        "stone_wall.tsx",
+        "raddish_Idle.tsx",
+        "cham_Idle.tsx",
+        "snail2_idle.tsx"
     ],
     "project": "",
     "property.type": "string",
     "recentFiles": [
-        "Chest.tsx",
-        "house_1.tmx",
+        "bus.tsx",
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
         "Hills.tsx",
-        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
-        "dandelion.tsx",
-        "onion.tsx",
-        "pink_apple.tsx",
-        "apple.tsx",
+        "new_mroom_idle.tsx",
+        "small_test.tmx",
         "Tilled_Dirt.tsx",
-        "small_test.tmx"
+        "apple.tsx",
+        "pink_apple.tsx",
+        "onion.tsx",
+        "dandelion.tsx",
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 128,
+        "width": 128
     }
 }

@@ -210,14 +210,19 @@ public class ShopScreen extends JDialog {
     private void handleBuyXPAction() {
         Item studyStud = findItemInInventory("Study Stud");
         if (studyStud != null && studyStud.getQuantity() >= 1) {
-            // Remove Study Studs from inventory
-         //   studyStud.setQuantity(studyStud.getQuantity() - 1);
+            // Decrease the quantity by 1
+            studyStud.setQuantity(studyStud.getQuantity() - 1);
+
+            // Remove the item from inventory if quantity is zero
             if (studyStud.getQuantity() <= 0) {
                 player.removeItem(studyStud);
-                player.addXP(10);
-                JOptionPane.showMessageDialog(this, "You bought 10 XP for 1 Study Stud.");
             }
 
+            // Add XP to the player
+            player.addXP(10);
+
+
+            JOptionPane.showMessageDialog(this, "You bought 10 XP for 1 Study Stud.");
         } else {
             JOptionPane.showMessageDialog(this, "You don't have enough Study Studs!", "Insufficient Funds", JOptionPane.WARNING_MESSAGE);
         }
