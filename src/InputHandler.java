@@ -38,47 +38,20 @@ public class InputHandler {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "move_down");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "move_left");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "move_right");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), "open_inventory");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0, false), "use_item");
 
-
-
-        // Map each action name to an action that moves the character
-        actionMap.put("use_item", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Use the first item in the inventory as an example
-                if (!character.getInventory().isEmpty()) {
-                    Item itemToUse = character.getInventory().get(0);
-                    character.useItem(itemToUse);
-                    System.out.println("Used item: " + itemToUse.getName());
-                } else {
-                    System.out.println("Inventory is empty!");
-                }            // Refresh panel display after movement
-            }
-        });
-
-        // Map each action name to an action that moves the character
-        actionMap.put("open_inventory", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                character.displayInventory();               // Refresh panel display after movement
-            }
-        });
-
-        // Map each action name to an action that moves the character
+        // Map each action name to an action that moves the character using the same run animation
         actionMap.put("move_up", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                character.move(0, -MOVE_DISTANCE);  // Move character up by MOVE_DISTANCE
-                panel.repaint();                    // Refresh panel display after movement
+                character.move(0, -MOVE_DISTANCE);
+                panel.repaint(); // Repaint to reflect new position and frame
             }
         });
 
         actionMap.put("move_down", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                character.move(0, MOVE_DISTANCE);   // Move character down by MOVE_DISTANCE
+                character.move(0, MOVE_DISTANCE);
                 panel.repaint();
             }
         });
@@ -86,7 +59,7 @@ public class InputHandler {
         actionMap.put("move_left", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                character.move(-MOVE_DISTANCE, 0);  // Move character left by MOVE_DISTANCE
+                character.move(-MOVE_DISTANCE, 0);
                 panel.repaint();
             }
         });
@@ -94,7 +67,7 @@ public class InputHandler {
         actionMap.put("move_right", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                character.move(MOVE_DISTANCE, 0);   // Move character right by MOVE_DISTANCE
+                character.move(MOVE_DISTANCE, 0);
                 panel.repaint();
             }
         });

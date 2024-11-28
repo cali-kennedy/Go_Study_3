@@ -23,13 +23,13 @@ public class Character {
     private int health;
     private int study_stud_count;
     private boolean defending = false;
-
+    private Graphics g;
     private List<ObjectModel> objects;
     private List<Item> inventory;
-
-
+    private TmxRenderer tmxRenderer;
+    private String spritePath;
     // Constructor
-    public Character(String spritePath, int startX, int startY, int width, int height) {
+    public Character(String spritePath, int startX, int startY, int width, int height, TmxRenderer tmxRenderer) {
         this.x = startX; // Sprite starting position
         this.y = startY;
         this.width = width;
@@ -41,7 +41,8 @@ public class Character {
         this.health = MAX_HEALTH; // Start with full health
         this.study_stud_count = 0;
         this.inventory = new ArrayList<>();
-
+        this.tmxRenderer= tmxRenderer;
+        this.spritePath = spritePath;
         // Loads character model
         try {
             this.sprite = ImageIO.read(new File("resources/B_witch.png"));
@@ -51,11 +52,12 @@ public class Character {
     }
     // Draws character model
     public void draw(Graphics g) {
-        g.drawImage(sprite, x, y, width, height, null);
+        tmxRenderer.renderIndividualAnimation(spritePath +"_run",x,y, g);
     }
 
     // Movement Method
     public void move(int dx, int dy){ // TmxParser parser, JFrame parentFrame, Question question, List<Question> questions) {
+            // tmxRenderer.renderIndividualAnimation(spritePath +"_run.tsk",x,y, g);
              this.x += dx;
              this.y += dy;
        //  }

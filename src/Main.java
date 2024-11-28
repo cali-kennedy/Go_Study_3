@@ -234,8 +234,13 @@ public class Main extends JPanel {
                 objects.removeIf(obj -> finalMapState.getEncounteredObjects().contains(obj.getName().toLowerCase()));
             }
 
+            // Initialize the renderer with parsed map data and encountered objects
+            tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera, mapState.getEncounteredObjects());
+            tmxRenderer.printObjectNames();
+
+
             // Initialize character and camera
-            character = new Character("resources/B_witch.png", 50, 250, 32, 32);
+            character = new Character("B_witch", 50, 250, 32, 32,tmxRenderer) ;
             camera = new Camera(700, 700,  3.0f, character);
 
             // Initialize question panel
@@ -253,19 +258,17 @@ public class Main extends JPanel {
                 }
             });
 
-            // Initialize input handler
-            inputHandler = new InputHandler(character, this);
+
 
             setFocusable(true);
             requestFocusInWindow();
 
-            // Initialize the renderer with parsed map data and encountered objects
-            tmxRenderer = new TmxRenderer(mapModel, layers, objects, animations, tilesets, camera, mapState.getEncounteredObjects());
-            tmxRenderer.printObjectNames();
+
 
             // Initialize collision detector
             collisionDetector = new CollisionDetector(character, objects, this.tmxRenderer, this);
-
+            // Initialize input handler
+            inputHandler = new InputHandler(character, this);
 
             playBackgroundMusic("resources/2016_ Clement Panchout_ Life is full of Joy.wav");
 
