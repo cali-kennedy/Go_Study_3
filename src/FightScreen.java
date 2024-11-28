@@ -89,7 +89,7 @@ public class FightScreen extends JDialog {
     }
 
     private void setupUI() {
-        setSize(500, 350);
+        setSize(600, 350);
         setLocationRelativeTo(getParent());
 
         mainPanel = new JPanel(new BorderLayout());
@@ -110,7 +110,7 @@ public class FightScreen extends JDialog {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         JPanel playerImagePanel = createPlayerImagePanel();
-        playerImagePanel.setPreferredSize(new Dimension(100, 100));
+        playerImagePanel.setPreferredSize(new Dimension(200, 100));
         mainPanel.add(playerImagePanel, BorderLayout.LINE_START);
 
         Color customColor = new Color(255, 169, 178);
@@ -118,10 +118,10 @@ public class FightScreen extends JDialog {
 
         layeredPane = new JLayeredPane();
         layeredPane.setBackground(customColor);
-        layeredPane.setPreferredSize(new Dimension(500, 300));
+        layeredPane.setPreferredSize(new Dimension(600, 300));
         setContentPane(layeredPane);
 
-        mainPanel.setBounds(0, 0, 500, 300);
+        mainPanel.setBounds(0, 0, 600, 300);
         layeredPane.add(mainPanel, Integer.valueOf(0));
         messageOverlay = new MessageOverlayPanel();
         messageOverlay.setVisible(false); // Start hidden
@@ -215,7 +215,7 @@ public class FightScreen extends JDialog {
                 if (showAttackEffect) {
                     // Draw an overlay effect (e.g., a slash image)
                     // need to edit tmxrenderer to detect b_witch_attack and make it 104x46
-                    tmxRenderer.renderIndividualAnimation("B_witch_attack",-5,40,g);
+                   // tmxRenderer.renderIndividualAnimation("B_witch_attack",-5,40,g);
                     String baseEnemyName = enemyName.replaceAll("\\d", "");
 
                     tmxRenderer.renderIndividualAnimation(baseEnemyName+"_hurt",200,40,g);
@@ -234,7 +234,18 @@ public class FightScreen extends JDialog {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (!showAttackEffect) {
+                if (showAttackEffect) {
+                    // Draw attack animation when attack effect is true
+                    // Assuming there's an attack animation in the form of an image or a frame of an animation
+                    if (playerImage != null) {
+                        // Render attack effect
+                        // Adjust coordinates as needed for proper positioning
+                        tmxRenderer.renderIndividualAnimation("B_witch_attack", 80, 40, g);
+                    } else {
+                        System.err.println("Player attack image is not available for rendering.");
+                    }
+                } else {
+                    // Draw regular player image when not attacking
                     if (playerImage != null) {
                         g.drawImage(playerImage, 10, 40, 128, 128, null);  // Draw image with padding
                     } else {
@@ -243,7 +254,6 @@ public class FightScreen extends JDialog {
                 }
             }
         };
-
         return imagePanel;
     }
 

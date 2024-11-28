@@ -350,6 +350,10 @@ public class TmxRenderer {
         if (frame != null && objectName.equalsIgnoreCase("shop")) {
             g.drawImage(frame, x/2 + 25, y/2, ENEMY_RENDER_SIZE*2, ENEMY_RENDER_SIZE*2, null);
         }
+        if (frame != null && objectName.equalsIgnoreCase("B_witch_attack")) {
+            g.drawImage(frame, x-80, y, 316, 124, null);
+        }
+
 
 
         // Draw the frame if it exists
