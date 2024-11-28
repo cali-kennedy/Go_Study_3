@@ -7,6 +7,12 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "B_witch_attack.tsx": {
+            "scaleInDock": 1
+        },
+        "B_witch_run_left.tsx": {
+            "scaleInEditor": 1
+        },
         "Barn structures.tsx": {
             "scaleInDock": 5.5,
             "scaleInEditor": 4
@@ -129,6 +135,7 @@
             "scaleInEditor": 16
         },
         "bus.tsx": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "cham_Idle.tsx": {
@@ -167,8 +174,8 @@
             "scale": 4,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 140.625,
-                "y": 78.875
+                "x": 152.125,
+                "y": 160.125
             }
         },
         "house_2.tmx": {
@@ -277,8 +284,8 @@
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 656.8333333333333,
-                "y": 190.16666666666669
+                "x": 822.5,
+                "y": 200.16666666666669
             }
         },
         "snail.tsx": {
@@ -370,6 +377,7 @@
     "project": "",
     "property.type": "string",
     "recentFiles": [
+        "B_witch_run_left.tsx",
         "bus.tsx",
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
@@ -380,12 +388,11 @@
         "apple.tsx",
         "pink_apple.tsx",
         "onion.tsx",
-        "dandelion.tsx",
-        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx"
+        "dandelion.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 46,
-        "width": 104
+        "height": 48,
+        "width": 32
     }
 }

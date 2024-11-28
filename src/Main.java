@@ -241,7 +241,7 @@ public class Main extends JPanel {
 
             // Initialize character and camera
             character = new Character("B_witch", 50, 250, 32, 32,tmxRenderer) ;
-            camera = new Camera(700, 700,  3.0f, character);
+            camera = new Camera(700, 700,  4.0f, character);
 
             // Initialize question panel
             questionPanel = new GameQuestionPanel(character, this);
@@ -443,7 +443,7 @@ public class Main extends JPanel {
             Main mainPanel = new Main();
 
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            gameFrame.setSize(700, 700); // Adjust based on map size
+            gameFrame.setSize(915, 700); // Adjust based on map size
             gameFrame.add(mainPanel);
             gameFrame.setVisible(true);
             mainPanel.requestFocusInWindow();

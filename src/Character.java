@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Character {
+    private  BufferedImage left_sprite;
     private int x;
     private int y;
     private BufferedImage sprite;
@@ -30,6 +31,11 @@ public class Character {
     private String spritePath;
     private boolean isMoving = false;  // Tracks if the character is moving
     private Timer idleCheckTimer;     // Timer for checking idle state
+    private boolean isMovingLeft;
+    private boolean isMovingRight;
+    private String lastDirection;
+
+
 
     // Constructor
     public Character(String spritePath, int startX, int startY, int width, int height, TmxRenderer tmxRenderer) {
@@ -49,6 +55,8 @@ public class Character {
         // Loads character model
         try {
             this.sprite = ImageIO.read(new File("resources/B_witch.png"));
+            this.left_sprite = ImageIO.read(new File("resources/B_witch_left.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,24 +70,50 @@ public class Character {
     }
     // Draws character model
     public void draw(Graphics g) {
-        if (isMoving) {
+        if (isMoving && !isMovingLeft) {
             tmxRenderer.renderIndividualAnimation(spritePath +"_run",x,y, g);
 
+        }else if (isMovingLeft && isMoving) {
+            tmxRenderer.renderIndividualAnimation(spritePath +"_run_left",x,y, g);
+
         }else{
-            g.drawImage(sprite, x, y, width, height, null);
+            if(lastDirection != null && lastDirection.equalsIgnoreCase("left")) {
+                g.drawImage(left_sprite , x, y, width, height, null);
+            } else {
+                g.drawImage(sprite, x, y, width, height, null);
+
+            }
         }
     }
 
-    // Movement Method
     public void move(int dx, int dy) {
+        // Reset movement direction booleans
+        isMovingLeft = false;
+        isMovingRight = false;
+
+        if (dx < 0) {
+            isMovingLeft = true; // Moving left
+            lastDirection = "left";
+        } else if (dx > 0) {
+            isMovingRight = true; // Moving right
+            lastDirection = "right";
+        }
+
+        // Movement check
         if (dx != 0 || dy != 0) {
             this.isMoving = true;
             // Restart the idle timer whenever there's movement
             idleCheckTimer.restart();
+        } else {
+            this.isMoving = false; // Stop moving if no dx or dy
         }
 
+        // Update position
         this.x += dx;
         this.y += dy;
+
+        // Debugging (Optional)
+        System.out.println("Moving Left: " + isMovingLeft + ", Moving Right: " + isMovingRight);
     }
 
     // Health Management

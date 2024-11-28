@@ -356,8 +356,11 @@ public class TmxRenderer {
         if (frame != null && objectName.equalsIgnoreCase("B_witch_run")) {
             g.drawImage(frame, x, y, 32, 32, null);
         }
+        if (frame != null && objectName.equalsIgnoreCase("B_witch_run_left")) {
+            g.drawImage(frame, x, y, 32, 32, null);
+        }
         // Draw the frame if it exists
-        else if (frame != null && !objectName.equalsIgnoreCase("B_witch_attack")) {
+        else if (frame != null && !objectName.equalsIgnoreCase("B_witch_attack")&& !objectName.equalsIgnoreCase("B_witch_run")&& !objectName.equalsIgnoreCase("B_witch_run_left")) {
             g.drawImage(frame, x, y, ENEMY_RENDER_SIZE, ENEMY_RENDER_SIZE, null);
         }
 

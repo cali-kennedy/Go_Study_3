@@ -110,7 +110,7 @@ public class FightScreen extends JDialog {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         JPanel playerImagePanel = createPlayerImagePanel();
-        playerImagePanel.setPreferredSize(new Dimension(200, 100));
+        playerImagePanel.setPreferredSize(new Dimension(250, 100));
         mainPanel.add(playerImagePanel, BorderLayout.LINE_START);
 
         Color customColor = new Color(255, 169, 178);

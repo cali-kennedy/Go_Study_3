@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="226">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="229">
  <tileset firstgid="1" source="Grass.tsx"/>
  <tileset firstgid="78" source="new_mroom_idle.tsx"/>
  <tileset firstgid="94" source="Water.tsx"/>
@@ -59,6 +59,8 @@
  <tileset firstgid="2245" source="B_witch_attack.tsx"/>
  <tileset firstgid="2254" source="B_Witch_run.tsx"/>
  <tileset firstgid="2262" source="B_witch_run.tsx"/>
+ <tileset firstgid="2270" source="B_witch_run_left.tsx"/>
+ <tileset firstgid="2279" source="B_witch_run_left.tsx"/>
  <objectgroup id="13" name="Hidden_Objects">
   <object id="81" name="snail_hurt" gid="490" x="-372.091" y="409.545" width="32" height="32">
    <properties>
@@ -875,6 +877,7 @@
    </properties>
   </object>
   <object id="221" name="B_witch_attack" gid="2253" x="-236.5" y="576" width="104" height="46"/>
-  <object id="225" name="B_witch_run" gid="2269" x="-130" y="364" width="32" height="48"/>
+  <object id="227" name="B_witch_run_left" gid="2285" x="-160" y="275" width="32" height="48"/>
+  <object id="228" name="B_witch_run" gid="2261" x="-135.5" y="372.5" width="32" height="48"/>
  </objectgroup>
 </map>
