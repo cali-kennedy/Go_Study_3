@@ -28,6 +28,9 @@ public class Character {
     private List<Item> inventory;
     private TmxRenderer tmxRenderer;
     private String spritePath;
+    private boolean isMoving = false;  // Tracks if the character is moving
+    private Timer idleCheckTimer;     // Timer for checking idle state
+
     // Constructor
     public Character(String spritePath, int startX, int startY, int width, int height, TmxRenderer tmxRenderer) {
         this.x = startX; // Sprite starting position
@@ -49,19 +52,34 @@ public class Character {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Initialize timer to check if the character is idle
+        idleCheckTimer = new Timer(500, e -> {
+            // Set isMoving to false if no movement detected for a while
+            isMoving = false;
+        });
+        idleCheckTimer.setRepeats(false); // Only run once per movement event
+
     }
     // Draws character model
     public void draw(Graphics g) {
-        tmxRenderer.renderIndividualAnimation(spritePath +"_run",x,y, g);
+        if (isMoving) {
+            tmxRenderer.renderIndividualAnimation(spritePath +"_run",x,y, g);
+
+        }else{
+            g.drawImage(sprite, x, y, width, height, null);
+        }
     }
 
     // Movement Method
-    public void move(int dx, int dy){ // TmxParser parser, JFrame parentFrame, Question question, List<Question> questions) {
-            // tmxRenderer.renderIndividualAnimation(spritePath +"_run.tsk",x,y, g);
-             this.x += dx;
-             this.y += dy;
-       //  }
+    public void move(int dx, int dy) {
+        if (dx != 0 || dy != 0) {
+            this.isMoving = true;
+            // Restart the idle timer whenever there's movement
+            idleCheckTimer.restart();
+        }
 
+        this.x += dx;
+        this.y += dy;
     }
 
     // Health Management

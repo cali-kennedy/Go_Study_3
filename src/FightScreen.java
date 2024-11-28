@@ -135,6 +135,8 @@ public class FightScreen extends JDialog {
         questionPanel.setBounds(100, 75, questionPanel.getPreferredSize().width, questionPanel.getPreferredSize().height);
         layeredPane.add(questionPanel, Integer.valueOf(1));
         questionPanel.setVisible(false);
+        System.out.println(layeredPane.getComponents());
+
     }
 
     /**
@@ -486,10 +488,7 @@ public class FightScreen extends JDialog {
             tmxRenderer.renderIndividualAnimation(enemyName, 200, 40, g);
         } else {
             System.err.println("No enemy name found for animation rendering.");
-
         }
-
-
     }
 
     /**
