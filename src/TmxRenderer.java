@@ -251,10 +251,21 @@ public class TmxRenderer {
             if ((frame != null) && animation.getName().matches("bus")) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 120, TILE_RENDER_SIZE * 2, TILE_RENDER_SIZE * 2, null);
             }
+            if ((frame != null) && animation.getName().matches("lowXPChest")) {
+                g2d.drawImage(frame, (int) animation.getX()-5, (int) animation.getY() - 30, 40, TILE_RENDER_SIZE/2 ,null);
+            }
 
 
             if((frame != null) && animation.getName().matches("(?i)slime.*") ) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2 , null);
+
+            }
+            if((frame != null) && animation.getName().matches("(?i)spider.*") ) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/4, TILE_RENDER_SIZE/4 , null);
+
+            }
+            if((frame != null) && animation.getName().matches("(?i)phantom.*") ) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/4, TILE_RENDER_SIZE/4 , null);
 
             }
 
@@ -273,11 +284,12 @@ public class TmxRenderer {
                 }
             }
 
-            if (frame != null && !animation.getName().matches("(?i)apple.*") &&  !animation.getName().matches("bus") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome_.*") && !animation.getName().matches("(?i)help_npc(_\\d+)?") && !animation.getName().matches("fountain") && !animation.getName().matches("(?i)study_stud.*") && !animation.getName().matches("(?i)slime.*")) {
+            if (frame != null && !animation.getName().matches("(?i)apple.*") &&  !animation.getName().matches("bus") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome_.*") && !animation.getName().matches("(?i)help_npc(_\\d+)?") && !animation.getName().matches("fountain") && !animation.getName().matches("(?i)study_stud.*") && !animation.getName().matches("(?i)slime.*") && !animation.getName().matches("lowXPChest") && !animation.getName().matches("(?i)phantom.*") && !animation.getName().matches("(?i)spider.*")) {
                 String animationName = animation.getName().toLowerCase();
                     g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30,
                             TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
                 }
+
 
 
 
@@ -346,25 +358,54 @@ public class TmxRenderer {
             }
         }
 
-        // Draw the frame if it exists
-        if (frame != null && objectName.equalsIgnoreCase("shop")) {
-            g.drawImage(frame, x/2 + 25, y/2, ENEMY_RENDER_SIZE*2, ENEMY_RENDER_SIZE*2, null);
-        }
-        if (frame != null && objectName.equalsIgnoreCase("B_witch_attack")) {
-            g.drawImage(frame, x-80, y, 316, 124, null);
-        }
-        if (frame != null && objectName.equalsIgnoreCase("B_witch_run")) {
-            g.drawImage(frame, x, y, 32, 32, null);
-        }
-        if (frame != null && objectName.equalsIgnoreCase("B_witch_run_left")) {
-            g.drawImage(frame, x, y, 32, 32, null);
-        }
-        // Draw the frame if it exists
-        else if (frame != null && !objectName.equalsIgnoreCase("B_witch_attack")&& !objectName.equalsIgnoreCase("B_witch_run")&& !objectName.equalsIgnoreCase("B_witch_run_left")) {
-            g.drawImage(frame, x, y, ENEMY_RENDER_SIZE, ENEMY_RENDER_SIZE, null);
+        if (frame != null) {
+            int renderWidth = ENEMY_RENDER_SIZE;
+            int renderHeight = ENEMY_RENDER_SIZE;
+            int offsetX = 0;
+            int offsetY = 0;
+
+            switch (objectName.toLowerCase()) {
+                case "shop":
+                    renderWidth = ENEMY_RENDER_SIZE * 2;
+                    renderHeight = ENEMY_RENDER_SIZE * 2;
+                    offsetX = x / 2 + 25;
+                    offsetY = y / 2;
+                    break;
+
+                case "b_witch_attack":
+                    renderWidth = 316;
+                    renderHeight = 124;
+                    offsetX = x - 80;
+                    offsetY = y;
+                    break;
+
+                case "b_witch_run":
+                case "b_witch_run_left":
+                    renderWidth = 32;
+                    renderHeight = 32;
+                    offsetX = x;
+                    offsetY = y;
+                    break;
+
+                default:
+                    // Default rendering logic
+                    offsetX = x;
+                    offsetY = y;
+                    break;
+            }
+
+            // Use a centralized method to draw the frame
+
+         //   g.drawImage(frame, x, y, width, height, null);
+            drawFrame(g, frame, offsetX, offsetY, renderWidth, renderHeight);
         }
 
     }
+
+    private void drawFrame (Graphics g, BufferedImage frame,int x, int y, int width, int height){
+        g.drawImage(frame, x, y, width, height, null);
+    }
+
     // Method to trigger repaint
     public void repaintMap() {
         if (displayComponent != null) {

@@ -3,14 +3,22 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "large_test.tmx",
+    "activeFile": "C:/Users/calik/IdeaProjects/Go_Study_Test/B_Witch/run.tsx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "B_Witch_run.tsx": {
+            "scaleInDock": 1
+        },
         "B_witch_attack.tsx": {
             "scaleInDock": 1
         },
+        "B_witch_run.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "B_witch_run_left.tsx": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "Barn structures.tsx": {
@@ -18,6 +26,7 @@
             "scaleInEditor": 4
         },
         "Basic_Furniture.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -41,6 +50,14 @@
             "scaleInEditor": 5.5
         },
         "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/calik/IdeaProjects/Go_Study_Test/B_Witch/run.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/calik/IdeaProjects/Go_Study_Test/resources/B_witch_run.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -134,6 +151,10 @@
             "scaleInDock": 1,
             "scaleInEditor": 16
         },
+        "blue_ghost.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "bus.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -160,6 +181,10 @@
         "frog.tsx": {
             "scaleInDock": 1
         },
+        "ghost.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "gnome_hurt.tsx": {
             "scaleInDock": 1
         },
@@ -174,7 +199,7 @@
             "scale": 4,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 152.125,
+                "x": 152,
                 "y": 160.125
             }
         },
@@ -195,15 +220,15 @@
         },
         "large_test.tmx": {
             "expandedObjectLayers": [
+                11,
                 13,
-                12,
-                11
+                12
             ],
-            "scale": 2,
+            "scale": 3,
             "selectedLayer": 10,
             "viewCenter": {
-                "x": 596.25,
-                "y": 259.75
+                "x": 160,
+                "y": 441.49999999999994
             }
         },
         "left_facing_light_cow.tsx": {
@@ -213,6 +238,10 @@
         "light_cow.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 3
+        },
+        "mroom2_idle.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "mroom_hurt.tsx": {
             "scaleInDock": 1,
@@ -233,6 +262,18 @@
         },
         "onion_hurt.tsx": {
             "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "phantom_hurt.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 5.5
+        },
+        "phantom_idle_left.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 8
+        },
+        "phantom_idle_right.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -284,12 +325,13 @@
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 822.5,
-                "y": 200.16666666666669
+                "x": 795.3333333333333,
+                "y": 190.16666666666669
             }
         },
         "snail.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "snail2_idle.tsx": {
             "scaleInDock": 1,
@@ -297,6 +339,14 @@
         },
         "snail_hurt.tsx": {
             "scaleInDock": 1
+        },
+        "spider_hurt.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
+        "spider_idle.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 16
         },
         "squirrel.tsx": {
             "scaleInDock": 1,
@@ -343,13 +393,13 @@
         "house_1.tmx",
         "onion_hurt.tsx",
         "Basic_Furniture.tsx",
-        "Chest.tsx",
         "fountain.tsx",
         "Boats.tsx",
         "Bush_Tiles.tsx",
         "Mushrooms, Flowers, Stones.tsx",
         "Trees, stumps and bushes.tsx",
         "Water Objects.tsx",
+        "Chest.tsx",
         "item-shadow.tsx",
         "Water well.tsx",
         "Piknik blanket.tsx",
@@ -363,22 +413,32 @@
         "Water tray.tsx",
         "study_stud2.tsx",
         "Slime_Green.tsx",
-        "Slime_Green.tsx",
         "Slime_Green_hurt.tsx",
         "purple_slime.tsx",
         "purple_slime_hurt.tsx",
         "TX_Props.tsx",
-        "large_test.tmx",
         "stone_wall.tsx",
         "raddish_Idle.tsx",
         "cham_Idle.tsx",
-        "snail2_idle.tsx"
+        "snail2_idle.tsx",
+        "C:/Users/calik/IdeaProjects/Go_Study_Test/B_Witch/run.tsx",
+        "B_witch_run.tsx",
+        "C:/Users/calik/IdeaProjects/Go_Study_Test/resources/B_witch_run.tsx",
+        "B_witch_run_left.tsx",
+        "ghost.tsx",
+        "blue_ghost.tsx",
+        "large_test.tmx",
+        "spider_idle.tsx",
+        "phantom_idle_left.tsx",
+        "phantom_idle_right.tsx",
+        "phantom_hurt.tsx",
+        "spider_hurt.tsx",
+        "mroom2_idle.tsx",
+        "snail.tsx"
     ],
     "project": "",
     "property.type": "string",
     "recentFiles": [
-        "B_witch_run_left.tsx",
-        "bus.tsx",
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",
         "Hills.tsx",
@@ -388,11 +448,13 @@
         "apple.tsx",
         "pink_apple.tsx",
         "onion.tsx",
-        "dandelion.tsx"
+        "dandelion.tsx",
+        "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx",
+        "mroom_hurt.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 48,
-        "width": 32
+        "height": 128,
+        "width": 128
     }
 }
