@@ -304,7 +304,7 @@ public class CollisionDetector {
         Rectangle charBounds = new Rectangle(
                 character.getX(),
                 character.getY(),
-                character.getWidth(),d
+                character.getWidth(),
                 character.getHeight()
         );
         if(object.getName().toLowerCase().startsWith("wall")){
