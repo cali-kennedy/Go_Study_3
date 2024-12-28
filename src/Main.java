@@ -104,7 +104,6 @@ public class Main extends JPanel {
 
         dialog.setBackground(customorangeColor);
 
-
         JPanel inputPanel = new JPanel(new GridBagLayout());
         inputPanel.setBackground(customorangeColor);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -112,35 +111,36 @@ public class Main extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 5, 5, 5);
 
-
         Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
         Color customgreenColor = new Color(145, 175, 156);
         Color customLightgreenColor = new Color(195, 213, 200);
         Color customRedColor = new Color(174, 141, 137);
         Color customLightOrangeColor = new Color(250, 234, 224);
 
-
         JTextField questionField = new JTextField(20);
         questionField.setFont(customFont);
         questionField.setBorder(thinBlackBorder);
         questionField.setBackground(customLightOrangeColor);
 
-
         JTextField answerField = new JTextField(20);
         answerField.setBorder(thinBlackBorder);
         answerField.setBackground(customLightOrangeColor);
-
-
         answerField.setFont(customFont);
+
         JButton addButton = new JButton("Add Question");
         addButton.setFont(customFont);
         addButton.setBackground(customLightgreenColor);
         addButton.setBorder(blackBorder);
 
+        // New button to load from file
+        JButton loadFromFileButton = new JButton("Load from File");
+        loadFromFileButton.setFont(customFont);
+        loadFromFileButton.setBackground(customLightgreenColor);
+        loadFromFileButton.setBorder(blackBorder);
+
         DefaultListModel<String> listModel = new DefaultListModel<>();
         JList<String> questionList = new JList<>(listModel);
         questionList.setFont(customFont);
-
         questionList.setBackground(customLightOrangeColor);
         JScrollPane scrollPane = new JScrollPane(questionList);
 
@@ -154,8 +154,10 @@ public class Main extends JPanel {
         inputPanel.add(inputAnswerLabel, gbc);
         inputPanel.add(answerField, gbc);
         inputPanel.add(addButton, gbc);
+        inputPanel.add(loadFromFileButton, gbc);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBackground(customorangeColor);
         JButton startButton = new JButton("Start Game");
         startButton.setFont(customFont);
         startButton.setBorder(blackBorder);
@@ -166,7 +168,7 @@ public class Main extends JPanel {
         removeButton.setBorder(blackBorder);
         buttonPanel.add(removeButton);
         buttonPanel.add(startButton);
-        buttonPanel.setBackground(customorangeColor);
+
         addButton.addActionListener(e -> {
             String q = questionField.getText().trim();
             String a = answerField.getText().trim();
@@ -198,6 +200,16 @@ public class Main extends JPanel {
             }
         });
 
+        // Action listener to load questions from a file
+        loadFromFileButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showOpenDialog(dialog);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                loadQuestionsFromFile(selectedFile, questions, listModel);
+            }
+        });
+
         mainPanel.add(inputPanel, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -206,13 +218,52 @@ public class Main extends JPanel {
         dialog.setVisible(true);
     }
 
+    /**
+     * Loads questions from a file where each question and answer is formatted as:
+     * Q: <question>
+     * A: <answer>
+     *
+     * Multiple Q/A pairs can be given. For example:
+     * Q: What is 2 + 2?
+     * A: 4
+     *
+     * Q: What is the capital of France?
+     * A: Paris
+     */
+    private void loadQuestionsFromFile(File file, List<Question> questions, DefaultListModel<String> listModel) {
+        try (java.util.Scanner scanner = new java.util.Scanner(file)) {
+            String currentQuestion = null;
+            String currentAnswer = null;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                if (line.startsWith("Q:")) {
+                    currentQuestion = line.substring(2).trim();
+                } else if (line.startsWith("A:")) {
+                    currentAnswer = line.substring(2).trim();
+                    // If we have both question and answer, add them to the list
+                    if (currentQuestion != null && currentAnswer != null) {
+                        questions.add(new Question(currentQuestion, currentAnswer));
+                        listModel.addElement(currentQuestion);
+                        currentQuestion = null;
+                        currentAnswer = null;
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error reading file: " + ex.getMessage(),
+                    "File Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
     private void initializeGame() {
         setLayout(null);
         Color customColor = new Color(208, 222, 117);
         setBackground(customColor);
         try {
             // Set the current map file name
-            currentMapFileName = "large_test.tmx";
+            currentMapFileName = "new_test.tmx";
             String initialMapFilePath = "resources/" + currentMapFileName;
 
             // Parse .tmx file and tileset files to populate models
@@ -240,8 +291,8 @@ public class Main extends JPanel {
 
 
             // Initialize character and camera
-            character = new Character("B_witch", 50, 250, 32, 32,tmxRenderer) ;
-            camera = new Camera(700, 700,  4.0f, character);
+            character = new Character("B_witch", 50, 50, 26, 26,tmxRenderer) ;
+            camera = new Camera(700, 700,  6.0f, character);
 
             // Initialize question panel
             questionPanel = new GameQuestionPanel(character, this);

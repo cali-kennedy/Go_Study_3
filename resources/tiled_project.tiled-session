@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "C:/Users/calik/IdeaProjects/Go_Study_Test/B_Witch/run.tsx",
+    "activeFile": "Mantis.tsx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -37,6 +37,14 @@
         "Basic_Plants.tsx": {
             "scaleInDock": 3
         },
+        "BeetleMove.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 16
+        },
+        "Beetle_hurt.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 5.5
+        },
         "Boats.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 5.5,
@@ -46,11 +54,11 @@
             "scaleInDock": 1
         },
         "Bush_Tiles.tsx": {
-            "scaleInDock": 2,
+            "scaleInDock": 5.5,
             "scaleInEditor": 5.5
         },
         "C:/Users/calik/IdeaProjects/Final_Project_Tester/resources/assets/Grass.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "C:/Users/calik/IdeaProjects/Go_Study_Test/B_Witch/run.tsx": {
@@ -67,6 +75,7 @@
             "scaleInEditor": 5.5
         },
         "Doors.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1
         },
         "Fences.tsx": {
@@ -76,12 +85,16 @@
             "scaleInDock": 1
         },
         "Grass.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "Hills.tsx": {
             "scaleInDock": 3,
             "scaleInEditor": 1
+        },
+        "Mantis.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 11
         },
         "Mushrooms, Flowers, Stones.tsx": {
             "scaleInDock": 3,
@@ -148,7 +161,7 @@
             "scaleInDock": 4
         },
         "apple.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 8,
             "scaleInEditor": 16
         },
         "blue_ghost.tsx": {
@@ -179,6 +192,7 @@
             "scaleInEditor": 1
         },
         "frog.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1
         },
         "ghost.tsx": {
@@ -223,11 +237,11 @@
                 12,
                 11
             ],
-            "scale": 3,
-            "selectedLayer": 10,
+            "scale": 1,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 225.83333333333331,
-                "y": 467.8333333333333
+                "x": 398.5,
+                "y": 391.5
             }
         },
         "left_facing_light_cow.tsx": {
@@ -255,6 +269,18 @@
             "scaleInDock": 1,
             "scaleInEditor": 1.5
         },
+        "new_test.tmx": {
+            "expandedObjectLayers": [
+                9,
+                5
+            ],
+            "scale": 3,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 338.16666666666663,
+                "y": 139.49999999999997
+            }
+        },
         "onion.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 11
@@ -269,7 +295,7 @@
             "scaleInEditor": 5.5
         },
         "phantom_idle_left.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 11,
             "scaleInEditor": 8
         },
         "phantom_idle_right.tsx": {
@@ -333,7 +359,7 @@
             "scaleInEditor": 1
         },
         "snail2_idle.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 8,
             "scaleInEditor": 1
         },
         "snail_hurt.tsx": {
@@ -344,7 +370,7 @@
             "scaleInEditor": 1
         },
         "spider_idle.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 3,
             "scaleInEditor": 16
         },
         "squirrel.tsx": {
@@ -426,17 +452,22 @@
         "B_witch_run_left.tsx",
         "ghost.tsx",
         "blue_ghost.tsx",
-        "large_test.tmx",
         "spider_idle.tsx",
         "phantom_idle_left.tsx",
         "phantom_idle_right.tsx",
         "phantom_hurt.tsx",
         "spider_hurt.tsx",
         "mroom2_idle.tsx",
-        "snail.tsx"
+        "snail.tsx",
+        "Mantis.tsx",
+        "BeetleMove.tsx",
+        "BeetleMove.tsx",
+        "Beetle_hurt.tsx",
+        "large_test.tmx",
+        "new_test.tmx"
     ],
     "project": "",
-    "property.type": "string",
+    "property.type": "bool",
     "recentFiles": [
         "Basic_Grass_Biom_things.tsx",
         "Grass.tsx",

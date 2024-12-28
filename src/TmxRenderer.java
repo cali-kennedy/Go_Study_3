@@ -236,17 +236,17 @@ public class TmxRenderer {
             }
          // for me to think about later - cali
             if ((frame != null) && animation.getName().matches("(?i)apple.*")) {
-                g2d.drawImage(frame, (int) animation.getX()+10, (int) animation.getY() - 15, TILE_RENDER_SIZE / 4, TILE_RENDER_SIZE / 4, null);
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 15, 12, 12, null);
             }
             if ((frame != null) && animation.getName().matches("(?i)study_stud.*")) {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 15, TILE_RENDER_SIZE / 4, TILE_RENDER_SIZE / 4, null);
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 15, 10, 10, null);
             }
             if ((frame != null) && animation.getName().matches("brown_shop") || animation.getName().matches("pink_shop"))
             {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -30, TILE_RENDER_SIZE, TILE_RENDER_SIZE , null);
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -30, 40, 40 , null);
             }
             if ((frame != null) && animation.getName().matches("fountain")) {
-                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -95, 96, 96 , null);
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -50, 45, 50 , null);
             }
             if ((frame != null) && animation.getName().matches("bus")) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 120, TILE_RENDER_SIZE * 2, TILE_RENDER_SIZE * 2, null);
@@ -254,12 +254,14 @@ public class TmxRenderer {
             if ((frame != null) && animation.getName().matches("lowXPChest")) {
                 g2d.drawImage(frame, (int) animation.getX()-5, (int) animation.getY() - 30, 40, TILE_RENDER_SIZE/2 ,null);
             }
-
+            if((frame != null) && animation.getName().matches("(?i)Beetle.*") ) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() -15 , TILE_RENDER_SIZE/4, TILE_RENDER_SIZE/4 , null);
+            }
 
             if((frame != null) && animation.getName().matches("(?i)slime.*") ) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2 , null);
-
             }
+
             if((frame != null) && animation.getName().matches("(?i)spider.*") ) {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/4, TILE_RENDER_SIZE/4 , null);
 
@@ -268,23 +270,31 @@ public class TmxRenderer {
                 g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/4, TILE_RENDER_SIZE/4 , null);
 
             }
+            if((frame != null) && animation.getName().matches("(?i)sign.*") ) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 20, 20, 20 , null);
+
+            }
+            if((frame != null) && animation.getName().matches("(?i)frog.*") ) {
+                g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 20, 20, 20, null);
+
+            }
 
             if ((frame != null) && animation.getName().matches("(?i)help_npc(_\\d+)?") ) {
 
               //  System.out.println("TMX RENDERER CHECK IF HELPED -------------------" + checkIfHelped(animation.getName()));
                 if(checkIfHelped(animation.getName()) == false) {
-                    g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30, TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
+                    g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 20, 20, 20, null);
                 }
                 else if(checkIfHelped(animation.getName())== true){
                     System.out.println(checkIfHelped(animation.getName()));
                     animation.setY(53);
                     animation.setX(88);
-                    setObjectXandY(animation.getName(), 53, 88);
-                    g2d.drawImage(frame, (int) animation.getX(), (int) (int) animation.getY(), TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
+                    setObjectXandY(animation.getName(), 340, 120);
+                    g2d.drawImage(frame, (int) animation.getX(), (int) (int) animation.getY(), 20, 20, null);
                 }
             }
 
-            if (frame != null && !animation.getName().matches("(?i)apple.*") &&  !animation.getName().matches("bus") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome_.*") && !animation.getName().matches("(?i)help_npc(_\\d+)?") && !animation.getName().matches("fountain") && !animation.getName().matches("(?i)study_stud.*") && !animation.getName().matches("(?i)slime.*") && !animation.getName().matches("lowXPChest") && !animation.getName().matches("(?i)phantom.*") && !animation.getName().matches("(?i)spider.*")) {
+            if (frame != null && !animation.getName().matches("(?i)sign.*") && !animation.getName().matches("(?i)apple.*") && !animation.getName().matches("(?i)frog.*") && !animation.getName().matches("(?i)Beetle.*") && !animation.getName().matches("bus") && !animation.getName().matches("brown_shop") && !animation.getName().matches("pink_shop") && !animation.getName().matches("(?i)gnome_.*") && !animation.getName().matches("(?i)help_npc(_\\d+)?") && !animation.getName().matches("fountain") && !animation.getName().matches("(?i)study_stud.*") && !animation.getName().matches("(?i)slime.*") && !animation.getName().matches("lowXPChest") && !animation.getName().matches("(?i)phantom.*") && !animation.getName().matches("(?i)spider.*")) {
                 String animationName = animation.getName().toLowerCase();
                     g2d.drawImage(frame, (int) animation.getX(), (int) animation.getY() - 30,
                             TILE_RENDER_SIZE/2, TILE_RENDER_SIZE/2, null);
@@ -381,8 +391,8 @@ public class TmxRenderer {
 
                 case "b_witch_run":
                 case "b_witch_run_left":
-                    renderWidth = 32;
-                    renderHeight = 32;
+                    renderWidth = 26;
+                    renderHeight = 26;
                     offsetX = x;
                     offsetY = y;
                     break;

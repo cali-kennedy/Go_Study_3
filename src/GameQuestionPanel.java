@@ -21,7 +21,7 @@ public class GameQuestionPanel extends JPanel {
         this.character = character;
         this.mainPanel = mainPanel;
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(300, 150));
+        setPreferredSize(new Dimension(500, 250));
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK, 2); // Thickness of 2 pixels
 
         // Set semi-transparent white background
@@ -86,14 +86,23 @@ public class GameQuestionPanel extends JPanel {
         if (!isVisible) {
             isAnswered = false;
             this.currentQuestion = question;
-            questionLabel.setText(question.getQuestion());
+            Font customFont = FontUtils.loadFont("/fonts/Bungee-Regular.ttf", 15);
+
+            // Set a width for wrapping, adjust as desired
+            int maxWidth = 250;
+            String wrappedQuestion = "<html><body style='width:" + maxWidth + "px; text-align:center;'>"
+                    + question.getQuestion()
+                    + "</body></html>";
+            questionLabel.setText(wrappedQuestion);
+            questionLabel.setFont(customFont);
             answerField.setText("");
             isVisible = true;
             setVisible(true);
-          //  mainPanel.togglePause(true);
+            // mainPanel.togglePause(true);
             answerField.requestFocus();
         }
     }
+
 
     // Verify the user's answer and provide feedback
     private void checkAnswer() {
@@ -146,7 +155,7 @@ public class GameQuestionPanel extends JPanel {
     // Set the preferred size of the question panel
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(300, 150);
+        return new Dimension(500, 250);
     }
 
     public boolean isAnswered() {

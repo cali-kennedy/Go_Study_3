@@ -68,7 +68,7 @@ public class InventoryScreen extends JDialog {
             if (selectedItem.getQuantity() > 0) {
                 switch (selectedItem.getName().toLowerCase()) {
                     case "apple":
-                        character.addHealth(10);
+                        character.addHealth(20);
                         JOptionPane.showMessageDialog(this, "You used an Apple and restored 10 health!");
                         break;
                     // Handle other items...

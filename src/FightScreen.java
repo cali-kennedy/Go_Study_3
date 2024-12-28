@@ -380,8 +380,10 @@ public class FightScreen extends JDialog {
         messageOverlay.revalidate();
         messageOverlay.repaint();
 
-        // Hide the overlay after a few seconds (e.g., 3 seconds)
-        Timer timer = new Timer(2000, e -> {
+// Choose delay based on whether the question was answered correctly
+        int delay = questionIsCorrect ? 1000 : 2000; // 2 seconds if correct, 10 seconds if not
+
+        Timer timer = new Timer(delay, e -> {
             messageOverlay.setVisible(false);
             isMessageDisplayed = false;
             displayNextMessage(); // Display the next message in the queue

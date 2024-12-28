@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="284">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="296">
  <tileset firstgid="1" source="Grass.tsx"/>
  <tileset firstgid="78" source="new_mroom_idle.tsx"/>
  <tileset firstgid="94" source="Water.tsx"/>
@@ -71,6 +71,7 @@
  <tileset firstgid="2316" source="mroom2_idle.tsx"/>
  <tileset firstgid="2325" source="BeetleMove.tsx"/>
  <tileset firstgid="2329" source="Beetle_hurt.tsx"/>
+ <tileset firstgid="2333" source="BeetleMove.tsx"/>
  <objectgroup id="13" name="Hidden_Objects">
   <object id="81" name="snail_hurt" gid="482" x="-311.591" y="231.045" width="32" height="32">
    <properties>
@@ -692,7 +693,7 @@
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="262" name="wall" x="497.687" y="749.131" width="149.96" height="38.4881">
+  <object id="262" name="wall" x="497.687" y="755.464" width="149.96" height="32.1548">
    <properties>
     <property name="type" value="wall"/>
    </properties>
@@ -702,27 +703,27 @@
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="264" name="wall" x="206.353" y="751.298" width="143.96" height="34.9881">
+  <object id="264" name="wall" x="206.353" y="757.965" width="143.96" height="28.3214">
    <properties>
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="265" name="wall" x="175.687" y="615.964" width="49.6267" height="102.988">
+  <object id="265" name="wall" x="175.687" y="615.964" width="25.96" height="102.988">
    <properties>
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="266" name="wall" x="264.687" y="567.048" width="25.6267" height="150.571">
+  <object id="266" name="wall" x="272.02" y="567.048" width="18.2934" height="150.571">
    <properties>
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="267" name="wall" x="525.687" y="534.048" width="21.6267" height="150.571">
+  <object id="267" name="wall" x="525.687" y="534.048" width="12.96" height="150.571">
    <properties>
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="268" name="wall" x="590.02" y="501.381" width="25.6267" height="129.238">
+  <object id="268" name="wall" x="596.687" y="495.714" width="25.6267" height="104.238">
    <properties>
     <property name="type" value="wall"/>
    </properties>
@@ -762,17 +763,17 @@
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="277" name="wall" x="587.02" y="659.199" width="32.6267" height="40.6013">
+  <object id="277" name="wall" x="587.02" y="659.199" width="32.6267" height="31.9346">
    <properties>
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="278" name="wall" x="399.687" y="671.533" width="126.96" height="40.1847">
+  <object id="278" name="wall" x="419.354" y="671.533" width="107.293" height="28.518">
    <properties>
     <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="279" name="wall" x="267.187" y="670.366" width="100.293" height="37.6847">
+  <object id="279" name="wall" x="267.187" y="670.366" width="86.9597" height="29.3514">
    <properties>
     <property name="type" value="wall"/>
    </properties>
@@ -1060,11 +1061,66 @@
     <property name="type" value="enemy"/>
    </properties>
   </object>
-  <object id="248" name="Beetle" gid="2328" x="414.667" y="667.333" width="32" height="32">
+  <object id="249" name="Beetle_hurt" gid="2332" x="-303.667" y="693" width="32" height="32"/>
+  <object id="284" name="Beetle" gid="2336" x="379.333" y="667" width="32" height="32">
    <properties>
     <property name="type" value="enemy"/>
    </properties>
   </object>
-  <object id="249" name="Beetle_hurt" gid="2332" x="-303.667" y="693" width="32" height="32"/>
+  <object id="285" name="Beetle" gid="2336" x="461" y="561.333" width="32" height="32">
+   <properties>
+    <property name="type" value="enemy"/>
+   </properties>
+  </object>
+  <object id="286" name="Beetle" gid="2336" x="212.333" y="325" width="32" height="32">
+   <properties>
+    <property name="type" value="enemy"/>
+   </properties>
+  </object>
+  <object id="287" name="apple_" gid="412" x="137.667" y="153.333" width="32" height="32">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="288" name="apple_" gid="412" x="228.333" y="50" width="32" height="32">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="289" name="apple_" gid="412" x="764.667" y="207.667" width="32" height="32">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="290" name="apple_" gid="412" x="4.33333" y="622.667" width="32" height="32">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="291" name="apple_" gid="412" x="22.6667" y="783.333" width="32" height="32">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="292" name="apple" gid="412" x="592.333" y="93.3333" width="16" height="16">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="293" name="apple" gid="412" x="551.333" y="150" width="16" height="16">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="294" name="apple" gid="412" x="336.333" y="161.667" width="16" height="16">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
+  <object id="295" name="apple" gid="412" x="394.667" y="308.333" width="16" height="16">
+   <properties>
+    <property name="type" value="apple"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
